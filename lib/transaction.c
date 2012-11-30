@@ -1465,6 +1465,8 @@ int rpmtsRun(rpmts ts, rpmps okProbs, rpmprobFilterFlags ignoreSet)
     tsMembers tsmem = rpmtsMembers(ts);
     rpmlock lock = NULL;
     rpmps tsprobs = NULL;
+    int TsmPreDone = 0; /* TsmPre hook hasn't been called */
+    
     /* Force default 022 umask during transaction for consistent results */
     mode_t oldmask = umask(022);
 
@@ -1496,6 +1498,7 @@ int rpmtsRun(rpmts ts, rpmps okProbs, rpmprobFilterFlags ignoreSet)
     tsprobs = checkProblems(ts);
 
     /* Run pre transaction hook for all plugins */
+    TsmPreDone = 1;
     if (rpmpluginsCallTsmPre(ts->plugins, ts) == RPMRC_FAIL) {
 	goto exit;
     }
@@ -1543,12 +1546,11 @@ int rpmtsRun(rpmts ts, rpmps okProbs, rpmprobFilterFlags ignoreSet)
 	runTransScripts(ts, PKG_POSTTRANS);
     }
 
-    /* Run post transaction hook for all plugins */
-    if (rpmpluginsCallTsmPost(ts->plugins, ts) == RPMRC_FAIL) {
-	goto exit;
-    }
-
 exit:
+    /* Run post transaction hook for all plugins */
+    if (TsmPreDone) /* If TsmPre hook has been called, call the TsmPost hook */
+	rpmpluginsCallTsmPost(ts->plugins, ts, rc);
+
     /* Finish up... */
     (void) umask(oldmask);
     (void) rpmtsFinish(ts);
