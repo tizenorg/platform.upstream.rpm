@@ -1,0 +1,9 @@
+Change-Id: I8fe34defba338cf0e3bdef8a27ec9bd91550d332
+Code-Review+2: Anas Nashif
+Verified+1: Anas Nashif
+Code-Review+1: Dilimot Mihai <mihaix.dilimot@intel.com>
+Submitted-by: Anas Nashif
+Submitted-at: Mon, 03 Jun 2013 11:48:35 -0700
+Reviewed-on: https://review.tizen.org/gerrit/3782
+Project: platform/upstream/rpm
+Branch: refs/heads/tizen
