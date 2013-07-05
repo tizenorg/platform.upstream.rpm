@@ -1093,7 +1093,7 @@ static int msmProcessMsm(xmlTextReaderPtr reader, manifest_x *mfx, sw_source_x *
 {
     const xmlChar *node;
     int ret, depth;
-    int assignPresent = 0, requestPresent = 0, definePresent = 0, attributesPresent = 0; /* there must be only one section per manifest */
+    int assignPresent = 0, requestPresent = 0, attributesPresent = 0; /* there must be only one section per manifest */
     mfx->sw_source = current;
 
     rpmlog(RPMLOG_DEBUG, "manifest\n");
@@ -1121,14 +1121,10 @@ static int msmProcessMsm(xmlTextReaderPtr reader, manifest_x *mfx, sw_source_x *
             attributesPresent = 1;
             ret = msmProcessAttributes(reader, mfx);
 	} else if (!strcmp(ASCII(node), "define")) {
-            if (definePresent) {
-                rpmlog(RPMLOG_ERR, "A second request section in manifest isn't allowed. Abort installation.\n");
-                return -1; 
-            }
-            definePresent = 1;
-            mfx->define = calloc(1, sizeof(define_x));
-            if (mfx->define) {
-                ret = msmProcessDefine(reader, mfx->define, mfx, current);
+            define_x *define = calloc(1, sizeof(define_x));
+            if (define) {
+                LISTADD(mfx->defines, define);
+                ret = msmProcessDefine(reader, define, mfx, current);
             } else return -1;
 	} else if (!strcmp(ASCII(node), "request")) {
             if (requestPresent) {
@@ -1416,14 +1412,42 @@ static d_provide_x *msmFreeDProvide(d_provide_x *d_provide)
     return next;
 }
 
+static define_x *msmFreeDefine(define_x *define)
+{
+    define_x *next = define->next;
+    d_request_x *d_request;
+    d_permit_x *d_permit;
+    d_provide_x *d_provide;
+
+    msmFreePointer((void**)&define->name);
+    msmFreePointer((void**)&define->policy);
+    msmFreePointer((void**)&define->plist);
+
+    if (define->d_requests) {
+	LISTHEAD(define->d_requests, d_request);	
+	for (; d_request; d_request = msmFreeDRequest(d_request));
+    }
+    rpmlog(RPMLOG_DEBUG, "after freeing define requests\n");
+    if (define->d_permits) {
+	LISTHEAD(define->d_permits, d_permit);	
+	for (; d_permit; d_permit = msmFreeDPermit(d_permit));
+    }
+    rpmlog(RPMLOG_DEBUG, "after freeing define permits\n");
+    if (define->d_provides) {
+	LISTHEAD(define->d_provides, d_provide);	
+	for (; d_provide; d_provide = msmFreeDProvide(d_provide));
+    }
+    rpmlog(RPMLOG_DEBUG, "after freeing provides\n");
+    msmFreePointer((void**)&define); 
+    return next;
+}
+
 manifest_x* msmFreeManifestXml(manifest_x* mfx)
 {
     provide_x *provide;
     file_x *file;
     sw_source_x *sw_source;
-    d_request_x *d_request;
-    d_permit_x *d_permit;
-    d_provide_x *d_provide;
+    define_x *define;
 
     rpmlog(RPMLOG_DEBUG, "in msmFreeManifestXml\n");
     if (mfx) {
@@ -1443,27 +1467,10 @@ manifest_x* msmFreeManifestXml(manifest_x* mfx)
 	}
 	msmFreePointer((void**)&mfx->name);
         rpmlog(RPMLOG_DEBUG, "after freeing name\n");
-	if (mfx->define) {
-            msmFreePointer((void**)&mfx->define->name);
-            msmFreePointer((void**)&mfx->define->policy);
-            msmFreePointer((void**)&mfx->define->plist);
-            if (mfx->define->d_requests) {
-                LISTHEAD(mfx->define->d_requests, d_request);	
-                for (; d_request; d_request = msmFreeDRequest(d_request));
-            }
-            rpmlog(RPMLOG_DEBUG, "after freeing define requests\n");
-            if (mfx->define->d_permits) {
-                LISTHEAD(mfx->define->d_permits, d_permit);	
-                for (; d_permit; d_permit = msmFreeDPermit(d_permit));
-            }
-            rpmlog(RPMLOG_DEBUG, "after freeing define permits\n");
-            if (mfx->define->d_provides) {
-                LISTHEAD(mfx->define->d_provides, d_provide);	
-                for (; d_provide; d_provide = msmFreeDProvide(d_provide));
-            }
-            rpmlog(RPMLOG_DEBUG, "after freeing provides\n");
-            msmFreePointer((void**)&mfx->define); 
-	}
+        if (mfx->defines) {
+            LISTHEAD(mfx->defines, define);
+            for (; define; define = msmFreeDefine(define));            
+        }
         rpmlog(RPMLOG_DEBUG, "after freeing defines \n");
         msmFreePointer((void**)&mfx);
     }
