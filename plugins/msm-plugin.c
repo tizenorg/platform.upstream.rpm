@@ -25,9 +25,6 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA
  */
- 
-#include "plugin.h"
-#include "debug.h"
 
 #include <errno.h>
 #include <sys/types.h>

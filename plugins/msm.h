@@ -52,6 +52,9 @@
 #define DBUS_METHOD    4
 #define DBUS_SIGNAL    5
 
+#include "plugin.h"
+#include "debug.h"
+
 #include <uthash.h>
 #include <sys/capability.h>
 #include <sys/smack.h>
