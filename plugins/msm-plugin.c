@@ -209,14 +209,15 @@ rpmRC PLUGINHOOK_FILE_CONFLICT_FUNC(rpmts ts, char* path,
 {
     fileconflict *fc;
     if (!path)
-        return rpmrc; 
+        return rpmrc;
+
     rpmlog(RPMLOG_DEBUG, "FILE_CONFLICT_FUNC hook  path %s\n",path);
 
-    const char *name = headerGetString(oldHeader, RPMTAG_SECSWSOURCE);    
-    if (!name || !root) {
-        return rpmrc; /* no sw source(s) - abnormal state */
-    }
+    const char *name = headerGetString(oldHeader, RPMTAG_SECSWSOURCE);
     const char *pkg_name = headerGetString(oldHeader, RPMTAG_NAME);
+    if (!name || !root || !pkg_name) {
+        return rpmrc; /* no sw source(s) or package name - abnormal state */
+    }
 
     sw_source_x *sw_source = msmSWSourceTreeTraversal(root->sw_sources, findSWSourceByName, (void *)name, NULL);
     if (!sw_source)
@@ -229,7 +230,7 @@ rpmRC PLUGINHOOK_FILE_CONFLICT_FUNC(rpmts ts, char* path,
         if (!fc) return RPMRC_FAIL;
         fc->path = path;
         fc->sw_source = sw_source;
-        fc->pkg_name = pkg_name;
+        fc->pkg_name = strndup(pkg_name, strlen(pkg_name));
         HASH_ADD_KEYPTR(hh, allfileconflicts, path, strlen(path), fc);
     } else {
         /* Many packages have installed the same file */
