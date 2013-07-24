@@ -1,0 +1,10 @@
+Code-Review+2: Ryan Ware <ware@linux.intel.com>
+Verified+1: Ryan Ware <ware@linux.intel.com>
+Code-Review+1: Michael Leibowitz <michael.leibowitz@intel.com>
+Code-Review+1: Michael Demeter <michael.demeter@intel.com>
+Verified+1: Mihai Dilimot <mihaix.dilimot@intel.com>
+Submitted-by: Ryan Ware <ware@linux.intel.com>
+Submitted-at: Wed, 24 Jul 2013 15:10:26 -0700
+Reviewed-on: https://review.tizen.org/gerrit/5982
+Project: platform/upstream/rpm
+Branch: refs/heads/tizen
