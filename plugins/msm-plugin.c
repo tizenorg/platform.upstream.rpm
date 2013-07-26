@@ -90,21 +90,40 @@ static int SmackEnabled = 0;
 static magic_t cookie = NULL;
 static int package_created = 0;
 
+static int copyFile(char *old_filename, char  *new_filename)
+{
+    FD_t ptr_old, ptr_new;
+    int res;
+
+    ptr_old = Fopen(old_filename, "r.fdio");
+    ptr_new = Fopen(new_filename, "w.fdio");
+
+    if ((ptr_old == NULL) || (Ferror(ptr_old))) {
+	return  -1;
+    }
+
+    if ((ptr_new == NULL) || (Ferror(ptr_new))) {
+	Fclose(ptr_old);
+	return  -1;
+    }
+
+    res = ufdCopy(ptr_old, ptr_new);
+
+    Fclose(ptr_new);
+    Fclose(ptr_old);
+    return res;
+}
+
 rpmRC PLUGINHOOK_INIT_FUNC(rpmts _ts, const char *name, const char *opts)
 {
     ts = _ts;
     int res = 0;
     char *fullPath = NULL, *fullPath1 = NULL;
+    char *defaultPolicyPath = NULL, *runtimePolicyPath = NULL;
+    struct stat buf;
 
     if (!ts)
         return RPMRC_FAIL;
-    
-    fullPath = rpmGenPath(ts->rootDir, DEVICE_SECURITY_POLICY, NULL);
-    rpmlog(RPMLOG_DEBUG, "fullPath %s\n", fullPath);
-    if (!fullPath) {
-        rpmlog(RPMLOG_ERR, "Building a full path failed for device security policy\n");
-        return RPMRC_FAIL;
-    }
 
 #ifndef ENABLE_DCHECKS
     rpmlog(RPMLOG_DEBUG, "ENABLE_DCHECKS is undefined!\n");
@@ -112,23 +131,73 @@ rpmRC PLUGINHOOK_INIT_FUNC(rpmts _ts, const char *name, const char *opts)
     rpmlog(RPMLOG_DEBUG, "ENABLE_DCHECKS is defined!\n");
 #endif
 
-    rpmlog(RPMLOG_DEBUG, "reading device security policy from %s\n", fullPath);
-    root = msmProcessDevSecPolicyXml(fullPath);
-
-    if (root) {
-        if (msmSetupSWSources(NULL, root, NULL)) {
-	    rpmlog(RPMLOG_ERR, "Failed to setup device security policy from %s\n", 
-		   fullPath);
-            return RPMRC_FAIL;
-        }
-    } else {
-        /* Do not allow plug-in to proceed without security policy existing */
-        rpmlog(RPMLOG_ERR, "Failed to process sw sources from %s\n", 
-	       fullPath);
+    runtimePolicyPath = rpmExpand("%{?__transaction_msm_runtime_policy}", NULL);
+    if (!runtimePolicyPath || !strcmp(runtimePolicyPath, "")) {
+        rpmlog(RPMLOG_ERR, "Failed to expand transaction_msm_runtime_policy macro\n");
         return RPMRC_FAIL;
     }
 
+    fullPath = rpmGenPath(ts->rootDir, runtimePolicyPath, NULL);
+    rpmlog(RPMLOG_DEBUG, "fullPath %s\n", fullPath);
+    if (!fullPath) {
+        rpmlog(RPMLOG_ERR, "Building a full path failed for device security policy\n");
+        return RPMRC_FAIL;
+    }
+
+    if (stat(fullPath, &buf) != 0) { // the policy file is missing
+        if (ts->rootDir) { // we are running with --root option and policy is missing, need to copy it for now
+            // first create prefix for it
+            char *sysconfdir = rpmExpand("%{?_sysconfdir}", NULL);
+            if (!sysconfdir || !strcmp(sysconfdir, "")) {
+		rpmlog(RPMLOG_ERR, "Failed to expand %%_sysconfdir macro\n");
+		return RPMRC_FAIL;
+            }
+            fullPath1 = rpmGenPath(ts->rootDir, sysconfdir, NULL);
+            rpmlog(RPMLOG_DEBUG, "fullPath1 %s\n", fullPath1);
+            if (!fullPath1) {
+		rpmlog(RPMLOG_ERR, "Building a full path for sysconfdir failed\n");
+		return RPMRC_FAIL;
+            }
+            if (rpmioMkpath(fullPath1, 0755, getuid(), getgid()) != 0) {
+                    rpmlog(RPMLOG_ERR, "Failed to create a path for policy file\n");
+                    return RPMRC_FAIL;
+            }
+            msmFreePointer((void**)&sysconfdir);
+            defaultPolicyPath = rpmExpand("%{?__transaction_msm_default_policy}", NULL);
+            if (!defaultPolicyPath || !strcmp(defaultPolicyPath, "")) {
+                rpmlog(RPMLOG_ERR, "Failed to expand transaction_msm_default_policy macro\n");
+                return RPMRC_FAIL;
+            }
+            if(copyFile(defaultPolicyPath, fullPath) == -1) {
+		/* Do not allow plug-in to proceed without security policy existing */
+		rpmlog(RPMLOG_ERR, "Failed to copy the policy outside of chroot. Abort installation.\n");
+		return RPMRC_FAIL;
+            }
+	} else {
+            /* Do not allow plug-in to proceed without security policy existing */
+            rpmlog(RPMLOG_ERR, "Policy file is missing at %s. Abort installation.\n",
+		   fullPath);
+            return RPMRC_FAIL;
+        }
+    }
+
+    rpmlog(RPMLOG_DEBUG, "reading device security policy from %s\n", fullPath);
+    root = msmProcessDevSecPolicyXml(fullPath);
+
+    if (!root) {
+        rpmlog(RPMLOG_ERR, "Failed process sw sources from %s\n", fullPath);
+        return RPMRC_FAIL;
+    } else {
+        if (msmSetupSWSources(NULL, root, NULL)) {
+            rpmlog(RPMLOG_ERR, "Failed to setup security policy from %s\n",fullPath);
+            return RPMRC_FAIL;
+        }
+    }
+
     msmFreePointer((void**)&fullPath);
+    msmFreePointer((void**)&fullPath1);
+    msmFreePointer((void**)&defaultPolicyPath);
+    msmFreePointer((void**)&runtimePolicyPath);
 
     fullPath = rpmGenPath(ts->rootDir, SMACK_LOAD_PATH, NULL);
     rpmlog(RPMLOG_DEBUG, "fullPath for SMACK_LOAD_PATH %s\n", fullPath);
@@ -138,8 +207,6 @@ rpmRC PLUGINHOOK_INIT_FUNC(rpmts _ts, const char *name, const char *opts)
     }
 
     /* check its own security context and store it for the case when packages without manifest will be installed */
-    struct stat buf;
-
     if (stat(fullPath, &buf) == 0) {
         res = smack_new_label_from_self(&ownSmackLabel);
         SmackEnabled = 1;
