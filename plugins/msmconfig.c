@@ -235,7 +235,14 @@ static void msmHandleSWSource(xmlNode *parent, sw_source_x *sw_source)
 rpmRC msmSaveDeviceSecPolicyXml(manifest_x *mfx)
 {    
     FILE *outFile;
-    rpmRC rc = RPMRC_OK;    
+    rpmRC rc = RPMRC_OK;
+    char *runtimePolicyPath = NULL;
+
+    runtimePolicyPath = rpmExpand("%{?__transaction_msm_runtime_policy}", NULL);
+    if (!runtimePolicyPath || rstreq(runtimePolicyPath, "")) {
+	rpmlog(RPMLOG_ERR, "Failed to expand transaction_msm_runtime_policy macro\n");
+	return RPMRC_FAIL;
+    }
 
     /* if data doesn't have sw_source information, no need to do anything */    
     if (mfx && mfx->sw_sources) {    
@@ -247,13 +254,13 @@ rpmRC msmSaveDeviceSecPolicyXml(manifest_x *mfx)
 	LISTHEAD(mfx->sw_sources, sw_source);	
         msmHandleSWSource(rootnode, sw_source);
 
-        outFile = fopen(DEVICE_SECURITY_POLICY, "w");
+        outFile = fopen(runtimePolicyPath, "w");
         if (outFile) {
             xmlElemDump(outFile, doc, rootnode);
             fclose(outFile);
         } else {
             rpmlog(RPMLOG_ERR, "Unable to write device security policy%s\n", 
-	           DEVICE_SECURITY_POLICY);
+	           runtimePolicyPath);
             rc = RPMRC_FAIL;
         }
         xmlFreeDoc(doc);
