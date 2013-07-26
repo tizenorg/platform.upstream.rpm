@@ -90,19 +90,51 @@ static int SmackEnabled = 0;
 static magic_t cookie = NULL;
 static int package_created = 0;
 
+static int copyFile(char *old_filename, char  *new_filename)
+{
+    FILE  *ptr_old, *ptr_new;
+    int  a;
+
+    ptr_old = fopen(old_filename, "r");
+    ptr_new = fopen(new_filename, "w");
+
+    if(!ptr_old) {
+	return  -1;
+    }
+
+    if(!ptr_new) {
+	fclose(ptr_old);
+	return  -1;
+    }
+
+    while(1) {
+	a  =  fgetc(ptr_old);
+	if(!feof(ptr_old))
+	    fputc(a, ptr_new);
+	else
+	    break;
+    }
+
+    fclose(ptr_new);
+    fclose(ptr_old);
+    return  0;
+}
+
 rpmRC PLUGINHOOK_INIT_FUNC(rpmts _ts, const char *name, const char *opts)
 {
     ts = _ts;
     int res = 0;
     char *fullPath = NULL, *fullPath1 = NULL;
+    struct stat buf;
 
     if (!ts)
         return RPMRC_FAIL;
-    
+
     fullPath = rpmGenPath(ts->rootDir, DEVICE_SECURITY_POLICY, NULL);
-    rpmlog(RPMLOG_DEBUG, "fullPath %s\n", fullPath);
-    if (!fullPath) {
-        rpmlog(RPMLOG_ERR, "Building a full path failed for device security policy\n");
+    fullPath1 = rpmGenPath(ts->rootDir, DEVICE_SECURITY_POLICY_DIR, NULL);
+    rpmlog(RPMLOG_DEBUG, "fullPath %s, fullPath1 %s\n", fullPath, fullPath1);
+    if ((!fullPath) || (!fullPath1)) {
+        rpmlog(RPMLOG_ERR, "Building a full path or its part failed for device security policy\n");
         return RPMRC_FAIL;
     }
 
@@ -112,23 +144,45 @@ rpmRC PLUGINHOOK_INIT_FUNC(rpmts _ts, const char *name, const char *opts)
     rpmlog(RPMLOG_DEBUG, "ENABLE_DCHECKS is defined!\n");
 #endif
 
+    if (stat(fullPath, &buf) != 0) { // the policy file is missing
+	if (ts->rootDir) { // we are running with --root option and policy is missing, need to copy it for now
+	    // first create prefix for it
+	    if (stat(fullPath1, &buf) != 0) { // dir prefix is missing
+		mode_t mode = S_IRUSR | S_IWUSR | S_IXUSR | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH; // rwxr-xr-x
+		if (mkdir(fullPath1, mode) != 0) {
+                    rpmlog(RPMLOG_ERR, "Failed to create a directory for policy file\n");
+                    return RPMRC_FAIL;
+		}    
+	    }
+	    if(copyFile(DEVICE_SECURITY_POLICY, fullPath) != 0) {
+		/* Do not allow plug-in to proceed without security policy existing */
+		rpmlog(RPMLOG_ERR, "Failed to copy the policy outside of chroot. Abort installation.\n");
+		return RPMRC_FAIL;
+	    }
+	} else {
+	    /* Do not allow plug-in to proceed without security policy existing */
+	    rpmlog(RPMLOG_ERR, "Policy file is missing at %s. Abort installation.\n", 
+		   fullPath);
+	    return RPMRC_FAIL;
+	}
+    }
+
     rpmlog(RPMLOG_DEBUG, "reading device security policy from %s\n", fullPath);
     root = msmProcessDevSecPolicyXml(fullPath);
 
-    if (root) {
-        if (msmSetupSWSources(NULL, root, NULL)) {
-	    rpmlog(RPMLOG_ERR, "Failed to setup device security policy from %s\n", 
-		   fullPath);
-            return RPMRC_FAIL;
-        }
+    if (!root) { 
+	rpmlog(RPMLOG_ERR, "Failed process sw sources from %s\n", fullPath);
+	return RPMRC_FAIL;
     } else {
-        /* Do not allow plug-in to proceed without security policy existing */
-        rpmlog(RPMLOG_ERR, "Failed to process sw sources from %s\n", 
+	if (msmSetupSWSources(NULL, root, NULL)) {
+	    rpmlog(RPMLOG_ERR, "Failed to setup device security policy from %s\n", 
 	       fullPath);
-        return RPMRC_FAIL;
+	    return RPMRC_FAIL;
+	}
     }
 
     msmFreePointer((void**)&fullPath);
+    msmFreePointer((void**)&fullPath1);
 
     fullPath = rpmGenPath(ts->rootDir, SMACK_LOAD_PATH, NULL);
     rpmlog(RPMLOG_DEBUG, "fullPath for SMACK_LOAD_PATH %s\n", fullPath);
@@ -138,8 +192,6 @@ rpmRC PLUGINHOOK_INIT_FUNC(rpmts _ts, const char *name, const char *opts)
     }
 
     /* check its own security context and store it for the case when packages without manifest will be installed */
-    struct stat buf;
-
     if (stat(fullPath, &buf) == 0) {
         res = smack_new_label_from_self(&ownSmackLabel);
         SmackEnabled = 1;
