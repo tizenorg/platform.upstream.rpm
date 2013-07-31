@@ -543,6 +543,7 @@ static int msmSetupDBusRule(FILE *file, const char *creds, int type, const char 
 static int msmSetupDBusConfig(package_x *package, dbus_x *dbus, int phase, manifest_x *mfx)
 {
     char path[FILENAME_MAX+1];
+    char path_prefix[FILENAME_MAX+1];
     FILE *file = NULL;
     char data[512];
     node_x *node;
@@ -554,6 +555,13 @@ static int msmSetupDBusConfig(package_x *package, dbus_x *dbus, int phase, manif
     if (!sysconfdir || !strcmp(sysconfdir, "")) {
 	rpmlog(RPMLOG_ERR, "Failed to expand %%_sysconfdir macro\n");
 	goto exit;
+    }
+
+    snprintf(path_prefix, sizeof(path_prefix), "%s/dbus-1/%s.d/",
+             sysconfdir, dbus->bus);
+    if (rpmioMkpath(path_prefix, 0755, getuid(), getgid()) != 0) {
+         rpmlog(RPMLOG_ERR, "Failed to create a path for dbus policy files\n");
+         goto exit;
     }
     snprintf(path, sizeof(path), "%s/dbus-1/%s.d/manifest.%s.conf", 
 	     sysconfdir, dbus->bus, package->name);
