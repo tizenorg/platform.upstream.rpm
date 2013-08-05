@@ -1,0 +1,9 @@
+Code-Review+2: Ryan Ware <ware@linux.intel.com>
+Verified+1: Ryan Ware <ware@linux.intel.com>
+Code-Review+1: Anas Nashif <anas.nashif@intel.com>
+Verified+1: Anas Nashif <anas.nashif@intel.com>
+Submitted-by: Ryan Ware <ware@linux.intel.com>
+Submitted-at: Mon, 05 Aug 2013 09:19:16 -0700
+Reviewed-on: https://review.tizen.org/gerrit/7772
+Project: platform/upstream/rpm
+Branch: refs/heads/tizen
