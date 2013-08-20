@@ -1,0 +1,14 @@
+Code-Review+1: Chengwei Yang <chengwei.yang@intel.com>
+Code-Review+2: Auke Kok <auke-jan.h.kok@intel.com>
+Code-Review+1: Patrick McCarty <patrick.mccarty@linux.intel.com>
+Code-Review+2: Tracy Graydon <tracy.graydon@intel.com>
+Verified+1: Tracy Graydon <tracy.graydon@intel.com>
+Code-Review+1: Michael Leibowitz <michael.leibowitz@intel.com>
+Code-Review+1: Anas Nashif <anas.nashif@intel.com>
+Code-Review+1: Michael Demeter <michael.demeter@intel.com>
+Verified+1: Michael Demeter <michael.demeter@intel.com>
+Submitted-by: Tracy Graydon <tracy.graydon@intel.com>
+Submitted-at: Tue, 20 Aug 2013 15:33:48 -0700
+Reviewed-on: https://review.tizen.org/gerrit/8426
+Project: platform/upstream/rpm
+Branch: refs/heads/tizen
