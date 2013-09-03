@@ -8,7 +8,7 @@
 %_vendor		@RPMCANONVENDOR@
 %_os			@RPMCANONOS@
 %_gnu			@RPMRC_GNU@
-%_target_platform	%{_target_cpu}-%{_vendor}-%{_target_os}
+%_target_platform	%{_target_cpu}-%{_vendor}-%{_target_os}%{?_gnu}
 %optflags		@RPMRC_OPTFLAGS@
 
 %__isa_name		@ISANAME@
