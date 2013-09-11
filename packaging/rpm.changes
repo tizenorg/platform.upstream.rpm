@@ -1,3 +1,7 @@
+* Wed Sep 11 2013 Jacek Bukarewicz <j.bukarewicz@samsung.com> submit/tizen/20130903.001559@f56842e
+- Introduction of -locale and -docs subpackages
+- Moved package to another group
+
 * Mon Sep 02 2013 Anas Nashif <anas.nashif@intel.com> submit/tizen/20130820.223822@6ebf41a
 - Security plugin: adding checking of return code for dbus policy verification
 
