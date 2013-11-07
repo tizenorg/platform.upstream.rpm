@@ -24,7 +24,16 @@ BuildRequires:  libxml2-devel
 BuildRequires:  libattr-devel
 BuildRequires:  pkgconfig(libsmack)
 Requires:       rpm = %{version}
-%{expand:%(sed -n -e '/^Source0:/,/^BuildRoot:/p' <%_sourcedir/rpm.spec)}
+Source0:        rpm-%{version}.tar.bz2
+Source1:       	db-4.8.30.tar.bz2
+Source2:	    db-4.8.30-integration.dif
+Source4:        rpm-tizen_macros
+Source8:        rpmconfigcheck
+Source13:	    find-docs.sh
+Source22:	    device-sec-policy
+Source23:       find-provides.ksyms
+Source1001: 	rpm.manifest
+BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 %global with_python 2
 
 %description
@@ -36,7 +45,46 @@ This package should be installed if you want to develop Python programs
 that will manipulate RPM packages and databases.
 
 %prep
-%{expand:%(sed -n -e '/^%%prep/,/^%%install/p' <%_sourcedir/rpm.spec | sed -e '1d' -e '$d')}
+%setup -q -n rpm-%{version}
+cp %{SOURCE1001} .
+rm -rf sqlite
+tar xjf %{S:1}
+ln -s db-4.8.30 db
+chmod -R u+w db/*
+# will get linked from db3
+rm -f rpmdb/db.h
+patch -p0 < %{S:2}
+
+if [ -s /etc/rpm/tizen_macros ]; then
+        cp -a /etc/rpm/tizen_macros %{SOURCE4}
+fi
+cp -a %{SOURCE4} tizen_macros
+rm -f m4/libtool.m4
+rm -f m4/lt*.m4
+
+%build
+CPPFLAGS="$CPPFLAGS `pkg-config --cflags nss`"
+export CPPFLAGS 
+export CFLAGS="%{optflags} -ffunction-sections"
+export LDFLAGS="-Wl,-Bsymbolic-functions -ffunction-sections"
+%ifarch armv5tel
+export CFLAGS="-g -O0 -fno-strict-aliasing -ffunction-sections"
+%endif
+
+%if %{_target_cpu}
+%ifarch %arm
+BUILDTARGET="--build=%{_target_cpu}-tizen-linux-gnueabi"
+%else
+BUILDTARGET="--build=%{_target_cpu}-tizen-linux"
+%endif
+%endif
+
+autoreconf -i -f
+./configure --disable-dependency-tracking --prefix=%{_prefix} --mandir=%{_mandir} --infodir=%{_infodir} \
+--libdir=%{_libdir} --sysconfdir=/etc --localstatedir=/var  --with-lua \
+--with-acl --with-cap  --enable-shared %{?with_python: --enable-python} --with-msm $BUILDTARGET
+
+make %{?_smp_mflags}
 
 %install
 mkdir -p %{buildroot}%{_prefix}/lib
