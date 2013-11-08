@@ -83,7 +83,7 @@ static sw_source_x *current = NULL;
 static packagecontext *contextsHead = NULL;
 static packagecontext *contextsTail = NULL;
 static fileconflict *allfileconflicts = NULL;
-static char* ownSmackLabel = NULL;		/* rpm smack security context */
+//static char* ownSmackLabel = NULL;		/* rpm smack security context */
 static int SmackEnabled = 0;			/* indicates if Smack is enabled in kernel or not */
 static magic_t cookie = NULL;
 static int package_created = 0;
@@ -232,19 +232,19 @@ rpmRC PLUGINHOOK_INIT_FUNC(rpmts _ts, const char *name, const char *opts)
 
     if (smack_smackfs_path() == NULL) {
         rpmlog(RPMLOG_INFO, "Smackfs isn't mounted at %s. Going to the image build mode. \n", smack_smackfs_path());
-        ownSmackLabel = strdup("_");
+        //ownSmackLabel = strdup("_");
         SmackEnabled = 0;
     } else {
-        /* check its own security context and store it for the case when packages without manifest will be installed */
-        int res = smack_new_label_from_self(&ownSmackLabel);
         SmackEnabled = 1;
+        /* check its own security context and store it for the case when packages without manifest will be installed 
+        int res = smack_new_label_from_self(&ownSmackLabel);
         if (res < 0) {
             rpmlog(RPMLOG_ERR, "Failed to obtain rpm security context\n");
             return RPMRC_FAIL;
-        }
+        } */
     }
 
-    rpmlog(RPMLOG_DEBUG, "rpm security context: %s\n", ownSmackLabel);
+    //rpmlog(RPMLOG_DEBUG, "rpm security context: %s\n", ownSmackLabel);
 
     if (msmSetupSmackRulesDir(ts->rootDir) == RPMRC_FAIL)
         return RPMRC_FAIL;
@@ -420,10 +420,9 @@ rpmRC PLUGINHOOK_PSM_PRE_FUNC(rpmte te)
     }
 
     if (!ctx->data) {
-        rpmlog(RPMLOG_INFO, "No manifest in this package. Creating default one\n");
-
-        /* create default manifest manually. Make the package to belong to the domain where rpm is running */
-
+        rpmlog(RPMLOG_ERR, "No security manifest in this package. Abort package installation\n");
+        goto fail;
+        /* create default manifest manually. Make the package to belong to the domain where rpm is running 
         mfx = calloc(1, sizeof(manifest_x));
         if (!mfx)  goto fail;
         mfx->sw_source = current;
@@ -435,7 +434,7 @@ rpmRC PLUGINHOOK_PSM_PRE_FUNC(rpmte te)
             goto fail;
         }
         mfx->request->ac_domain = strdup(ownSmackLabel);
-        rpmlog(RPMLOG_DEBUG, "Done with manifest creation\n");
+        rpmlog(RPMLOG_DEBUG, "Done with manifest creation\n"); */
     } else {
         if (rpmBase64Decode(ctx->data, (void **) &xml, &xmllen) != 0) {
             rpmlog(RPMLOG_ERR, "Failed to decode manifest for %s\n",
@@ -754,7 +753,7 @@ rpmRC PLUGINHOOK_CLEANUP_FUNC(void)
         }
     }
 
-    msmFreePointer((void**)&ownSmackLabel);
+    //msmFreePointer((void**)&ownSmackLabel);
     if (cookie) magic_close(cookie);
 
     return RPMRC_OK;
