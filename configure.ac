@@ -688,6 +688,12 @@ AS_IF([test "$with_msm" = yes],[
   ],[
     AC_MSG_ERROR([--with-msm given, but sys/capability.h not found])
   ])
+  AC_CHECK_HEADER([libxml/xmlreader.h],[],
+    [AC_MSG_ERROR([--with-msm given, but libxml/xmlreader.h not found])]
+  )
+  AC_CHECK_HEADER([libxml/tree.h],[],
+    [AC_MSG_ERROR([--with-msm given, but libxml/tree.h not found])]
+  )
   AC_CHECK_HEADER([attr/xattr.h],[
     save_LIBS="$LIBS"
     AC_CHECK_LIB([attr],[setxattr],[],[

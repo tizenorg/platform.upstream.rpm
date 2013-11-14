@@ -29,7 +29,7 @@ BuildRequires:  xz-devel
 BuildRequires:  pkgconfig(zlib)
 BuildRequires:  pkgconfig(nss)
 BuildRequires:  uthash-devel
-BuildRequires:  libxml2-devel
+BuildRequires:  pkgconfig(libxml-2.0)
 BuildRequires:  libattr-devel
 BuildRequires:  pkgconfig(libsmack)
 
@@ -120,7 +120,7 @@ rm -f m4/libtool.m4
 rm -f m4/lt*.m4
 
 %build
-CPPFLAGS="$CPPFLAGS `pkg-config --cflags nss`"
+CPPFLAGS="$CPPFLAGS `pkg-config --cflags nss` `pkg-config --cflags libxml-2.0`"
 export CPPFLAGS 
 export CFLAGS="%{optflags} -ffunction-sections"
 export LDFLAGS="-Wl,-Bsymbolic-functions -ffunction-sections"
