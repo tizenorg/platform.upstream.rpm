@@ -839,11 +839,9 @@ static int msmCheckDomainRequestOrPermit(manifest_x *mfx, const char* domain)
     rpmlog(RPMLOG_DEBUG, "label name %s domain name %s \n", domain, name);
 	
     HASH_FIND(hh, all_ac_domains, name, strlen(name), defined_ac_domain);
-    if (!defined_ac_domain) { // request or permit for an undefined domain. 
-        rpmlog(RPMLOG_ERR, "A domain name %s hasn't been yet defined by any package. Can't verify if it is allowed\n", name);
-        msmFreePointer((void**)&name);
-        return -1;
-    }
+    if (!defined_ac_domain) // request or permit for an undefined domain.
+      rpmlog(RPMLOG_WARN, "The domain '%s' has not been yet defined by any " \
+             "package\n");
 
     //now check that this ac_domain can be requested
     if (mfx->defines) {
@@ -860,18 +858,19 @@ static int msmCheckDomainRequestOrPermit(manifest_x *mfx, const char* domain)
         }
     } 
 
-    // no need to check if developer allowed other packages to request/permit this domain
-    // because this isn't a request to belong to a domain, but request/permit for domain access
-    if (msmIsRequestAllowed(mfx, defined_ac_domain)) {
+    // no need to check if developer allowed other packages to
+    // request/permit this domain because this isn't a request to
+    // belong to a domain, but request/permit for domain access
+    if (defined_ac_domain && msmIsRequestAllowed(mfx, defined_ac_domain))
         // request or permit is allowed by domain policy
-        rpmlog(RPMLOG_DEBUG, "Request/Permit to access a domain name %s is allowed based on package sw source\n", name);
-        msmFreePointer((void**)&name);
-        return 0;
-    } else {
-        rpmlog(RPMLOG_ERR, "Request/Permit to access a domain name %s isn't allowed based on package sw source\n", name);
-        msmFreePointer((void**)&name);
-        return -1;
-    }
+        rpmlog(RPMLOG_DEBUG, "Request/Permit to access the domain '%s' is "\
+               "allowed based on package SW source\n", name);
+    else
+        rpmlog(RPMLOG_WARN, "Request/Permit access the domain '%s' is not "\
+               "allowed based on package SW source\n", name);
+
+    msmFreePointer((void**)&name);
+    return 0;
 }
 
 int msmSetupDefines(struct smack_accesses *smack_accesses, manifest_x *mfx)
