@@ -1,0 +1,9 @@
+Code-Review+2: Patrick McCarty <patrick.mccarty@linux.intel.com>
+Verified+1: Mikko Ylinen <mikko.ylinen@intel.com>
+Code-Review+1: Jarkko Sakkinen <jarkko.sakkinen@linux.intel.com>
+Code-Review+1: Kévin THIERRY <kevin.thierry@open.eurogiciel.org>
+Submitted-by: Mikko Ylinen <mikko.ylinen@intel.com>
+Submitted-at: Mon, 20 Jan 2014 02:16:04 -0800
+Reviewed-on: https://review.tizen.org/gerrit/15261
+Project: platform/upstream/rpm
+Branch: refs/heads/tizen
