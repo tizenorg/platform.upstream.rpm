@@ -1,0 +1,11 @@
+Verified+1: Patrick McCarty <patrick.mccarty@linux.intel.com>
+Code-Review-1: Lukasz Stelmach <l.stelmach@samsung.com>
+Code-Review+1: Jacek Pielaszkiewicz <j.pielaszkie@samsung.com>
+Code-Review+2: Karol Lewandowski <k.lewandowsk@samsung.com>
+Code-Review+1: Maciej Wereski <m.wereski@partner.samsung.com>
+Code-Review+1: Kévin THIERRY <kevin.thierry@open.eurogiciel.org>
+Submitted-by: Patrick McCarty <patrick.mccarty@linux.intel.com>
+Submitted-at: Tue, 04 Feb 2014 11:18:24 -0800
+Reviewed-on: https://review.tizen.org/gerrit/15913
+Project: platform/upstream/rpm
+Branch: refs/heads/tizen
