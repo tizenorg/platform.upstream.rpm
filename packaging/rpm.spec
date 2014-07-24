@@ -146,6 +146,7 @@ export CFLAGS="-g -O0 -fno-strict-aliasing -ffunction-sections"
     --with-cap \
     --enable-shared \
     --enable-python \
+    --with-vendor=tizen \
     --with-msm 
 
 make %{?_smp_mflags}
@@ -310,8 +311,8 @@ rm -f %{_dbpath}/Filemd5s \
 
 %files -n python-rpm
 %defattr(-,root,root)
-%{_libdir}/python*/site-packages/rpm
-%attr(755,root,root) %{_libdir}/python*/site-packages/rpm/transaction.py
+%{python_sitearch}/rpm
+%attr(755,root,root) %{python_sitearch}/rpm/transaction.py
 
 %lang_package
 
