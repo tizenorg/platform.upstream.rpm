@@ -183,7 +183,8 @@ rm -f %{buildroot}%{rpmlibdir}/rpmpopt
 rm -rf %{buildroot}%{_mandir}/{fr,ja,ko,pl,ru,sk}
 rm -f %{buildroot}%{_datadir}/locale/de/LC_MESSAGES/rpm.mo
 rm -f %{buildroot}%{rpmhome}/cpanflute %{buildroot}%{rpmhome}/cpanflute2
-install -m 755 scripts/find-supplements{,.ksyms} %{buildroot}%{rpmhome}
+install -m 755 scripts/find-supplements %{buildroot}%{rpmhome}
+install -m 755 scripts/find-supplements.ksyms %{buildroot}%{rpmhome}
 install -m 755 scripts/firmware.prov %{buildroot}%{rpmhome}
 install -m 755 scripts/debuginfo.prov %{buildroot}%{rpmhome}
 rm -f %{buildroot}%{rpmlibdir}/locale %{buildroot}%{rpmlibdir}/rpmrc
