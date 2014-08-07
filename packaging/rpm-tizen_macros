@@ -1,4 +1,3 @@
-%suse_version           1408
 # directories
 %_infodir               %{_prefix}/share/info
 %_mandir                %{_prefix}/share/man
