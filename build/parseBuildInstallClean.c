@@ -46,7 +46,24 @@ int parseBuildInstallClean(rpmSpec spec, int parsePart)
     } else if (rc < 0) {
 	goto exit;
     }
-    
+
+    if (parsePart == PART_BUILD) {
+        char* buf = strdup(
+            "if [[ `uname -m` == \"aarch64\" ]]; then\n"
+            "ref=/usr/lib/rpm\n"
+            "for s in guess sub; do\n"
+            "    for c in $(find -maxdepth 8 -name \"config.$s\"); do\n"
+            "         grep -q config-patches@ $c || continue\n"
+            "         grep -q aarch64 $c || install -m 755 $ref/config.$s $c\n"
+            "         grep -q ppc64le $c || install -m 755 $ref/config.$s $c\n"
+            "     done\n"
+            "done\n"
+            "fi\n"
+        );
+        appendLineStringBuf(*sbp, buf);
+        free(buf);
+    }
+
     while (! (nextPart = isPart(spec->line))) {
 	appendStringBuf(*sbp, spec->line);
 	if ((rc = readLine(spec, STRIP_NOTHING)) > 0) {
