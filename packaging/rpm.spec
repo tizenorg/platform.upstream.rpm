@@ -38,16 +38,16 @@ BuildRequires:  fdupes
 Provides:       rpminst
 Provides:       rpm-libs
 
-Source1:       db-4.8.30.tar.bz2
-Source2:       db-4.8.30-integration.dif
-Source4:       rpm-tizen_macros
-Source8:       rpmconfigcheck
-Source13:      find-docs.sh
-Source22:      device-sec-policy
-Source23:      find-provides.ksyms
-Source1001:    rpm.manifest
+Source1:        db-4.8.30.tar.bz2
+Source2:        db-4.8.30-integration.dif
+Source4:        rpm-tizen_macros
+Source8:        rpmconfigcheck
+Source13:       find-docs.sh
+Source22:       device-sec-policy
+Source23:       find-provides.ksyms
+Source1001:     rpm.manifest
 Source0:        rpm-%{version}.tar.bz2
-#
+
 # avoid bootstrapping problem
 %define _binary_payload w9.bzdio
 
@@ -118,7 +118,7 @@ that will manipulate RPM packages and databases.
 cp %{SOURCE1001} .
 rm -rf sqlite
 tar xjf %{S:1}
-ln -s db-4.8.30 db
+ln -sfn db-4.8.30 db
 chmod -R u+w db/*
 # will get linked from db3
 rm -f rpmdb/db.h
