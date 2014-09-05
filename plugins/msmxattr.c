@@ -179,9 +179,14 @@ static int msmSetSmackProvide(struct smack_accesses *smack_accesses, provide_x *
                 rpmlog(RPMLOG_DEBUG, "%s ac_domain %s provided in %s for %s\n", (ac_domain->allowed ? "allowing" : "not allowing"), 
                        ac_domain->name, ac_domain->sw_source->name, sw_source->name);
 	    }
+/* FIXME(José Bollo): I'm removing this call that has the effect to create rules having the
+sw_source->name as subject. I'm thinking that this behaviour is not expected.
+It is solving the bug https://bugs.tizen.org/jira/browse/PTREL-638.
+
 	    if (smack_accesses)
 	    	ret = msmSetSmackRules(smack_accesses, provide->ac_domains, sw_source->name);
 	    else 
+*/
                 ret = 0;
 	}
     }
