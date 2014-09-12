@@ -848,7 +848,7 @@ static int msmCheckDomainRequestOrPermit(manifest_x *mfx, const char* domain)
         // FIXME: maybe this should be changed to a command-line option that
         // would be used during the image build?
         rpmlog(RPMLOG_WARNING, "The domain '%s' has not been yet defined by "\
-               "any package\n");
+               "any package\n", domain);
 
     //now check that this ac_domain can be requested
     if (mfx->defines) {
