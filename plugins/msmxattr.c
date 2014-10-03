@@ -989,6 +989,7 @@ package_x *msmCreatePackage(const char *name, sw_source_x *sw_source, provide_x 
 int msmSetupSmackRules(struct smack_accesses *smack_accesses, const char* package_name, int flag, int SmackEnabled)
 {
     int ret = 0;
+    int empty = 0;
     char * buffer = calloc(strlen(SMACK_RULES_PATH) + strlen(package_name) + 1, sizeof(char));
     if (!buffer) return -1;    
     strncpy(buffer, SMACK_RULES_PATH, strlen(SMACK_RULES_PATH));
@@ -1035,10 +1036,13 @@ int msmSetupSmackRules(struct smack_accesses *smack_accesses, const char* packag
     	ret = smack_accesses_save(smack_accesses, fileno(fd));
     	rpmlog(RPMLOG_DEBUG, "ret in installation %d\n", ret);
         if (!ret) {
+            empty = !ftell(fd);
             if (SmackEnabled == 1) 
                 ret = smack_accesses_apply(smack_accesses);
         }
     	fclose(fd);
+        if (empty)
+            unlink(buffer); /* status not checked because it dont care */
     }    
     free(buffer);
     if (ret)
