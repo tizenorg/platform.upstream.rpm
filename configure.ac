@@ -832,6 +832,9 @@ fi
 if echo "$host_os" | grep '.*-gnu' > /dev/null ; then
 	host_os=`echo "${host_os}" | sed 's/-gnu$//'`
 fi
+if echo "$host_os" | grep '.*-uclibc' > /dev/null ; then
+  host_os=`echo "${host_os}" | sed 's/-uclibc$//'`
+fi
 
 changequote(<, >)
 host_os_exact="${host_os}"
