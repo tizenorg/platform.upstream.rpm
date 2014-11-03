@@ -178,7 +178,6 @@ This package provides translations for package %{name}.\
 %docs_package \
 %package docs \
 Summary: Documentation for package %{name}\
-Group: Documentation\
 AutoReqProv: 0\
 %description docs\
 This package provides documentation for package %{name}.\
