@@ -4,8 +4,11 @@
 %_sysconfdir            /etc
 %_localstatedir         /var
 %_defaultdocdir         %{_usr}/share/doc/packages
-%_unitdir_user /usr/lib/systemd/user
-%_unitdir /usr/lib/systemd/system
+
+# _rootprefix can be set to (/,%{_prefix}) to customize systemd installation)
+%_rootprefix %{_prefix}
+%_unitdir_user %{_prefix}/lib/systemd/user
+%_unitdir %{_rootprefix}/lib/systemd/system
 
 # package build macros
 # %make_install           make install DESTDIR=%{?buildroot}
