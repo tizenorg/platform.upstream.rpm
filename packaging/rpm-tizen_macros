@@ -165,7 +165,6 @@
 %lang_package(n:f:) \
 %package %{-n:-n %{-n*}-}locale \
 Summary: Translations and Locale for package %{name}\
-Group: System/Localization\
 Requires: %{-n:%{-n*}}%{!-n:%{name}} = %{version} \
 Provides: %{-n:%{-n*}}%{!-n:%{name}}-lang-all = %{version} \
 BuildArch:  noarch \
