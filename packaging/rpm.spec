@@ -193,20 +193,18 @@ mkdir -p %{buildroot}%{_sysconfdir}/rpm
 chmod 755 %{buildroot}%{_sysconfdir}/rpm
 mkdir -p %{buildroot}%{rpmhome}/macros.d
 # remove some nonsense or non-working scripts
-pushd %{buildroot}%{rpmhome}/
 for f in rpm2cpio.sh rpm.daily rpmdiff* rpm.log rpm.xinetd freshen.sh u_pkg.sh \
          magic magic.mgc magic.mime* rpmfile *.pl javadeps brp-redhat \
          brp-strip-static-archive vpkg-provides*.sh http.req sql.req tcl.req \
          rpmdb_* brp-sparc64-linux brp-strip-comment-note brp-java-gcjcompile
 do
-    rm -f $f
+    rm -f %{buildroot}%{rpmhome}/$f
 done
 for i in %{_datadir}/automake-*/*; do
-  if test -f "$i" && test -f "${i##*/}"; then
-    rm -f "${i##*/}"
+  if test -f "$i" && test -f %{buildroot}%{rpmhome}/"${i##*/}"; then
+    rm -f %{buildroot}%{rpmhome}/"${i##*/}"
   fi
 done
-popd
 %ifarch aarch64 ppc64le
 install -m 755 config.guess %{buildroot}/usr/lib/rpm
 install -m 755 config.sub %{buildroot}/usr/lib/rpm
