@@ -193,7 +193,8 @@ mkdir -p %{buildroot}%{_sysconfdir}/rpm
 chmod 755 %{buildroot}%{_sysconfdir}/rpm
 mkdir -p %{buildroot}%{rpmhome}/macros.d
 # remove some nonsense or non-working scripts
-pushd %{buildroot}%{rpmhome}/
+CURDIR=$(pwd)
+cd %{buildroot}%{rpmhome}/
 for f in rpm2cpio.sh rpm.daily rpmdiff* rpm.log rpm.xinetd freshen.sh u_pkg.sh \
          magic magic.mgc magic.mime* rpmfile *.pl javadeps brp-redhat \
          brp-strip-static-archive vpkg-provides*.sh http.req sql.req tcl.req \
@@ -206,7 +207,7 @@ for i in %{_datadir}/automake-*/*; do
     rm -f "${i##*/}"
   fi
 done
-popd
+cd ${CURDIR}
 %ifarch aarch64 ppc64le
 install -m 755 config.guess %{buildroot}/usr/lib/rpm
 install -m 755 config.sub %{buildroot}/usr/lib/rpm
