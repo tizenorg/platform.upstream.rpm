@@ -237,7 +237,7 @@ strict_error=ERROR
 $strict || strict_error=WARNING
 
 # Strip ELF binaries (and no static libraries)
-find $RPM_BUILD_ROOT ! -path "${debugdir}/*.debug" -type f \( -perm +111 -or -name "*.so*" -or -name "*.ko" \) ! -name "*.a" -print0 | sort -z |
+find $RPM_BUILD_ROOT ! -path "${debugdir}/*.debug" -type f \( -perm /111 -or -name "*.so*" -or -name "*.ko" \) ! -name "*.a" -print0 | sort -z |
 xargs --no-run-if-empty -0 stat -c '%h %D_%i %n' |
 while read nlinks inum f; do
   case $(objdump -h $f 2>/dev/null | egrep -o '(debug[\.a-z_]*|gnu.version)') in
