@@ -54,6 +54,7 @@ rpmRC rpmpluginsAdd(rpmPlugins plugins, const char *name, const char *path,
 {
     char *error;
 
+    dlerror();
     void *handle = dlopen(path, RTLD_LAZY);
     if (!handle) {
 	rpmlog(RPMLOG_ERR, _("Failed to dlopen %s %s\n"), path, dlerror());
