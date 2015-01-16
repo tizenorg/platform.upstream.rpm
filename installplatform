@@ -125,7 +125,7 @@ for ARCH in noarch `grep ^arch_canon $RPMRC | cut -d: -f2`; do
   [ -d $PPD ] || mkdir -p $PPD
 
   cat $PLATFORM \
-  | sed -e "s,@RPMRC_OPTFLAGS@,$RPMRC_OPTFLAGS," \
+  | sed -e "s#@RPMRC_OPTFLAGS@#$RPMRC_OPTFLAGS#" \
 	-e "s,@RPMCANONARCH@,$CANONARCH,g" \
 	-e "s,@RPMCANONCOLOR@,$CANONCOLOR," \
 	-e "s,@RPMRC_GNU@,$RPMRC_GNU," \
