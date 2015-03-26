@@ -204,6 +204,7 @@ CXXFLAGS="${CXXFLAGS:-%optflags}" ; export CXXFLAGS ; \
 FFLAGS="${FFLAGS:-%optflags -I%_fmoddir}" ; export FFLAGS ; \
 LDFLAGS="${LDFLAGS:-%{?global_LDFLAGS}}"; export LDFLAGS ; \
 LD_AS_NEEDED=1; export LD_AS_NEEDED ; \
+%{?clang_build:CC=clang; CXX=clang++; export CC; export CXX;} \
 %{nil}
 
 %install %{?_enable_debug_packages:%{?buildsubdir:%{debug_package}}}\
