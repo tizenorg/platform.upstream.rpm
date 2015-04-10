@@ -620,7 +620,7 @@ rpmRC PLUGINHOOK_FSM_INIT_FUNC(const char* path, mode_t mode)
         //rpmlog(RPMLOG_DEBUG, "rpmteN(ctx->te) %s fc->pkg_name: %s\n", rpmteN(ctx->te), fc->pkg_name);
         /* There is a conflict, see if we are not allowed to overwrite */
         if ((!current || 
-           (strcmp(current->rankkey, fc->sw_source->rankkey) >= 0)) &&
+           (strcmp(current->rankkey, fc->sw_source->rankkey) > 0)) &&
            (strcmp(rpmteN(ctx->te), fc->pkg_name))) {
             rpmlog(RPMLOG_ERR, "%s has file conflict in %s from sw source %s\n",
                    rpmteN(ctx->te), fc->path, fc->sw_source->name);
