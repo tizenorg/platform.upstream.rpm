@@ -205,10 +205,8 @@ for i in %{_datadir}/automake-*/*; do
     rm -f %{buildroot}%{rpmhome}/"${i##*/}"
   fi
 done
-%ifarch aarch64 ppc64le
 install -m 755 config.guess %{buildroot}/usr/lib/rpm
 install -m 755 config.sub %{buildroot}/usr/lib/rpm
-%endif
 rm -f %{buildroot}%{_libdir}/*.la
 rm -f %{buildroot}%{__plugindir}/*.la
 
@@ -293,9 +291,7 @@ rm -f %{_dbpath}/Filemd5s \
 %{rpmhome}/*.req
 %{rpmhome}/macros.*
 %{rpmhome}/fileattrs
-%ifarch aarch64 ppc64le
 %{rpmhome}/config.*
-%endif
 
 %files devel
 %manifest %{name}.manifest
