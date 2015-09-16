@@ -206,7 +206,24 @@ LDFLAGS="${LDFLAGS:-%{?global_LDFLAGS}}"; export LDFLAGS ; \
 LD_AS_NEEDED=1; export LD_AS_NEEDED ; \
 %{nil}
 
+%ccache_package \
+%package ccache \
+Summary: CCache for package %{name} \
+Group: Development/Build \
+AutoReqProv: 0 \
+BuildRequires: ccache \
+%description ccache \
+This package provides ccache collected from last build of %{name} package \
+%post ccache \
+touch /var/ccache/timestamp \
+chmod -R 777 /var/ccache \
+%files ccache -f ccache.list \
+%defattr(-,root,root) \
+%{nil}
+
+
 %install %{?_enable_debug_packages:%{?buildsubdir:%{debug_package}}}\
+%{?enable_ccache_package:%{ccache_package}}\
 %%install\
 LANG=C\
 export LANG\

@@ -183,6 +183,17 @@
    %{_rpmconfigdir}/find-debuginfo.sh %{?_missing_build_ids_terminate_build:--strict-build-id} %{?_find_debuginfo_opts} "%{_builddir}/%{?buildsubdir}"\
 %{nil}
 
+%__ccache_install_post   \
+mkdir -p %{buildroot}/var/ccache \
+find /var/ccache/cache -type f -anewer /var/ccache/timestamp > %{_builddir}/%{?buildsubdir}/ccache.list \
+sed -i -e "/\/CACHEDIR.TAG$/d;/\/ccache.conf$/d;/\/stats$/d" %{_builddir}/%{?buildsubdir}/ccache.list \
+for file in `cat %{_builddir}/%{?buildsubdir}/ccache.list | sort -u`; do \
+  mkdir -p %{buildroot}${file%/*} \
+  install ${file} %{buildroot}${file} \
+done \
+chmod -R 777 %{buildroot}/var/ccache \
+%{nil}
+
 #	Template for debug information sub-package.
 %debug_package \
 %global __debug_package 1\
@@ -712,6 +723,7 @@ posix.setenv("RPMBUILD_SOURCEDIR",rpm.expand("%?_sourcedir"));
 %__spec_install_body	%{___build_body}
 %__spec_install_post\
 %{?__debug_package:%{__debug_install_post}}\
+%{?enable_ccache_package:%{__ccache_install_post}}\
 %{__arch_install_post}\
 %{__os_install_post}\
 %{nil}
