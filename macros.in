@@ -184,14 +184,16 @@
 %{nil}
 
 %__ccache_install_post   \
+set +x \
 mkdir -p %{buildroot}/var/ccache \
 find /var/ccache/cache -type f -anewer /var/ccache/timestamp > %{_builddir}/%{?buildsubdir}/ccache.list \
-sed -i -e "/\/CACHEDIR.TAG$/d;/\/ccache.conf$/d;/\/stats$/d" %{_builddir}/%{?buildsubdir}/ccache.list \
+sed -i -e "/\\\/CACHEDIR.TAG$/d;/\\\/ccache.conf$/d;/\\\/stats$/d" %{_builddir}/%{?buildsubdir}/ccache.list \
 for file in `cat %{_builddir}/%{?buildsubdir}/ccache.list | sort -u`; do \
   mkdir -p %{buildroot}${file%/*} \
   install ${file} %{buildroot}${file} \
 done \
 chmod -R 777 %{buildroot}/var/ccache \
+set -x \
 %{nil}
 
 #	Template for debug information sub-package.
