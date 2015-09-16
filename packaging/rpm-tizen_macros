@@ -215,12 +215,12 @@ BuildRequires: ccache \
 %description ccache \
 This package provides ccache collected from last build of %{name} package \
 %post ccache \
-tar --atime-preserve -xPzpf /var/ccache/%{name}-ccache.tar.gz \
+tar --atime-preserve -xPjpf /var/ccache/%{name}-ccache.tar.bz2 \
 touch /var/ccache/timestamp \
 chmod -R 777 /var/ccache \
 %files ccache \
 %defattr(-,root,root) \
-/var/ccache/%{name}-ccache.tar.gz \
+/var/ccache/%{name}-ccache.tar.bz2 \
 %{nil}
 
 
