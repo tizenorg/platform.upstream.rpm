@@ -184,15 +184,12 @@
 %{nil}
 
 %__ccache_install_post   \
-set +x \
+find /var/ccache/cache -type f -anewer /var/ccache/timestamp > ccache.list \
+%{__sed} -i -e "/\\\/CACHEDIR.TAG$/d;/\\\/ccache.conf$/d;/\\\/stats$/d" ccache.list \
 mkdir -p %{buildroot}/var/ccache \
-find /var/ccache/cache -type f -anewer /var/ccache/timestamp > %{_builddir}/%{?buildsubdir}/ccache.list \
-sed -i -e "/\\\/CACHEDIR.TAG$/d;/\\\/ccache.conf$/d;/\\\/stats$/d" %{_builddir}/%{?buildsubdir}/ccache.list \
-for file in `cat %{_builddir}/%{?buildsubdir}/ccache.list | sort -u`; do \
-  mkdir -p %{buildroot}${file%/*} \
-  install ${file} %{buildroot}${file} \
-done \
-chmod -R 777 %{buildroot}/var/ccache \
+%{__tar} -T ccache.list --atime-preserve -czpf %{buildroot}/var/ccache/%{name}-ccache.tar.gz \
+rm -f ccache.list \
+touch %{buildroot}/var/ccache/%{name}-ccache.tar.gz \
 set -x \
 %{nil}
 
