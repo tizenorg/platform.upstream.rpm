@@ -215,7 +215,7 @@ BuildRequires: ccache \
 %description ccache \
 This package provides ccache collected from last build of %{name} package \
 %post ccache \
-tar --atime-preserve -xzpf /var/ccache/%{name}-ccache.tar.gz \
+tar --atime-preserve -xPzpf /var/ccache/%{name}-ccache.tar.gz \
 touch /var/ccache/timestamp \
 chmod -R 777 /var/ccache \
 %files ccache \
