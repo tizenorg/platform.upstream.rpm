@@ -158,6 +158,10 @@
 #	The directory where sources/patches will be unpacked and built.
 %_builddir		%{_topdir}/BUILD
 
+#	The directory where sources/patches from a source package will be
+#	installed. This is also where sources/patches are found when building.
+%_sourcedir		%{_topdir}/SOURCES
+
 #	The interpreter used for build scriptlets.
 %_buildshell		/bin/sh
 
@@ -184,10 +188,10 @@
 %{nil}
 
 %__ccache_install_post   \
-find /var/ccache/cache -type f -anewer /var/ccache/timestamp > ccache.list \
-%{__sed} -i -e "/\\\/CACHEDIR.TAG$/d;/\\\/ccache.conf$/d;/\\\/stats$/d" ccache.list \
+find /var/ccache/cache -type f -anewer /var/ccache/timestamp > %{_sourcedir}/ccache.list \
+%{__sed} -i -e "/\\\/CACHEDIR.TAG$/d;/\\\/ccache.conf$/d;/\\\/stats$/d" %{_sourcedir}/ccache.list \
 mkdir -p %{buildroot}/var/ccache \
-%{__tar} -T ccache.list --atime-preserve -cPjpf %{buildroot}/var/ccache/%{name}-ccache.tar.bz2 \
+%{__tar} -T %{_sourcedir}/ccache.list --atime-preserve -cPjpf %{buildroot}/var/ccache/%{name}-ccache.tar.bz2 \
 rm -f ccache.list \
 touch %{buildroot}/var/ccache/%{name}-ccache.tar.bz2 \
 set -x \
