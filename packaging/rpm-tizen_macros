@@ -212,6 +212,7 @@ Summary: CCache for package %{name} \
 Group: Development/Build \
 AutoReqProv: 0 \
 BuildRequires: ccache \
+BuildRequires: %{name}-ccache \
 %description ccache \
 This package provides ccache collected from last build of %{name} package \
 %post ccache \
