@@ -5,7 +5,7 @@ Name:           rpm
 Summary:        The Package Manager
 License:        GPL-2.0+
 Group:          Base/Package Management
-Version:        4.11.0.1
+Version:        4.11.0.2
 Release:        0
 Url:            http://www.rpm.org
 BuildRequires:  binutils
