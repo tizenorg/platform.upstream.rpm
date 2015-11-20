@@ -95,17 +95,22 @@ debugdir="${RPM_BUILD_ROOT}/usr/lib/debug"
 
 strip_to_debug()
 {
+  local g=
   local r=
   $strip_r && r=--reloc-debug-sections
+  $strip_g && case "$(file -bi "$2")" in
+  application/x-sharedlib*) g=-g ;;
+  esac
+
   case $2 in
       *.ko)
-	  # don't attempt to create a minimal backtrace binary for
-	  # kernel modules as this just causes the stripping process
-	  # to be skipped entirely
-	  eu-strip --remove-comment $r -f "$1" "$2" || exit
-	  ;;
+          # don't attempt to create a minimal backtrace binary for
+          # kernel modules as this just causes the stripping process
+          # to be skipped entirely
+          eu-strip --remove-comment $r -f "$1" "$2" || exit
+          ;;
       *)
-	  eu-strip --remove-comment -g -f "$1" "$2" || exit
+          eu-strip --remove-comment $g -f "$1" "$2" || exit
   esac
   chmod 444 "$1" || exit
 }
