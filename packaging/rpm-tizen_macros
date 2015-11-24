@@ -24,11 +24,15 @@
 # this script calls all scripts in /usr/lib/rpm/brp-tizen.d
 %__arch_install_post   /usr/lib/rpm/check-buildroot
 
-%__os_install_post    \
-    /usr/lib/rpm//brp-compress \
+%__strip_install_post    \
     %{!?__debug_package:/usr/lib/rpm/brp-strip %{__strip}} \
     /usr/lib/rpm/brp-strip-static-archive %{__strip} \
     /usr/lib/rpm/brp-strip-comment-note %{__strip} %{__objdump} \
+%{nil}
+
+%__os_install_post    \
+    /usr/lib/rpm//brp-compress \
+    %{!?_rpm_strip_disable:%{__strip_install_post}}\
     /usr/lib/rpm/brp-python-hardlink \
     %{!?disable_docs_package:/usr/lib/rpm/tizen/find-docs.sh %{buildroot}} \
 %{nil}

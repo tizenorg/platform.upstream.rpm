@@ -179,6 +179,9 @@
 #	A spec file can %%define _find_debuginfo_opts to pass options to
 #	the script.  See the script for details.
 #
+
+%_find_debuginfo_opts %{?_rpm_strip_disable:--strip-disable}
+
 %__debug_install_post   \
    %{_rpmconfigdir}/find-debuginfo.sh %{?_missing_build_ids_terminate_build:--strict-build-id} %{?_find_debuginfo_opts} "%{_builddir}/%{?buildsubdir}"\
 %{nil}

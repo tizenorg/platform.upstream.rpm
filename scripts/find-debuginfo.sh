@@ -2,7 +2,7 @@
 #find-debuginfo.sh - automagically generate debug info and file list
 #for inclusion in an rpm spec file.
 #
-# Usage: find-debuginfo.sh [--strict-build-id] [-g] [-r]
+# Usage: find-debuginfo.sh [--strict-build-id] [--strip-disable] [-g] [-r]
 #	 		   [-o debugfiles.list]
 #			   [[-l filelist]... [-p 'pattern'] -o debuginfo.list]
 #			   [builddir]
@@ -32,6 +32,9 @@ strip_r=false
 # Barf on missing build IDs.
 strict=false
 
+# With --strip-disable arg, no strip
+strip_disable=false
+
 BUILDDIR=.
 out=debugfiles.list
 nout=0
@@ -39,6 +42,9 @@ while [ $# -gt 0 ]; do
   case "$1" in
   --strict-build-id)
     strict=true
+    ;;
+  --strip-disable)
+    strip_disable=true
     ;;
   -g)
     strip_g=true
@@ -97,6 +103,11 @@ strip_to_debug()
 {
   local g=
   local r=
+
+  if test "$strip_disable" = true ; then
+      exit
+  fi
+
   $strip_r && r=--reloc-debug-sections
   $strip_g && case "$(file -bi "$2")" in
   application/x-sharedlib*) g=-g ;;
@@ -318,6 +329,9 @@ while read nlinks inum f; do
 	  if test "$NO_DEBUGINFO_STRIP_DEBUG" = true ; then
 	      strip_option=
 	  fi
+          if test "$strip_disable" = true ; then
+              strip_option=
+          fi
 	  objcopy --add-gnu-debuglink=$debugfn -R .comment -R .GCC.command.line $strip_option $f
 	  chmod $mode $f
       ) || :
