@@ -2,7 +2,7 @@
 #find-debuginfo.sh - automagically generate debug info and file list
 #for inclusion in an rpm spec file.
 #
-# Usage: find-debuginfo.sh [--strict-build-id] [--strip-disable] [-g] [-r]
+# Usage: find-debuginfo.sh [--strict-build-id] [--strip-disable] [--strip-option] [-g] [-r]
 #	 		   [-o debugfiles.list]
 #			   [[-l filelist]... [-p 'pattern'] -o debuginfo.list]
 #			   [builddir]
@@ -35,6 +35,9 @@ strict=false
 # With --strip-disable arg, no strip
 strip_disable=false
 
+# With --strip-option arg, this will be used as arg. of eu-strip
+strip_option=
+
 BUILDDIR=.
 out=debugfiles.list
 nout=0
@@ -45,6 +48,9 @@ while [ $# -gt 0 ]; do
     ;;
   --strip-disable)
     strip_disable=true
+    ;;
+  *--strip-option*)
+    strip_option=$(echo $1 | sed 's/--strip-option=//')
     ;;
   -g)
     strip_g=true
@@ -118,10 +124,10 @@ strip_to_debug()
           # don't attempt to create a minimal backtrace binary for
           # kernel modules as this just causes the stripping process
           # to be skipped entirely
-          eu-strip --remove-comment $r -f "$1" "$2" || exit
+          eu-strip --remove-comment $r $strip_option -f "$1" "$2" || exit
           ;;
       *)
-          eu-strip --remove-comment $g -f "$1" "$2" || exit
+          eu-strip --remove-comment $g $strip_option -f "$1" "$2" || exit
   esac
   chmod 444 "$1" || exit
 }

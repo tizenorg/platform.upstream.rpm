@@ -181,9 +181,10 @@
 #
 
 %_find_debuginfo_opts %{?_rpm_strip_disable:--strip-disable}
+%_find_debuginfo_strip_opts %{?_rpm_strip_option:\'--strip-option=%{_rpm_strip_option}\'}
 
 %__debug_install_post   \
-   %{_rpmconfigdir}/find-debuginfo.sh %{?_missing_build_ids_terminate_build:--strict-build-id} %{?_find_debuginfo_opts} "%{_builddir}/%{?buildsubdir}"\
+   %{_rpmconfigdir}/find-debuginfo.sh %{?_missing_build_ids_terminate_build:--strict-build-id} %{?_find_debuginfo_opts} %{?_find_debuginfo_strip_opts} "%{_builddir}/%{?buildsubdir}"\
 %{nil}
 
 #	Template for debug information sub-package.
