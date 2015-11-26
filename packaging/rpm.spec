@@ -195,8 +195,8 @@ mkdir -p %{buildroot}%{rpmhome}/macros.d
 # remove some nonsense or non-working scripts
 for f in rpm2cpio.sh rpm.daily rpmdiff* rpm.log rpm.xinetd freshen.sh u_pkg.sh \
          magic magic.mgc magic.mime* rpmfile *.pl javadeps brp-redhat \
-         brp-strip-static-archive vpkg-provides*.sh http.req sql.req tcl.req \
-         rpmdb_* brp-sparc64-linux brp-strip-comment-note brp-java-gcjcompile
+         vpkg-provides*.sh http.req sql.req tcl.req \
+         rpmdb_* brp-sparc64-linux brp-java-gcjcompile
 do
     rm -f %{buildroot}%{rpmhome}/$f
 done
