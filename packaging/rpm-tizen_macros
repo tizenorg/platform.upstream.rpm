@@ -27,7 +27,7 @@
 %__strip_install_post    \
     %{!?__debug_package:/usr/lib/rpm/brp-strip %{__strip}} \
     /usr/lib/rpm/brp-strip-static-archive %{__strip} \
-    /usr/lib/rpm/brp-strip-comment-note %{__strip} %{__objdump} \
+#    /usr/lib/rpm/brp-strip-comment-note %{__strip} %{__objdump} \
 %{nil}
 
 %__os_install_post    \
