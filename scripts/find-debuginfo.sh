@@ -164,12 +164,16 @@ debug_link()
   # this should correspond to what brp-symlink is doing
   case $t in
       /usr*)
-	  link_relative "$t" "$l" "$RPM_BUILD_ROOT"
-	  ;;
+          link_relative "$t" "$l" "$RPM_BUILD_ROOT"
+          ;;
       *)
-	  mkdir -p "$(dirname "$RPM_BUILD_ROOT$l")" && \
-	      ln -snf "$t" "$RPM_BUILD_ROOT$l"
-	  ;;
+          if [ ! -e $t ]; then
+              link_relative "$t" "$l" "$RPM_BUILD_ROOT"
+          else
+              mkdir -p "$(dirname "$RPM_BUILD_ROOT$l")" && \
+                  ln -snf "$t" "$RPM_BUILD_ROOT$l"
+          fi
+          ;;
   esac
 }
 
