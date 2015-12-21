@@ -264,8 +264,6 @@ static rpmRC writeRPM(Header *hdrp, unsigned char ** pkgidp, const char *fileNam
     rpmTagVal sizetag;
     rpmTagVal payloadtag;
 
-	rpmlog(RPMLOG_NOTICE, _("Process 1\n"), fileName);
-
     /* Transfer header reference form *hdrp to h. */
     h = headerLink(*hdrp);
     *hdrp = headerFree(*hdrp);
@@ -273,15 +271,11 @@ static rpmRC writeRPM(Header *hdrp, unsigned char ** pkgidp, const char *fileNam
     if (pkgidp)
 	*pkgidp = NULL;
 
-	rpmlog(RPMLOG_NOTICE, _("Process 2\n"), fileName);
-
     /* Save payload information */
     if (headerIsSource(h))
 	rpmio_flags = rpmExpand("%{?_source_payload}", NULL);
     else 
 	rpmio_flags = rpmExpand("%{?_binary_payload}", NULL);
-
-	rpmlog(RPMLOG_NOTICE, _("Process 3\n"), fileName);
 
     /* If not configured or bogus, fall back to gz */
     if (rpmio_flags[0] != 'w') {
@@ -327,21 +321,15 @@ static rpmRC writeRPM(Header *hdrp, unsigned char ** pkgidp, const char *fileNam
 	free(buf);
     }
 
-	rpmlog(RPMLOG_NOTICE, _("Process 4\n"), fileName);
-
     /* check if the package has a dependency with a '~' */
     if (haveTildeDep(h))
 	(void) rpmlibNeedsFeature(h, "TildeInVersions", "4.10.0-1");
-
-	rpmlog(RPMLOG_NOTICE, _("Process 5\n"), fileName);
 
     /* Create and add the cookie */
     if (cookie) {
 	rasprintf(cookie, "%s %d", buildHost(), (int) (*getBuildTime()));
 	headerPutString(h, RPMTAG_COOKIE, *cookie);
     }
-
-	rpmlog(RPMLOG_NOTICE, _("Process 6\n"), fileName);
     
     /* Reallocate the header into one contiguous region. */
     h = headerReload(h, RPMTAG_HEADERIMMUTABLE);
@@ -350,12 +338,8 @@ static rpmRC writeRPM(Header *hdrp, unsigned char ** pkgidp, const char *fileNam
 	rpmlog(RPMLOG_ERR, _("Unable to create immutable header region.\n"));
 	goto exit;
     }
-	rpmlog(RPMLOG_NOTICE, _("Process 7\n"), fileName);
-	
     /* Re-reference reallocated header. */
     *hdrp = headerLink(h);
-
-	rpmlog(RPMLOG_NOTICE, _("Process 8\n"), fileName);
 
     /*
      * Write the header+archive into a temp file so that the size of
@@ -367,8 +351,6 @@ static rpmRC writeRPM(Header *hdrp, unsigned char ** pkgidp, const char *fileNam
 	rpmlog(RPMLOG_ERR, _("Unable to open temp file.\n"));
 	goto exit;
     }
-
-	rpmlog(RPMLOG_NOTICE, _("Process 9\n"), fileName);
 
     fdInitDigest(fd, PGPHASHALGO_SHA1, 0);
     if (headerWrite(fd, h, HEADER_MAGIC_YES)) {
@@ -392,13 +374,9 @@ static rpmRC writeRPM(Header *hdrp, unsigned char ** pkgidp, const char *fileNam
     fd = NULL;
     (void) unlink(fileName);
 
-	rpmlog(RPMLOG_NOTICE, _("Process 10\n"), fileName);
-
     /* Generate the signature */
     (void) fflush(stdout);
     sig = rpmNewSignature();
-
-	rpmlog(RPMLOG_NOTICE, _("Process 11\n"), fileName);
 
     /*
      * There should be rpmlib() dependency on this, but that doesn't
@@ -418,8 +396,6 @@ static rpmRC writeRPM(Header *hdrp, unsigned char ** pkgidp, const char *fileNam
     (void) rpmGenDigest(sig, sigtarget, sizetag);
     (void) rpmGenDigest(sig, sigtarget, RPMSIGTAG_MD5);
 
-	rpmlog(RPMLOG_NOTICE, _("Process 12\n"), fileName);
-
     if (SHA1) {
 	/* XXX can't use rpmtdFromFoo() on RPMSIGTAG_* items */
 	rpmtdReset(&td);
@@ -430,8 +406,6 @@ static rpmRC writeRPM(Header *hdrp, unsigned char ** pkgidp, const char *fileNam
 	headerPut(sig, &td, HEADERPUT_DEFAULT);
 	SHA1 = _free(SHA1);
     }
-
-	rpmlog(RPMLOG_NOTICE, _("Process 13\n"), fileName);
 
     {	
 	/* XXX can't use headerPutType() on legacy RPMSIGTAG_* items */
@@ -451,8 +425,6 @@ static rpmRC writeRPM(Header *hdrp, unsigned char ** pkgidp, const char *fileNam
 	}
     }
 
-	rpmlog(RPMLOG_NOTICE, _("Process 14\n"), fileName);
-
     /* Reallocate the signature into one contiguous region. */
     sig = headerReload(sig, RPMTAG_HEADERSIGNATURES);
     if (sig == NULL) {	/* XXX can't happen */
@@ -460,8 +432,6 @@ static rpmRC writeRPM(Header *hdrp, unsigned char ** pkgidp, const char *fileNam
 	rpmlog(RPMLOG_ERR, _("Unable to reload signature header.\n"));
 	goto exit;
     }
-
-	rpmlog(RPMLOG_NOTICE, _("Process 15\n"), fileName);
 
     /* Open the output file */
     fd = Fopen(fileName, "w.ufdio");
@@ -471,8 +441,6 @@ static rpmRC writeRPM(Header *hdrp, unsigned char ** pkgidp, const char *fileNam
 		fileName, Fstrerror(fd));
 	goto exit;
     }
-
-	rpmlog(RPMLOG_NOTICE, _("Process 16\n"), fileName);
 
     /* Write the lead section into the package. */
     {	
@@ -487,15 +455,11 @@ static rpmRC writeRPM(Header *hdrp, unsigned char ** pkgidp, const char *fileNam
 	}
     }
 
-	rpmlog(RPMLOG_NOTICE, _("Process 17\n"), fileName);
-
     /* Write the signature section into the package. */
     if (rpmWriteSignature(fd, sig)) {
 	rc = RPMRC_FAIL;
 	goto exit;
     }
-
-	rpmlog(RPMLOG_NOTICE, _("Process 18\n"), fileName);
 
     /* Append the header and archive */
     ifd = Fopen(sigtarget, "r.ufdio");
@@ -505,8 +469,6 @@ static rpmRC writeRPM(Header *hdrp, unsigned char ** pkgidp, const char *fileNam
 		sigtarget, Fstrerror(ifd));
 	goto exit;
     }
-
-	rpmlog(RPMLOG_NOTICE, _("Process 19\n"), fileName);
 
     /* Add signatures to header, and write header into the package. */
     /* XXX header+payload digests/signatures might be checked again here. */
@@ -529,9 +491,7 @@ static rpmRC writeRPM(Header *hdrp, unsigned char ** pkgidp, const char *fileNam
 	    goto exit;
 	}
     }
-
 	
-	rpmlog(RPMLOG_NOTICE, _("Process 20\n"), fileName);
     /* Write the payload into the package. */
     rc = copyPayload(ifd, fileName, fd, sigtarget);
 
@@ -539,8 +499,6 @@ exit:
     free(rpmio_flags);
     free(SHA1);
     headerFree(h);
-
-	rpmlog(RPMLOG_NOTICE, _("Process 21\n"), fileName);
 
     /* XXX Fish the pkgid out of the signature header. */
     if (sig != NULL && pkgidp != NULL) {
