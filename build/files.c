@@ -290,6 +290,43 @@ static VFA_t const verifyAttrs[] = {
     { NULL, 0 }
 };
 
+/**
+ * Add 'provides' information to debuginfo package
+ * @param h		Header information from debuginfo package
+ * @return		nothing
+ */
+static void addPackageProvides_for_debuginfo_pkg(Header h)
+{
+    const char *arch, *name;
+    char *evr, *isaprov;
+    rpmsenseFlags pflags = RPMSENSE_EQUAL;
+
+	
+    /* <name> = <evr> provide */
+    name = headerGetString(h, RPMTAG_NAME);
+    arch = headerGetString(h, RPMTAG_ARCH);
+    evr = headerGetAsString(h, RPMTAG_EVR);
+    headerPutString(h, RPMTAG_PROVIDENAME, name);
+    headerPutString(h, RPMTAG_PROVIDEVERSION, evr);
+    headerPutUint32(h, RPMTAG_PROVIDEFLAGS, &pflags, 1);
+
+    /*
+     * <name>(<isa>) = <evr> provide
+     * FIXME: noarch needs special casing for now as BuildArch: noarch doesn't
+     * cause reading in the noarch macros :-/ 
+     */
+
+    isaprov = rpmExpand(name, "%{?_isa}", NULL);
+    if (!rstreq(arch, "noarch") && !rstreq(name, isaprov)) {
+	headerPutString(h, RPMTAG_PROVIDENAME, isaprov);
+	headerPutString(h, RPMTAG_PROVIDEVERSION, evr);
+	headerPutUint32(h, RPMTAG_PROVIDEFLAGS, &pflags, 1);
+    }
+  
+    free(isaprov);
+    free(evr);
+}
+
 static rpmFlags vfaMatch(VFA_t *attrs, const char *token, rpmFlags *flags)
 {
     VFA_t *vfa;
@@ -2234,9 +2271,13 @@ static rpmTag copyTagsForDebug[] = {
 static void addDebuginfoPackage(rpmSpec spec, Package pkg, char *buildroot)
 {
     const char *a;
+    const char *ver, *rel;
 
     elf_version(EV_CURRENT);
     a = headerGetString(pkg->header, RPMTAG_ARCH);
+    ver = headerGetAsString(pkg->header, RPMTAG_VERSION);
+    rel = headerGetAsString(pkg->header, RPMTAG_RELEASE);
+
     if (strcmp(a, "noarch") != 0 && strcmp(a, "src") != 0 && strcmp(a, "nosrc") != 0)
       {
 	Package dbg;
@@ -2314,6 +2355,9 @@ static void addDebuginfoPackage(rpmSpec spec, Package pkg, char *buildroot)
 	    /* Set name, summary and group.  */
 	    snprintf (tmp, 1024, "%s-debuginfo", name);
 	    headerPutString(dbg->header, RPMTAG_NAME, tmp);
+	    headerPutString(dbg->header, RPMTAG_VERSION, ver);
+	    headerPutString(dbg->header, RPMTAG_RELEASE, rel);
+	    headerPutString(dbg->header, RPMTAG_ARCH, a);
 	    snprintf (tmp, 1024, "Debug information for package %s", name);
 	    headerPutString(dbg->header, RPMTAG_SUMMARY, tmp);
 	    snprintf (tmp, 1024, "This package provides debug information for package %s.\n"
@@ -2321,6 +2365,10 @@ static void addDebuginfoPackage(rpmSpec spec, Package pkg, char *buildroot)
 		      "package or when debugging this package.", name);
 	    headerPutString(dbg->header, RPMTAG_DESCRIPTION, tmp);
 	    headerPutString(dbg->header, RPMTAG_GROUP, "Development/Debug");
+
+        /* Add 'provides' information to debuginfo package. */
+		addPackageProvides_for_debuginfo_pkg(dbg->header);
+
 	    /* Inherit other tags from parent.  */
 	    headerCopyTags (pkg->header, dbg->header, copyTagsForDebug);
 

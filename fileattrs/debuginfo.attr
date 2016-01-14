@@ -1,2 +1,3 @@
-%__debuginfo_provides	%{_rpmconfigdir}/debuginfo.prov
+# Change how to add "package provide" to debuginfo package : add "package provide" using addPackageProvides_for_debuginfo_pkg
+#%__debuginfo_provides	%{_rpmconfigdir}/debuginfo.prov
 %__debuginfo_path	^/usr/lib/debug/
