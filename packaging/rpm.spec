@@ -47,6 +47,7 @@ Source22:       device-sec-policy
 Source23:       find-provides.ksyms
 Source1001:     rpm.manifest
 Source0:        rpm-%{version}.tar.bz2
+Source9:        libsymlink.attr
 
 # avoid bootstrapping problem
 %define _binary_payload w9.bzdio
@@ -162,6 +163,7 @@ cp -a tizen_macros %{buildroot}%{rpmhome}
 mkdir -p %{buildroot}%{rpmhome}/tizen
 install -m 755 %{SOURCE13} %{buildroot}%{rpmhome}/tizen
 install -m 755 %{SOURCE23} %{buildroot}%{rpmhome}
+install -m 644 %{SOURCE9} %{buildroot}%{rpmhome}/fileattrs/libsymlink.attr
 install -m 644 %{SOURCE22} %{buildroot}%{_sysconfdir}/device-sec-policy
 install -m 644 %{SOURCE22} %{buildroot}%{__plugindir}/msm-device-sec-policy
 ln -s ../tizen_macros %{buildroot}%{rpmhome}/tizen/macros
