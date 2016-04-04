@@ -21,7 +21,7 @@ struct rpmSignArgs {
  * @param passPhrase	passphrase for the signing key
  * @return		0 on success
  */
-int rpmPkgSign(const char *path,
+__attribute__ ((visibility ("default"))) int rpmPkgSign(const char *path,
 	       const struct rpmSignArgs * args, const char *passPhrase);
 
 /** \ingroup rpmsign
@@ -29,7 +29,7 @@ int rpmPkgSign(const char *path,
  * @param path		path to package
  * @return		0 on success
  */
-int rpmPkgDelSign(const char *path);
+__attribute__ ((visibility ("default"))) int rpmPkgDelSign(const char *path);
 
 #ifdef __cplusplus
 }

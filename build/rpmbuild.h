@@ -71,7 +71,7 @@ typedef	struct rpmBuildArguments_s *	BTA_t;
  * @param buildRoot	buildRoot override or NULL for default
  * @return		new spec control structure
  */
-rpmSpec rpmSpecParse(const char *specFile, rpmSpecFlags flags,
+__attribute__ ((visibility ("default"))) rpmSpec rpmSpecParse(const char *specFile, rpmSpecFlags flags,
 		     const char *buildRoot);
 
 /** \ingroup rpmbuild
@@ -79,7 +79,7 @@ rpmSpec rpmSpecParse(const char *specFile, rpmSpecFlags flags,
  * @param spec		path to spec file
  * @return		Header
  */
-Header rpmSpecSourceHeader(rpmSpec spec);
+__attribute__ ((visibility ("default"))) Header rpmSpecSourceHeader(rpmSpec spec);
 
 /** \ingroup rpmbuild
  * Verify build depencies of a spec against.
@@ -87,7 +87,7 @@ Header rpmSpecSourceHeader(rpmSpec spec);
  * @param spec		parsed spec control structure
  * @return		rpm problem set or NULL on no problems
  */
-rpmps rpmSpecCheckDeps(rpmts ts, rpmSpec spec);
+__attribute__ ((visibility ("default"))) rpmps rpmSpecCheckDeps(rpmts ts, rpmSpec spec);
 
 /** \ingroup rpmbuild
  * Retrieve build dependency set from spec.
@@ -95,7 +95,7 @@ rpmps rpmSpecCheckDeps(rpmts ts, rpmSpec spec);
  * @param tag		dependency tag
  * @return		dependency set of tag (or NULL)
  */
-rpmds rpmSpecDS(rpmSpec spec, rpmTagVal tag);
+__attribute__ ((visibility ("default"))) rpmds rpmSpecDS(rpmSpec spec, rpmTagVal tag);
 
 /** \ingroup rpmbuild
  * Spec build stages state machine driver.
@@ -103,7 +103,7 @@ rpmds rpmSpecDS(rpmSpec spec, rpmTagVal tag);
  * @param buildArgs	build arguments
  * @return		RPMRC_OK on success
  */
-rpmRC rpmSpecBuild(rpmSpec spec, BTA_t buildArgs);
+__attribute__ ((visibility ("default"))) rpmRC rpmSpecBuild(rpmSpec spec, BTA_t buildArgs);
 
 #ifdef __cplusplus
 }

@@ -16,13 +16,13 @@ extern "C" {
  * Create a new, empty keyring
  * @return	new keyring handle
  */
-rpmKeyring rpmKeyringNew(void);
+__attribute__ ((visibility ("default"))) rpmKeyring rpmKeyringNew(void);
 
 /** \ingroup rpmkeyring
  * Free keyring and the keys within it
  * @return	NULL always
  */
-rpmKeyring rpmKeyringFree(rpmKeyring keyring);
+__attribute__ ((visibility ("default"))) rpmKeyring rpmKeyringFree(rpmKeyring keyring);
 
 /** \ingroup rpmkeyring
  * Add a public key to keyring.
@@ -30,7 +30,7 @@ rpmKeyring rpmKeyringFree(rpmKeyring keyring);
  * @param key		pubkey handle
  * @return		0 on success, -1 on error, 1 if key already present
  */
-int rpmKeyringAddKey(rpmKeyring keyring, rpmPubkey key);
+__attribute__ ((visibility ("default"))) int rpmKeyringAddKey(rpmKeyring keyring, rpmPubkey key);
 
 /** \ingroup rpmkeyring
  * Perform keyring lookup for a key matching a signature
@@ -38,7 +38,7 @@ int rpmKeyringAddKey(rpmKeyring keyring, rpmPubkey key);
  * @param sig		OpenPGP packet container of signature
  * @return		RPMRC_OK if found, RPMRC_NOKEY otherwise
  */
-rpmRC rpmKeyringLookup(rpmKeyring keyring, pgpDig sig);
+__attribute__ ((visibility ("default"))) rpmRC rpmKeyringLookup(rpmKeyring keyring, pgpDig sig);
 
 /** \ingroup rpmkeyring
  * Perform combined keyring lookup and signature verification
@@ -47,14 +47,14 @@ rpmRC rpmKeyringLookup(rpmKeyring keyring, pgpDig sig);
  * @param ctx		signature hash context
  * @return		RPMRC_OK / RPMRC_FAIL / RPMRC_NOKEY
  */
-rpmRC rpmKeyringVerifySig(rpmKeyring keyring, pgpDigParams sig, DIGEST_CTX ctx);
+__attribute__ ((visibility ("default"))) rpmRC rpmKeyringVerifySig(rpmKeyring keyring, pgpDigParams sig, DIGEST_CTX ctx);
 
 /** \ingroup rpmkeyring
  * Reference a keyring.
  * @param keyring	keyring handle
  * @return		new keyring reference
  */
-rpmKeyring rpmKeyringLink(rpmKeyring keyring);
+__attribute__ ((visibility ("default"))) rpmKeyring rpmKeyringLink(rpmKeyring keyring);
 
 /** \ingroup rpmkeyring
  * Create a new rpmPubkey from OpenPGP packet
@@ -62,42 +62,42 @@ rpmKeyring rpmKeyringLink(rpmKeyring keyring);
  * @param pktlen	Data length
  * @return		new pubkey handle
  */
-rpmPubkey rpmPubkeyNew(const uint8_t *pkt, size_t pktlen);
+__attribute__ ((visibility ("default"))) rpmPubkey rpmPubkeyNew(const uint8_t *pkt, size_t pktlen);
 
 /** \ingroup rpmkeyring
  * Create a new rpmPubkey from ASCII-armored pubkey file
  * @param filename	Path to pubkey file
  * @return		new pubkey handle
  */
-rpmPubkey rpmPubkeyRead(const char *filename);
+__attribute__ ((visibility ("default"))) rpmPubkey rpmPubkeyRead(const char *filename);
 
 /** \ingroup rpmkeyring
  * Free a pubkey.
  * @param key		Pubkey to free
  * @return		NULL always
  */
-rpmPubkey rpmPubkeyFree(rpmPubkey key);
+__attribute__ ((visibility ("default"))) rpmPubkey rpmPubkeyFree(rpmPubkey key);
 
 /** \ingroup rpmkeyring
  * Reference a pubkey.
  * @param key		Pubkey
  * @return		new pubkey reference
  */
-rpmPubkey rpmPubkeyLink(rpmPubkey key);
+__attribute__ ((visibility ("default"))) rpmPubkey rpmPubkeyLink(rpmPubkey key);
 
 /** \ingroup rpmkeyring
  * Parse OpenPGP pubkey parameters.
  * @param key           Pubkey
  * @return              parsed output of pubkey packet parameters
  */
-pgpDig rpmPubkeyDig(rpmPubkey key);
+__attribute__ ((visibility ("default"))) pgpDig rpmPubkeyDig(rpmPubkey key);
 
 /** \ingroup rpmkeyring
  * Return base64 encoding of pubkey
  * @param key           Pubkey
  * @return              base64 encoded pubkey (malloced), NULL on error
  */
-char * rpmPubkeyBase64(rpmPubkey key);
+__attribute__ ((visibility ("default"))) char * rpmPubkeyBase64(rpmPubkey key);
 
 #ifdef __cplusplus
 }

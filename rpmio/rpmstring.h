@@ -130,19 +130,19 @@ static inline int rstreqn(const char *s1, const char *s2, size_t n)
 /** \ingroup rpmstring
  * Locale insensitive strcasecmp(3).
  */
-RPM_GNUC_PURE
+__attribute__ ((visibility ("default"))) RPM_GNUC_PURE
 int rstrcasecmp(const char * s1, const char * s2)		;
 
 /** \ingroup rpmstring
  * Locale insensitive strncasecmp(3).
  */
-RPM_GNUC_PURE
+__attribute__ ((visibility ("default"))) RPM_GNUC_PURE
 int rstrncasecmp(const char *s1, const char * s2, size_t n)	;
 
 /** \ingroup rpmstring
  * asprintf() clone
  */
-int rasprintf(char **strp, const char *fmt, ...) RPM_GNUC_PRINTF(2, 3);
+__attribute__ ((visibility ("default"))) int rasprintf(char **strp, const char *fmt, ...) RPM_GNUC_PRINTF(2, 3);
 
 /** \ingroup rpmstring
  * Concatenate two strings with dynamically (re)allocated memory.
@@ -150,7 +150,7 @@ int rasprintf(char **strp, const char *fmt, ...) RPM_GNUC_PRINTF(2, 3);
  * @param src		source string
  * @return		realloc'd dest with src appended
  */
-char *rstrcat(char **dest, const char *src);
+__attribute__ ((visibility ("default"))) char *rstrcat(char **dest, const char *src);
 
 /** \ingroup rpmstring
  * Concatenate multiple strings with dynamically (re)allocated memory.
@@ -158,7 +158,7 @@ char *rstrcat(char **dest, const char *src);
  * @param arg		NULL terminated list of strings to concatenate
  * @return		realloc'd dest with strings appended
  */
-char *rstrscat(char **dest, const char *arg, ...) RPM_GNUC_NULL_TERMINATED;
+__attribute__ ((visibility ("default"))) char *rstrscat(char **dest, const char *arg, ...) RPM_GNUC_NULL_TERMINATED;
 
 /** \ingroup rpmstring
  * strlcpy() clone: 
@@ -170,14 +170,14 @@ char *rstrscat(char **dest, const char *arg, ...) RPM_GNUC_NULL_TERMINATED;
  * @param n		destination buffer size
  * @return		length of src string
  */
-size_t rstrlcpy(char *dest, const char *src, size_t n);
+__attribute__ ((visibility ("default"))) size_t rstrlcpy(char *dest, const char *src, size_t n);
 
 /** \ingroup rpmstring
  * String hashing function
  * @param string	string to hash
  * @return		hash id
  */
-RPM_GNUC_PURE
+__attribute__ ((visibility ("default"))) RPM_GNUC_PURE
 unsigned int rstrhash(const char * string);
 
 #ifdef __cplusplus

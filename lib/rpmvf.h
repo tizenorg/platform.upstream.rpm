@@ -92,7 +92,7 @@ typedef rpmFlags rpmVerifyFlags;
  * @param omitMask	bit(s) to disable verify checks
  * @return		0 on success (or not installed), 1 on error
  */
-int rpmVerifyFile(const rpmts ts, rpmfi fi,
+__attribute__ ((visibility ("default"))) int rpmVerifyFile(const rpmts ts, rpmfi fi,
 		rpmVerifyAttrs * res, rpmVerifyAttrs omitMask);
 
 

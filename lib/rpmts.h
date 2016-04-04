@@ -20,7 +20,7 @@
 extern "C" {
 #endif
 
-extern int _rpmts_stats;
+__attribute__ ((visibility ("default"))) extern int _rpmts_stats;
 
 /** \ingroup rpmts
  * Bit(s) to control rpmtsRun() operation.
@@ -163,7 +163,7 @@ typedef	enum rpmtsOpX_e {
  * @param ts		transaction set
  * @return		0 on success
  */
-int rpmtsCheck(rpmts ts);
+__attribute__ ((visibility ("default"))) int rpmtsCheck(rpmts ts);
 
 /** \ingroup rpmts
  * Determine package order in a transaction set according to dependencies.
@@ -181,7 +181,7 @@ int rpmtsCheck(rpmts ts);
  * @param ts		transaction set
  * @return		no. of (added) packages that could not be ordered
  */
-int rpmtsOrder(rpmts ts);
+__attribute__ ((visibility ("default"))) int rpmtsOrder(rpmts ts);
 
 /** \ingroup rpmts
  * Process all package elements in a transaction set.  Before calling
@@ -200,21 +200,21 @@ int rpmtsOrder(rpmts ts);
  * @param ignoreSet	bits to filter problem types
  * @return		0 on success, -1 on error, >0 with newProbs set
  */
-int rpmtsRun(rpmts ts, rpmps okProbs, rpmprobFilterFlags ignoreSet);
+__attribute__ ((visibility ("default"))) int rpmtsRun(rpmts ts, rpmps okProbs, rpmprobFilterFlags ignoreSet);
 
 /** \ingroup rpmts
  * Reference a transaction set instance.
  * @param ts		transaction set
  * @return		new transaction set reference
  */
-rpmts rpmtsLink (rpmts ts);
+__attribute__ ((visibility ("default"))) rpmts rpmtsLink (rpmts ts);
 
 /** \ingroup rpmts
  * Close the database used by the transaction.
  * @param ts		transaction set
  * @return		0 on success
  */
-int rpmtsCloseDB(rpmts ts);
+__attribute__ ((visibility ("default"))) int rpmtsCloseDB(rpmts ts);
 
 /** \ingroup rpmts
  * Open the database used by the transaction.
@@ -222,7 +222,7 @@ int rpmtsCloseDB(rpmts ts);
  * @param dbmode	O_RDONLY or O_RDWR
  * @return		0 on success
  */
-int rpmtsOpenDB(rpmts ts, int dbmode);
+__attribute__ ((visibility ("default"))) int rpmtsOpenDB(rpmts ts, int dbmode);
 
 /** \ingroup rpmts
  * Initialize the database used by the transaction.
@@ -231,14 +231,14 @@ int rpmtsOpenDB(rpmts ts, int dbmode);
  * @param dbmode	O_RDONLY or O_RDWR
  * @return		0 on success
  */
-int rpmtsInitDB(rpmts ts, int dbmode);
+__attribute__ ((visibility ("default"))) int rpmtsInitDB(rpmts ts, int dbmode);
 
 /** \ingroup rpmts
  * Return the transaction database mode
  * @param ts		transaction set
  * @return		O_RDONLY, O_RDWR or -1 (lazy opens disabled)
  */
-int rpmtsGetDBMode(rpmts ts);
+__attribute__ ((visibility ("default"))) int rpmtsGetDBMode(rpmts ts);
 
 /** \ingroup rpmts
  * Set the transaction database mode. Only permitted when when backing
@@ -247,21 +247,21 @@ int rpmtsGetDBMode(rpmts ts);
  * @param dbmode	O_RDONLY, O_RDWR or -1 (disable lazy opens)
  * @return		0 on success, 1 on error 
  */
-int rpmtsSetDBMode(rpmts ts, int dbmode);
+__attribute__ ((visibility ("default"))) int rpmtsSetDBMode(rpmts ts, int dbmode);
 
 /** \ingroup rpmts
  * Rebuild the database used by the transaction.
  * @param ts		transaction set
  * @return		0 on success
  */
-int rpmtsRebuildDB(rpmts ts);
+__attribute__ ((visibility ("default"))) int rpmtsRebuildDB(rpmts ts);
 
 /** \ingroup rpmts
  * Verify the database used by the transaction.
  * @param ts		transaction set
  * @return		0 on success
  */
-int rpmtsVerifyDB(rpmts ts);
+__attribute__ ((visibility ("default"))) int rpmtsVerifyDB(rpmts ts);
 
 /** \ingroup rpmts
  * Return transaction database iterator.
@@ -271,7 +271,7 @@ int rpmtsVerifyDB(rpmts ts);
  * @param keylen	key data length (0 will use strlen(keyp))
  * @return		NULL on failure
  */
-rpmdbMatchIterator rpmtsInitIterator(const rpmts ts, rpmDbiTagVal rpmtag,
+__attribute__ ((visibility ("default"))) rpmdbMatchIterator rpmtsInitIterator(const rpmts ts, rpmDbiTagVal rpmtag,
 			const void * keyp, size_t keylen);
 
 /** \ingroup rpmts
@@ -282,7 +282,7 @@ rpmdbMatchIterator rpmtsInitIterator(const rpmts ts, rpmDbiTagVal rpmtag,
  * @param pktlen        pgp pubkey length
  * @return              RPMRC_OK/RPMRC_FAIL
  */
-rpmRC rpmtsImportPubkey(rpmts ts, const unsigned char * pkt, size_t pktlen);
+__attribute__ ((visibility ("default"))) rpmRC rpmtsImportPubkey(rpmts ts, const unsigned char * pkt, size_t pktlen);
 
 /** \ingroup rpmts
  * Retrieve handle for keyring used for this transaction set
@@ -290,7 +290,7 @@ rpmRC rpmtsImportPubkey(rpmts ts, const unsigned char * pkt, size_t pktlen);
  * @param autoload	load default keyring if keyring is not set
  * @return              keyring handle (or NULL)
  */
-rpmKeyring rpmtsGetKeyring(rpmts ts, int autoload);
+__attribute__ ((visibility ("default"))) rpmKeyring rpmtsGetKeyring(rpmts ts, int autoload);
 
 /** \ingroup rpmts
  * Set keyring to use for this transaction set.
@@ -300,7 +300,7 @@ rpmKeyring rpmtsGetKeyring(rpmts ts, int autoload);
  * @param keyring	keyring handle (NULL to free current keyring)
  * @return              0 on success, -1 on error
  */
-int rpmtsSetKeyring(rpmts ts, rpmKeyring keyring);
+__attribute__ ((visibility ("default"))) int rpmtsSetKeyring(rpmts ts, rpmKeyring keyring);
 
 /** \ingroup rpmts
  * Set dependency solver callback.
@@ -309,7 +309,7 @@ int rpmtsSetKeyring(rpmts ts, rpmKeyring keyring);
  * @param solveData	dependency solver callback data (opaque)
  * @return		0 on success
  */
-int rpmtsSetSolveCallback(rpmts ts,
+__attribute__ ((visibility ("default"))) int rpmtsSetSolveCallback(rpmts ts,
 		int (*solve) (rpmts ts, rpmds ds, const void * data),
 		const void * solveData);
 
@@ -318,39 +318,39 @@ int rpmtsSetSolveCallback(rpmts ts,
  * @param ts		transaction set
  * @return		current problem set (or NULL if no problems)
  */
-rpmps rpmtsProblems(rpmts ts);
+__attribute__ ((visibility ("default"))) rpmps rpmtsProblems(rpmts ts);
 
 /** \ingroup rpmts
  * Clean current transaction problem set.
  * @param ts		transaction set
  */
-void rpmtsCleanProblems(rpmts ts);
+__attribute__ ((visibility ("default"))) void rpmtsCleanProblems(rpmts ts);
 
 /** \ingroup rpmts
  * Free memory needed only for dependency checks and ordering.
  * @param ts		transaction set
  */
-void rpmtsClean(rpmts ts);
+__attribute__ ((visibility ("default"))) void rpmtsClean(rpmts ts);
 
 /** \ingroup rpmts
  * Re-create an empty transaction set.
  * @param ts		transaction set
  */
-void rpmtsEmpty(rpmts ts);
+__attribute__ ((visibility ("default"))) void rpmtsEmpty(rpmts ts);
 
 /** \ingroup rpmts
  * Destroy transaction set, closing the database as well.
  * @param ts		transaction set
  * @return		NULL always
  */
-rpmts rpmtsFree(rpmts ts);
+__attribute__ ((visibility ("default"))) rpmts rpmtsFree(rpmts ts);
 
 /** \ingroup rpmts
  * Get verify signatures flag(s).
  * @param ts		transaction set
  * @return		verify signatures flags
  */
-rpmVSFlags rpmtsVSFlags(rpmts ts);
+__attribute__ ((visibility ("default"))) rpmVSFlags rpmtsVSFlags(rpmts ts);
 
 /** \ingroup rpmts
  * Set verify signatures flag(s).
@@ -358,14 +358,14 @@ rpmVSFlags rpmtsVSFlags(rpmts ts);
  * @param vsflags	new verify signatures flags
  * @return		previous value
  */
-rpmVSFlags rpmtsSetVSFlags(rpmts ts, rpmVSFlags vsflags);
+__attribute__ ((visibility ("default"))) rpmVSFlags rpmtsSetVSFlags(rpmts ts, rpmVSFlags vsflags);
 
 /** \ingroup rpmts
  * Get transaction rootDir, i.e. path to chroot(2).
  * @param ts		transaction set
  * @return		transaction rootDir
  */
-const char * rpmtsRootDir(rpmts ts);
+__attribute__ ((visibility ("default"))) const char * rpmtsRootDir(rpmts ts);
 
 /** \ingroup rpmts
  * Set transaction rootDir, i.e. path to chroot(2).
@@ -373,28 +373,28 @@ const char * rpmtsRootDir(rpmts ts);
  * @param rootDir	new transaction rootDir (or NULL)
  * @return		0 on success, -1 on error (invalid rootDir)
  */
-int rpmtsSetRootDir(rpmts ts, const char * rootDir);
+__attribute__ ((visibility ("default"))) int rpmtsSetRootDir(rpmts ts, const char * rootDir);
 
 /** \ingroup rpmts
  * Get transaction script file handle, i.e. stdout/stderr on scriptlet execution
  * @param ts		transaction set
  * @return		transaction script file handle
  */
-FD_t rpmtsScriptFd(rpmts ts);
+__attribute__ ((visibility ("default"))) FD_t rpmtsScriptFd(rpmts ts);
 
 /** \ingroup rpmts
  * Set transaction script file handle, i.e. stdout/stderr on scriptlet execution
  * @param ts		transaction set
  * @param scriptFd	new script file handle (or NULL)
  */
-void rpmtsSetScriptFd(rpmts ts, FD_t scriptFd);
+__attribute__ ((visibility ("default"))) void rpmtsSetScriptFd(rpmts ts, FD_t scriptFd);
 
 /** \ingroup rpmts
  * Get transaction id, i.e. transaction time stamp.
  * @param ts		transaction set
  * @return		transaction id
  */
-rpm_tid_t rpmtsGetTid(rpmts ts);
+__attribute__ ((visibility ("default"))) rpm_tid_t rpmtsGetTid(rpmts ts);
 
 /** \ingroup rpmts
  * Set transaction id, i.e. transaction time stamp.
@@ -402,14 +402,14 @@ rpm_tid_t rpmtsGetTid(rpmts ts);
  * @param tid		new transaction id
  * @return		previous transaction id
  */
-rpm_tid_t rpmtsSetTid(rpmts ts, rpm_tid_t tid);
+__attribute__ ((visibility ("default"))) rpm_tid_t rpmtsSetTid(rpmts ts, rpm_tid_t tid);
 
 /** \ingroup rpmts
  * Get transaction set database handle.
  * @param ts		transaction set
  * @return		transaction database handle
  */
-rpmdb rpmtsGetRdb(rpmts ts);
+__attribute__ ((visibility ("default"))) rpmdb rpmtsGetRdb(rpmts ts);
 
 /** \ingroup rpmts
  * Perform transaction progress notify callback.
@@ -420,17 +420,17 @@ rpmdb rpmtsGetRdb(rpmts ts);
  * @param total		final value
  * @return		callback dependent pointer
  */
-void * rpmtsNotify(rpmts ts, rpmte te,
+__attribute__ ((visibility ("default"))) void * rpmtsNotify(rpmts ts, rpmte te,
                 rpmCallbackType what, rpm_loff_t amount, rpm_loff_t total);
 
-int rpmtsSuspendResumeDBLock(rpmts ts, int mode);
+__attribute__ ((visibility ("default"))) int rpmtsSuspendResumeDBLock(rpmts ts, int mode);
 
 /** \ingroup rpmts
  * Return number of (ordered) transaction set elements.
  * @param ts		transaction set
  * @return		no. of transaction set elements
  */
-int rpmtsNElements(rpmts ts);
+__attribute__ ((visibility ("default"))) int rpmtsNElements(rpmts ts);
 
 /** \ingroup rpmts
  * Return (ordered) transaction set element.
@@ -438,21 +438,21 @@ int rpmtsNElements(rpmts ts);
  * @param ix		transaction element index
  * @return		transaction element (or NULL)
  */
-rpmte rpmtsElement(rpmts ts, int ix);
+__attribute__ ((visibility ("default"))) rpmte rpmtsElement(rpmts ts, int ix);
 
 /** \ingroup rpmts
  * Get problem ignore bit mask, i.e. bits to filter encountered problems.
  * @param ts		transaction set
  * @return		ignore bit mask
  */
-rpmprobFilterFlags rpmtsFilterFlags(rpmts ts);
+__attribute__ ((visibility ("default"))) rpmprobFilterFlags rpmtsFilterFlags(rpmts ts);
 
 /** \ingroup rpmts
  * Get transaction flags, i.e. bits that control rpmtsRun().
  * @param ts		transaction set
  * @return		transaction flags
  */
-rpmtransFlags rpmtsFlags(rpmts ts);
+__attribute__ ((visibility ("default"))) rpmtransFlags rpmtsFlags(rpmts ts);
 
 /** \ingroup rpmts
  * Set transaction flags, i.e. bits that control rpmtsRun().
@@ -460,21 +460,21 @@ rpmtransFlags rpmtsFlags(rpmts ts);
  * @param transFlags	new transaction flags
  * @return		previous transaction flags
  */
-rpmtransFlags rpmtsSetFlags(rpmts ts, rpmtransFlags transFlags);
+__attribute__ ((visibility ("default"))) rpmtransFlags rpmtsSetFlags(rpmts ts, rpmtransFlags transFlags);
 
 /** \ingroup rpmts
  * Retrieve color bits of transaction set.
  * @param ts		transaction set
  * @return		color bits
  */
-rpm_color_t rpmtsColor(rpmts ts);
+__attribute__ ((visibility ("default"))) rpm_color_t rpmtsColor(rpmts ts);
 
 /** \ingroup rpmts
  * Retrieve prefered file color
  * @param ts		transaction set
  * @return		color bits
  */
-rpm_color_t rpmtsPrefColor(rpmts ts);
+__attribute__ ((visibility ("default"))) rpm_color_t rpmtsPrefColor(rpmts ts);
 
 /** \ingroup rpmts
  * Set color bits of transaction set.
@@ -482,7 +482,7 @@ rpm_color_t rpmtsPrefColor(rpmts ts);
  * @param color		new color bits
  * @return		previous color bits
  */
-rpm_color_t rpmtsSetColor(rpmts ts, rpm_color_t color);
+__attribute__ ((visibility ("default"))) rpm_color_t rpmtsSetColor(rpmts ts, rpm_color_t color);
 
 /** \ingroup rpmts
  * Set prefered file color
@@ -490,7 +490,7 @@ rpm_color_t rpmtsSetColor(rpmts ts, rpm_color_t color);
  * @param color		new color bits
  * @return		previous color bits
  */
-rpm_color_t rpmtsSetPrefColor(rpmts ts, rpm_color_t color);
+__attribute__ ((visibility ("default"))) rpm_color_t rpmtsSetPrefColor(rpmts ts, rpm_color_t color);
 
 /** \ingroup rpmts
  * Retrieve operation timestamp from a transaction set.
@@ -498,14 +498,14 @@ rpm_color_t rpmtsSetPrefColor(rpmts ts, rpm_color_t color);
  * @param opx		operation timestamp index
  * @return		pointer to operation timestamp.
  */
-rpmop rpmtsOp(rpmts ts, rpmtsOpX opx);
+__attribute__ ((visibility ("default"))) rpmop rpmtsOp(rpmts ts, rpmtsOpX opx);
 
 /** \ingroup rpmts
  * Get the plugins associated with a transaction set
  * @param ts		transaction set
  * @return		plugins
  */
-rpmPlugins rpmtsPlugins(rpmts ts);
+__attribute__ ((visibility ("default"))) rpmPlugins rpmtsPlugins(rpmts ts);
 
 /** \ingroup rpmts
  * Set transaction notify callback function and argument.
@@ -518,7 +518,7 @@ rpmPlugins rpmtsPlugins(rpmts ts);
  * @param notifyData	progress callback private data
  * @return		0 on success
  */
-int rpmtsSetNotifyCallback(rpmts ts,
+__attribute__ ((visibility ("default"))) int rpmtsSetNotifyCallback(rpmts ts,
 		rpmCallbackFunction notify,
 		rpmCallbackData notifyData);
 
@@ -526,7 +526,7 @@ int rpmtsSetNotifyCallback(rpmts ts,
  * Create an empty transaction set.
  * @return		new transaction set
  */
-rpmts rpmtsCreate(void);
+__attribute__ ((visibility ("default"))) rpmts rpmtsCreate(void);
 
 /** \ingroup rpmts
  * Add package to be installed to transaction set.
@@ -541,7 +541,7 @@ rpmts rpmtsCreate(void);
  * @param relocs	package file relocations
  * @return		0 on success, 1 on I/O error, 2 needs capabilities
  */
-int rpmtsAddInstallElement(rpmts ts, Header h,
+__attribute__ ((visibility ("default"))) int rpmtsAddInstallElement(rpmts ts, Header h,
 		const fnpyKey key, int upgrade,
 		rpmRelocation * relocs);
 
@@ -552,21 +552,21 @@ int rpmtsAddInstallElement(rpmts ts, Header h,
  * @param dboffset	ununsed
  * @return		0 on success, 1 on error (not installed)
  */
-int rpmtsAddEraseElement(rpmts ts, Header h, int dboffset);
+__attribute__ ((visibility ("default"))) int rpmtsAddEraseElement(rpmts ts, Header h, int dboffset);
 
 /** \ingroup rpmte
  * Destroy transaction element iterator.
  * @param tsi		transaction element iterator
  * @return		NULL always
  */
-rpmtsi rpmtsiFree(rpmtsi tsi);
+__attribute__ ((visibility ("default"))) rpmtsi rpmtsiFree(rpmtsi tsi);
 
 /** \ingroup rpmte
  * Create transaction element iterator.
  * @param ts		transaction set
  * @return		transaction element iterator
  */
-rpmtsi rpmtsiInit(rpmts ts);
+__attribute__ ((visibility ("default"))) rpmtsi rpmtsiInit(rpmts ts);
 
 /** \ingroup rpmte
  * Return next transaction element of type.
@@ -574,7 +574,7 @@ rpmtsi rpmtsiInit(rpmts ts);
  * @param types		transaction element type selector (0 for any)
  * @return		next transaction element of type, NULL on termination
  */
-rpmte rpmtsiNext(rpmtsi tsi, rpmElementTypes types);
+__attribute__ ((visibility ("default"))) rpmte rpmtsiNext(rpmtsi tsi, rpmElementTypes types);
 
 #ifdef __cplusplus
 }

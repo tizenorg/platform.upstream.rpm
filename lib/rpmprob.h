@@ -61,7 +61,7 @@ typedef enum rpmProblemType_e {
  * @param number	generic number attribute
  * @return		rpmProblem
  */
-rpmProblem rpmProblemCreate(rpmProblemType type,
+__attribute__ ((visibility ("default"))) rpmProblem rpmProblemCreate(rpmProblemType type,
                             const char * pkgNEVR, fnpyKey key,
                             const char * altNEVR,
                             const char * str, uint64_t number);
@@ -71,14 +71,14 @@ rpmProblem rpmProblemCreate(rpmProblemType type,
  * @param prob		rpm problem
  * @return		rpm problem (NULL)
  */
-rpmProblem rpmProblemFree(rpmProblem prob);
+__attribute__ ((visibility ("default"))) rpmProblem rpmProblemFree(rpmProblem prob);
 
 /** \ingroup rpmprob
  * Reference an rpmProblem instance
  * @param prob		rpm problem
  * @return		rpm problem
  */
-rpmProblem rpmProblemLink(rpmProblem prob);
+__attribute__ ((visibility ("default"))) rpmProblem rpmProblemLink(rpmProblem prob);
 
 /** \ingroup rpmprob
  * Compare two problems for equality.
@@ -86,7 +86,7 @@ rpmProblem rpmProblemLink(rpmProblem prob);
  * @param bp		2nd problem
  * @return		1 if the problems differ, 0 otherwise
  */
-int rpmProblemCompare(rpmProblem ap, rpmProblem bp);
+__attribute__ ((visibility ("default"))) int rpmProblemCompare(rpmProblem ap, rpmProblem bp);
 
 /** \ingroup rpmprob
  * Return package NEVR
@@ -94,13 +94,13 @@ int rpmProblemCompare(rpmProblem ap, rpmProblem bp);
  * @return		package NEVR
  */
 
-const char * rpmProblemGetPkgNEVR(rpmProblem prob);
+__attribute__ ((visibility ("default"))) const char * rpmProblemGetPkgNEVR(rpmProblem prob);
 /** \ingroup rpmprob
  * Return related (e.g. through a dependency) package NEVR
  * @param prob		rpm problem
  * @return		related (e.g. through a dependency) package NEVR
  */
-const char * rpmProblemGetAltNEVR(rpmProblem prob);
+__attribute__ ((visibility ("default"))) const char * rpmProblemGetAltNEVR(rpmProblem prob);
 
 /** \ingroup rpmprob
  * Return type of problem (dependency, diskpace etc)
@@ -108,14 +108,14 @@ const char * rpmProblemGetAltNEVR(rpmProblem prob);
  * @return		type of problem
  */
 
-rpmProblemType rpmProblemGetType(rpmProblem prob);
+__attribute__ ((visibility ("default"))) rpmProblemType rpmProblemGetType(rpmProblem prob);
 
 /** \ingroup rpmprob
  * Return filename or python object address of a problem
  * @param prob		rpm problem
  * @return		filename or python object address
  */
-fnpyKey rpmProblemGetKey(rpmProblem prob);
+__attribute__ ((visibility ("default"))) fnpyKey rpmProblemGetKey(rpmProblem prob);
 
 /** \ingroup rpmprob
  * Return a generic data string from a problem
@@ -123,7 +123,7 @@ fnpyKey rpmProblemGetKey(rpmProblem prob);
  * @return		a generic data string
  * @todo		needs a better name
  */
-const char * rpmProblemGetStr(rpmProblem prob);
+__attribute__ ((visibility ("default"))) const char * rpmProblemGetStr(rpmProblem prob);
 
 /** \ingroup rpmprob
  * Return disk requirement (needed disk space / number of inodes)
@@ -132,14 +132,14 @@ const char * rpmProblemGetStr(rpmProblem prob);
  * @param prob		rpm problem
  * @return		disk requirement
  */
-rpm_loff_t rpmProblemGetDiskNeed(rpmProblem prob);
+__attribute__ ((visibility ("default"))) rpm_loff_t rpmProblemGetDiskNeed(rpmProblem prob);
 
 /** \ingroup rpmprob
  * Return formatted string representation of a problem.
  * @param prob		rpm problem
  * @return		formatted string (malloc'd)
  */
-char * rpmProblemString(rpmProblem prob);
+__attribute__ ((visibility ("default"))) char * rpmProblemString(rpmProblem prob);
 
 #ifdef __cplusplus
 }

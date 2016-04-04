@@ -36,70 +36,70 @@ struct rpmtd_s {
  * Create new tag data container
  * @return		New, initialized tag data container.
  */
-rpmtd rpmtdNew(void);
+__attribute__ ((visibility ("default"))) rpmtd rpmtdNew(void);
 
 /** \ingroup rpmtd
  * Destroy tag data container.
  * @param td		Tag data container
  * @return		NULL always
  */
-rpmtd rpmtdFree(rpmtd td);
+__attribute__ ((visibility ("default"))) rpmtd rpmtdFree(rpmtd td);
  
 /** \ingroup rpmtd
  * (Re-)initialize tag data container. Contents will be zeroed out
  * and iteration index reset.
  * @param td		Tag data container
  */
-void rpmtdReset(rpmtd td);
+__attribute__ ((visibility ("default"))) void rpmtdReset(rpmtd td);
 
 /** \ingroup rpmtd
  * Free contained data. This is always safe to call as the container knows 
  * if data was malloc'ed or not. Container is reinitialized.
  * @param td		Tag data container
  */
-void rpmtdFreeData(rpmtd td);
+__attribute__ ((visibility ("default"))) void rpmtdFreeData(rpmtd td);
 
 /** \ingroup rpmtd
  * Retrieve array size of the container. For non-array types this is always 1.
  * @param td		Tag data container
  * @return		Number of entries in contained data.
  */
-rpm_count_t rpmtdCount(rpmtd td);
+__attribute__ ((visibility ("default"))) rpm_count_t rpmtdCount(rpmtd td);
 
 /** \ingroup rpmtd
  * Retrieve tag of the container.
  * @param td		Tag data container
  * @return		Rpm tag.
  */
-rpmTagVal rpmtdTag(rpmtd td);
+__attribute__ ((visibility ("default"))) rpmTagVal rpmtdTag(rpmtd td);
 
 /** \ingroup rpmtd
  * Retrieve type of the container.
  * @param td		Tag data container
  * @return		Rpm tag type.
  */
-rpmTagType rpmtdType(rpmtd td);
+__attribute__ ((visibility ("default"))) rpmTagType rpmtdType(rpmtd td);
 
 /** \ingroup rpmtd
  * Retrieve class of the container.
  * @param td		Tag data container
  * @return		Rpm tag class
  */
-rpmTagClass rpmtdClass(rpmtd td);
+__attribute__ ((visibility ("default"))) rpmTagClass rpmtdClass(rpmtd td);
 
 /** \ingroup rpmtd
  * Retrieve flags of the container (allocation details etc)
  * @param td		Tag data container
  * @return		Container flags
  */
-rpmtdFlags rpmtdGetFlags(rpmtd td);
+__attribute__ ((visibility ("default"))) rpmtdFlags rpmtdGetFlags(rpmtd td);
 
 /** \ingroup rpmtd
  * Retrieve current iteration index of the container.
  * @param td		Tag data container
  * @return		Iteration index (or -1 if not iterating)
  */
-int rpmtdGetIndex(rpmtd td);
+__attribute__ ((visibility ("default"))) int rpmtdGetIndex(rpmtd td);
 
 /** \ingroup rpmtd
  * Set iteration index of the container.
@@ -109,42 +109,42 @@ int rpmtdGetIndex(rpmtd td);
  * @param index		New index
  * @return		New index, or -1 if index out of bounds
  */
-int rpmtdSetIndex(rpmtd td, int index);
+__attribute__ ((visibility ("default"))) int rpmtdSetIndex(rpmtd td, int index);
 
 /** \ingroup rpmtd
  * Initialize tag container for iteration
  * @param td		Tag data container
  * @return		0 on success
  */
-int rpmtdInit(rpmtd td);
+__attribute__ ((visibility ("default"))) int rpmtdInit(rpmtd td);
 
 /** \ingroup rpmtd
  * Iterate over tag data container.
  * @param td		Tag data container
  * @return		Tag data container iterator index, -1 on termination
  */
-int rpmtdNext(rpmtd td);
+__attribute__ ((visibility ("default"))) int rpmtdNext(rpmtd td);
 
 /** \ingroup rpmtd
  * Iterate over uint32_t type tag data container.
  * @param td		Tag data container
  * @return		Pointer to next value, NULL on termination or error
  */
-uint32_t *rpmtdNextUint32(rpmtd td);
+__attribute__ ((visibility ("default"))) uint32_t *rpmtdNextUint32(rpmtd td);
 
 /** \ingroup rpmtd
  * Iterate over uint64_t type tag data container.
  * @param td		Tag data container
  * @return		Pointer to next value, NULL on termination or error
  */
-uint64_t *rpmtdNextUint64(rpmtd td);
+__attribute__ ((visibility ("default"))) uint64_t *rpmtdNextUint64(rpmtd td);
 
 /** \ingroup rpmtd
  * Iterate over string / string array type tag data container.
  * @param td		Tag data container
  * @return		Pointer to next value, NULL on termination or error
  */
-const char *rpmtdNextString(rpmtd td);
+__attribute__ ((visibility ("default"))) const char *rpmtdNextString(rpmtd td);
 
 /** \ingroup rpmtd
  * Return char data from tag container.
@@ -154,7 +154,7 @@ const char *rpmtdNextString(rpmtd td);
  * @param td		Tag data container
  * @return		Pointer to uint16_t, NULL on error
  */
-char *rpmtdGetChar(rpmtd td);
+__attribute__ ((visibility ("default"))) char *rpmtdGetChar(rpmtd td);
 
 /** \ingroup rpmtd
  * Return uint16_t data from tag container.
@@ -164,7 +164,7 @@ char *rpmtdGetChar(rpmtd td);
  * @param td		Tag data container
  * @return		Pointer to uint16_t, NULL on error
  */
-uint16_t * rpmtdGetUint16(rpmtd td);
+__attribute__ ((visibility ("default"))) uint16_t * rpmtdGetUint16(rpmtd td);
 
 /** \ingroup rpmtd
  * Return uint32_t data from tag container.
@@ -174,7 +174,7 @@ uint16_t * rpmtdGetUint16(rpmtd td);
  * @param td		Tag data container
  * @return		Pointer to uint32_t, NULL on error
  */
-uint32_t * rpmtdGetUint32(rpmtd td);
+__attribute__ ((visibility ("default"))) uint32_t * rpmtdGetUint32(rpmtd td);
 
 /** \ingroup rpmtd
  * Return uint64_t data from tag container.
@@ -184,7 +184,7 @@ uint32_t * rpmtdGetUint32(rpmtd td);
  * @param td		Tag data container
  * @return		Pointer to uint64_t, NULL on error
  */
-uint64_t * rpmtdGetUint64(rpmtd td);
+__attribute__ ((visibility ("default"))) uint64_t * rpmtdGetUint64(rpmtd td);
 
 /** \ingroup rpmtd
  * Return string data from tag container.
@@ -194,7 +194,7 @@ uint64_t * rpmtdGetUint64(rpmtd td);
  * @param td		Tag data container
  * @return		String constant from container, NULL on error
  */
-const char * rpmtdGetString(rpmtd td);
+__attribute__ ((visibility ("default"))) const char * rpmtdGetString(rpmtd td);
 
 /** \ingroup rpmtd
  * Return numeric value from tag container.
@@ -205,7 +205,7 @@ const char * rpmtdGetString(rpmtd td);
  * @return		Value of current iteration item as uint64_t,
  * 			0 for non-numeric types (error)
  */
-uint64_t rpmtdGetNumber(rpmtd td);
+__attribute__ ((visibility ("default"))) uint64_t rpmtdGetNumber(rpmtd td);
 
 typedef enum rpmtdFormats_e {
     RPMTD_FORMAT_STRING		= 0,	/* plain string (any type) */
@@ -242,7 +242,7 @@ typedef enum rpmtdFormats_e {
  * @return		String representation of current data (malloc'ed), 
  * 			NULL on error
  */
-char *rpmtdFormat(rpmtd td, rpmtdFormats fmt, const char *errmsg);
+__attribute__ ((visibility ("default"))) char *rpmtdFormat(rpmtd td, rpmtdFormats fmt, const char *errmsg);
 
 /** \ingroup rpmtd
  * Set container tag and type.
@@ -252,7 +252,7 @@ char *rpmtdFormat(rpmtd td, rpmtdFormats fmt, const char *errmsg);
  * @param tag		New tag
  * @return		1 on success, 0 on error
  */
-int rpmtdSetTag(rpmtd td, rpmTagVal tag);
+__attribute__ ((visibility ("default"))) int rpmtdSetTag(rpmtd td, rpmTagVal tag);
 
 /** \ingroup rpmtd
  * Construct tag container from uint8_t pointer.
@@ -265,7 +265,7 @@ int rpmtdSetTag(rpmtd td, rpmTagVal tag);
  * @param count		Number of entries
  * @return		1 on success, 0 on error (eg wrong type)
  */
-int rpmtdFromUint8(rpmtd td, rpmTagVal tag, uint8_t *data, rpm_count_t count);
+__attribute__ ((visibility ("default"))) int rpmtdFromUint8(rpmtd td, rpmTagVal tag, uint8_t *data, rpm_count_t count);
 
 /** \ingroup rpmtd
  * Construct tag container from uint16_t pointer.
@@ -277,7 +277,7 @@ int rpmtdFromUint8(rpmtd td, rpmTagVal tag, uint8_t *data, rpm_count_t count);
  * @param count		Number of entries
  * @return		1 on success, 0 on error (eg wrong type)
  */
-int rpmtdFromUint16(rpmtd td, rpmTagVal tag, uint16_t *data, rpm_count_t count);
+__attribute__ ((visibility ("default"))) int rpmtdFromUint16(rpmtd td, rpmTagVal tag, uint16_t *data, rpm_count_t count);
 
 /** \ingroup rpmtd
  * Construct tag container from uint32_t pointer.
@@ -289,7 +289,7 @@ int rpmtdFromUint16(rpmtd td, rpmTagVal tag, uint16_t *data, rpm_count_t count);
  * @param count		Number of entries
  * @return		1 on success, 0 on error (eg wrong type)
  */
-int rpmtdFromUint32(rpmtd td, rpmTagVal tag, uint32_t *data, rpm_count_t count);
+__attribute__ ((visibility ("default"))) int rpmtdFromUint32(rpmtd td, rpmTagVal tag, uint32_t *data, rpm_count_t count);
 
 /** \ingroup rpmtd
  * Construct tag container from uint64_t pointer.
@@ -301,7 +301,7 @@ int rpmtdFromUint32(rpmtd td, rpmTagVal tag, uint32_t *data, rpm_count_t count);
  * @param count		Number of entries
  * @return		1 on success, 0 on error (eg wrong type)
  */
-int rpmtdFromUint64(rpmtd td, rpmTagVal tag, uint64_t *data, rpm_count_t count);
+__attribute__ ((visibility ("default"))) int rpmtdFromUint64(rpmtd td, rpmTagVal tag, uint64_t *data, rpm_count_t count);
 
 /** \ingroup rpmtd
  * Construct tag container from a string.
@@ -311,7 +311,7 @@ int rpmtdFromUint64(rpmtd td, rpmTagVal tag, uint64_t *data, rpm_count_t count);
  * @param data		String to use
  * @return		1 on success, 0 on error (eg wrong type)
  */
-int rpmtdFromString(rpmtd td, rpmTagVal tag, const char *data);
+__attribute__ ((visibility ("default"))) int rpmtdFromString(rpmtd td, rpmTagVal tag, const char *data);
 
 /** \ingroup rpmtd
  * Construct tag container from a string array.
@@ -323,7 +323,7 @@ int rpmtdFromString(rpmtd td, rpmTagVal tag, const char *data);
  * @param count		Number of entries
  * @return		1 on success, 0 on error (eg wrong type)
  */
-int rpmtdFromStringArray(rpmtd td, rpmTagVal tag, const char **data, rpm_count_t count);
+__attribute__ ((visibility ("default"))) int rpmtdFromStringArray(rpmtd td, rpmTagVal tag, const char **data, rpm_count_t count);
 
 /** \ingroup rpmtd
  * Construct tag container from ARGV_t array.
@@ -334,7 +334,7 @@ int rpmtdFromStringArray(rpmtd td, rpmTagVal tag, const char **data, rpm_count_t
  * @param argv		ARGV array
  * @return		1 on success, 0 on error (eg wrong type)
  */
-int rpmtdFromArgv(rpmtd td, rpmTagVal tag, ARGV_t argv);
+__attribute__ ((visibility ("default"))) int rpmtdFromArgv(rpmtd td, rpmTagVal tag, ARGV_t argv);
 
 /** \ingroup rpmtd
  * Construct tag container from ARGI_t array.
@@ -345,7 +345,7 @@ int rpmtdFromArgv(rpmtd td, rpmTagVal tag, ARGV_t argv);
  * @param argi		ARGI array
  * @return		1 on success, 0 on error (eg wrong type)
  */
-int rpmtdFromArgi(rpmtd td, rpmTagVal tag, ARGI_t argi);
+__attribute__ ((visibility ("default"))) int rpmtdFromArgi(rpmtd td, rpmTagVal tag, ARGI_t argi);
 
 /* \ingroup rpmtd
  * Perform deep copy of container.
@@ -355,7 +355,7 @@ int rpmtdFromArgi(rpmtd td, rpmTagVal tag, ARGI_t argi);
  * @param td		Container to copy
  * @return		New container or NULL on error
  */
-rpmtd rpmtdDup(rpmtd td);
+__attribute__ ((visibility ("default"))) rpmtd rpmtdDup(rpmtd td);
 
 /* \ingroup rpmtd
  * Push string array container contents to a string pool, return string ids.
@@ -363,7 +363,7 @@ rpmtd rpmtdDup(rpmtd td);
  * @param pool		String pool
  * @return		Array of string id's (malloced)
  */
-rpmsid * rpmtdToPool(rpmtd td, rpmstrPool pool);
+__attribute__ ((visibility ("default"))) rpmsid * rpmtdToPool(rpmtd td, rpmstrPool pool);
 
 #ifdef __cplusplus
 }

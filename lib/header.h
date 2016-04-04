@@ -24,7 +24,7 @@ extern "C" {
 /** \ingroup header 
  * Header magic value
  */ 
-extern const unsigned char rpm_header_magic[8];
+__attribute__ ((visibility ("default"))) extern const unsigned char rpm_header_magic[8];
 
 /** \ingroup header
  * Include calculation for 8 bytes of (magic, 0)?
@@ -38,33 +38,33 @@ enum hMagic {
  * Create new (empty) header instance.
  * @return		header
  */
-Header headerNew(void);
+__attribute__ ((visibility ("default"))) Header headerNew(void);
 
 /** \ingroup header
  * Dereference a header instance.
  * @param h		header
  * @return		NULL always
  */
-Header headerFree( Header h);
+__attribute__ ((visibility ("default"))) Header headerFree( Header h);
 
 /** \ingroup header
  * Reference a header instance.
  * @param h		header
  * @return		new header reference
  */
-Header headerLink(Header h);
+__attribute__ ((visibility ("default"))) Header headerLink(Header h);
 
 /** \ingroup header
  * Sort tags in header.
  * @param h		header
  */
-void headerSort(Header h);
+__attribute__ ((visibility ("default"))) void headerSort(Header h);
 
 /** \ingroup header
  * Restore tags in header to original ordering.
  * @param h		header
  */
-void headerUnsort(Header h);
+__attribute__ ((visibility ("default"))) void headerUnsort(Header h);
 
 /** \ingroup header
  * Return size of on-disk header representation in bytes.
@@ -72,7 +72,7 @@ void headerUnsort(Header h);
  * @param magicp	include size of 8 bytes for (magic, 0)?
  * @return		size of on-disk header
  */
-unsigned int headerSizeof(Header h, int magicp);
+__attribute__ ((visibility ("default"))) unsigned int headerSizeof(Header h, int magicp);
 
 /** \ingroup header
  * Perform simple sanity and range checks on header tag(s).
@@ -83,7 +83,7 @@ unsigned int headerSizeof(Header h, int magicp);
  * @param negate	negative offset expected?
  * @return		-1 on success, otherwise failing tag element index
  */
-int headerVerifyInfo(int il, int dl, const void * pev, void * iv, int negate);
+__attribute__ ((visibility ("default"))) int headerVerifyInfo(int il, int dl, const void * pev, void * iv, int negate);
 
 /** \ingroup header
  * Convert header to on-disk representation.
@@ -91,7 +91,7 @@ int headerVerifyInfo(int il, int dl, const void * pev, void * iv, int negate);
  * @param h		header (with pointers)
  * @return		on-disk header blob (i.e. with offsets)
  */
-void * headerUnload(Header h);
+__attribute__ ((visibility ("default"))) void * headerUnload(Header h);
 
 /** \ingroup header
  * Export header to on-disk representation.
@@ -99,7 +99,7 @@ void * headerUnload(Header h);
  * @retval bsize	on-disk header blob size in bytes
  * @return		on-disk header blob (i.e. with offsets)
  */
-void * headerExport(Header h, unsigned int * bsize);
+__attribute__ ((visibility ("default"))) void * headerExport(Header h, unsigned int * bsize);
 
 /** \ingroup header
  * Convert header to on-disk representation, and then reload.
@@ -108,14 +108,14 @@ void * headerExport(Header h, unsigned int * bsize);
  * @param tag		region tag
  * @return		on-disk header (with offsets)
  */
-Header headerReload(Header h, rpmTagVal tag);
+__attribute__ ((visibility ("default"))) Header headerReload(Header h, rpmTagVal tag);
 
 /** \ingroup header
  * Duplicate a header.
  * @param h		header
  * @return		new header instance
  */
-Header headerCopy(Header h);
+__attribute__ ((visibility ("default"))) Header headerCopy(Header h);
 
 /** \ingroup header
  * Convert header to in-memory representation.
@@ -123,7 +123,7 @@ Header headerCopy(Header h);
  * @param uh		on-disk header blob (i.e. with offsets)
  * @return		header
  */
-Header headerLoad(void * uh);
+__attribute__ ((visibility ("default"))) Header headerLoad(void * uh);
 
 /** \ingroup header
  * Make a copy and convert header to in-memory representation.
@@ -131,7 +131,7 @@ Header headerLoad(void * uh);
  * @param uh		on-disk header blob (i.e. with offsets)
  * @return		header
  */
-Header headerCopyLoad(const void * uh);
+__attribute__ ((visibility ("default"))) Header headerCopyLoad(const void * uh);
 
 enum headerImportFlags_e {
     HEADERIMPORT_COPY		= (1 << 0), /* Make copy of blob on import? */
@@ -147,7 +147,7 @@ typedef rpmFlags headerImportFlags;
  * @param flags		flags to control operation
  * @return		header
  */
-Header headerImport(void *blob, unsigned int bsize, headerImportFlags flags);
+__attribute__ ((visibility ("default"))) Header headerImport(void *blob, unsigned int bsize, headerImportFlags flags);
 
 /** \ingroup header
  * Read (and load) header from file handle.
@@ -155,7 +155,7 @@ Header headerImport(void *blob, unsigned int bsize, headerImportFlags flags);
  * @param magicp	read (and verify) 8 bytes of (magic, 0)?
  * @return		header (or NULL on error)
  */
-Header headerRead(FD_t fd, int magicp);
+__attribute__ ((visibility ("default"))) Header headerRead(FD_t fd, int magicp);
 
 /** \ingroup header
  * Write (with unload) header to file handle.
@@ -164,7 +164,7 @@ Header headerRead(FD_t fd, int magicp);
  * @param magicp	prefix write with 8 bytes of (magic, 0)?
  * @return		0 on success, 1 on error
  */
-int headerWrite(FD_t fd, Header h, int magicp);
+__attribute__ ((visibility ("default"))) int headerWrite(FD_t fd, Header h, int magicp);
 
 /** \ingroup header
  * Check if tag is in header.
@@ -172,7 +172,7 @@ int headerWrite(FD_t fd, Header h, int magicp);
  * @param tag		tag
  * @return		1 on success, 0 on failure
  */
-int headerIsEntry(Header h, rpmTagVal tag);
+__attribute__ ((visibility ("default"))) int headerIsEntry(Header h, rpmTagVal tag);
 
 /** \ingroup header
  * Modifier flags for headerGet() operation.
@@ -202,7 +202,7 @@ typedef rpmFlags headerGetFlags;
  * @param flags		retrieval modifier flags
  * @return		1 on success, 0 on failure
  */
-int headerGet(Header h, rpmTagVal tag, rpmtd td, headerGetFlags flags);
+__attribute__ ((visibility ("default"))) int headerGet(Header h, rpmTagVal tag, rpmtd td, headerGetFlags flags);
 
 
 enum headerPutFlags_e {
@@ -220,7 +220,7 @@ typedef rpmFlags headerPutFlags;
  * @param flags		flags to control operation
  * @return		1 on success, 0 on failure
  */
-int headerPut(Header h, rpmtd td, headerPutFlags flags);
+__attribute__ ((visibility ("default"))) int headerPut(Header h, rpmtd td, headerPutFlags flags);
 
 /** \ingroup header 
  * @{
@@ -245,14 +245,14 @@ int headerPut(Header h, rpmtd td, headerPutFlags flags);
  * @return		1 on success, 0 on failure
  * 
  */
-int headerPutString(Header h, rpmTagVal tag, const char *val);
-int headerPutStringArray(Header h, rpmTagVal tag, const char **val, rpm_count_t size);
-int headerPutBin(Header h, rpmTagVal tag, const uint8_t *val, rpm_count_t size);
-int headerPutChar(Header h, rpmTagVal tag, const char *val, rpm_count_t size);
-int headerPutUint8(Header h, rpmTagVal tag, const uint8_t *val, rpm_count_t size);
-int headerPutUint16(Header h, rpmTagVal tag, const uint16_t *val, rpm_count_t size);
-int headerPutUint32(Header h, rpmTagVal tag, const uint32_t *val, rpm_count_t size);
-int headerPutUint64(Header h, rpmTagVal tag, const uint64_t *val, rpm_count_t size);
+__attribute__ ((visibility ("default"))) int headerPutString(Header h, rpmTagVal tag, const char *val);
+__attribute__ ((visibility ("default"))) int headerPutStringArray(Header h, rpmTagVal tag, const char **val, rpm_count_t size);
+__attribute__ ((visibility ("default"))) int headerPutBin(Header h, rpmTagVal tag, const uint8_t *val, rpm_count_t size);
+__attribute__ ((visibility ("default"))) int headerPutChar(Header h, rpmTagVal tag, const char *val, rpm_count_t size);
+__attribute__ ((visibility ("default"))) int headerPutUint8(Header h, rpmTagVal tag, const uint8_t *val, rpm_count_t size);
+__attribute__ ((visibility ("default"))) int headerPutUint16(Header h, rpmTagVal tag, const uint16_t *val, rpm_count_t size);
+__attribute__ ((visibility ("default"))) int headerPutUint32(Header h, rpmTagVal tag, const uint32_t *val, rpm_count_t size);
+__attribute__ ((visibility ("default"))) int headerPutUint64(Header h, rpmTagVal tag, const uint64_t *val, rpm_count_t size);
 /** @} */
 
 /** \ingroup header
@@ -275,7 +275,7 @@ int headerPutUint64(Header h, rpmTagVal tag, const uint64_t *val, rpm_count_t si
  * @param lang		locale
  * @return		1 on success, 0 on failure
  */
-int headerAddI18NString(Header h, rpmTagVal tag, const char * string,
+__attribute__ ((visibility ("default"))) int headerAddI18NString(Header h, rpmTagVal tag, const char * string,
 		const char * lang);
 
 /** \ingroup header
@@ -285,7 +285,7 @@ int headerAddI18NString(Header h, rpmTagVal tag, const char * string,
  * @param td		tag data container
  * @return		1 on success, 0 on failure
  */
-int headerMod(Header h, rpmtd td);
+__attribute__ ((visibility ("default"))) int headerMod(Header h, rpmtd td);
 
 /** \ingroup header
  * Delete tag in header.
@@ -296,7 +296,7 @@ int headerMod(Header h, rpmtd td);
  * @param tag		tag
  * @return		0 on success, 1 on failure (INCONSISTENT)
  */
-int headerDel(Header h, rpmTagVal tag);
+__attribute__ ((visibility ("default"))) int headerDel(Header h, rpmTagVal tag);
 
 /** \ingroup header
  * Return formatted output string from header tags.
@@ -307,7 +307,7 @@ int headerDel(Header h, rpmTagVal tag);
  * @retval errmsg	error message (if any)
  * @return		formatted output string (malloc'ed)
  */
-char * headerFormat(Header h, const char * fmt, errmsg_t * errmsg);
+__attribute__ ((visibility ("default"))) char * headerFormat(Header h, const char * fmt, errmsg_t * errmsg);
 
 /** \ingroup header
  * Duplicate tag values from one header into another.
@@ -315,7 +315,7 @@ char * headerFormat(Header h, const char * fmt, errmsg_t * errmsg);
  * @param headerTo	destination header
  * @param tagstocopy	array of tags that are copied
  */
-void headerCopyTags(Header headerFrom, Header headerTo, 
+__attribute__ ((visibility ("default"))) void headerCopyTags(Header headerFrom, Header headerTo, 
 		    const rpmTagVal * tagstocopy);
 
 /** \ingroup header
@@ -323,14 +323,14 @@ void headerCopyTags(Header headerFrom, Header headerTo,
  * @param hi		header tag iterator
  * @return		NULL always
  */
-HeaderIterator headerFreeIterator(HeaderIterator hi);
+__attribute__ ((visibility ("default"))) HeaderIterator headerFreeIterator(HeaderIterator hi);
 
 /** \ingroup header
  * Create header tag iterator.
  * @param h		header
  * @return		header tag iterator
  */
-HeaderIterator headerInitIterator(Header h);
+__attribute__ ((visibility ("default"))) HeaderIterator headerInitIterator(Header h);
 
 /** \ingroup header
  * Return next tag contents from header.
@@ -338,14 +338,14 @@ HeaderIterator headerInitIterator(Header h);
  * @retval td		tag data container
  * @return		1 on success, 0 on failure
  */
-int headerNext(HeaderIterator hi, rpmtd td);
+__attribute__ ((visibility ("default"))) int headerNext(HeaderIterator hi, rpmtd td);
 
 /** \ingroup header
  * Return next tag number from header.
  * @param hi		header tag iterator
  * @return		next tag, RPMTAG_NOT_FOUND to stop iteration
  */
-rpmTagVal headerNextTag(HeaderIterator hi);
+__attribute__ ((visibility ("default"))) rpmTagVal headerNextTag(HeaderIterator hi);
 
 /** \ingroup header
  * Return name, version, release strings from header.
@@ -355,7 +355,7 @@ rpmTagVal headerNextTag(HeaderIterator hi);
  * @retval *rp		release pointer (or NULL)
  * @return		0 always
  */
-RPM_GNUC_DEPRECATED
+__attribute__ ((visibility ("default"))) RPM_GNUC_DEPRECATED
 int headerNVR(Header h,
 		const char ** np,
 		const char ** vp,
@@ -371,7 +371,7 @@ int headerNVR(Header h,
  * @retval *ap		arch pointer (or NULL)
  * @return		0 always
  */
-RPM_GNUC_DEPRECATED
+__attribute__ ((visibility ("default"))) RPM_GNUC_DEPRECATED
 int headerNEVRA(Header h,
 		const char ** np,
 		uint32_t ** ep,
@@ -385,7 +385,7 @@ int headerNEVRA(Header h,
  * @retval np		name tag value
  * @return		name-version-release string
  */
-RPM_GNUC_DEPRECATED
+__attribute__ ((visibility ("default"))) RPM_GNUC_DEPRECATED
 char * headerGetNEVR(Header h, const char ** np );
 
 /** \ingroup header
@@ -394,7 +394,7 @@ char * headerGetNEVR(Header h, const char ** np );
  * @retval np		name tag value
  * @return		name-version-release string
  */
-RPM_GNUC_DEPRECATED
+__attribute__ ((visibility ("default"))) RPM_GNUC_DEPRECATED
 char * headerGetNEVRA(Header h, const char ** np );
 
 /* \ingroup header
@@ -403,7 +403,7 @@ char * headerGetNEVRA(Header h, const char ** np );
  * @retval np		name tag value (or NULL)
  * @return             (epoch:)version-release string
  */
-RPM_GNUC_DEPRECATED
+__attribute__ ((visibility ("default"))) RPM_GNUC_DEPRECATED
 char * headerGetEVR(Header h, const char **np);
 
 /** \ingroup header
@@ -412,7 +412,7 @@ char * headerGetEVR(Header h, const char **np);
  * @param tag		tag to retrieve
  * @return 		string pointer (malloced) or NULL on failure
  */
-char * headerGetAsString(Header h, rpmTagVal tag);
+__attribute__ ((visibility ("default"))) char * headerGetAsString(Header h, rpmTagVal tag);
 
 /** \ingroup header
  * Return a simple string tag from header
@@ -420,7 +420,7 @@ char * headerGetAsString(Header h, rpmTagVal tag);
  * @param tag		tag to retrieve
  * @return		string pointer (to header memory) or NULL on failure
  */
-const char * headerGetString(Header h, rpmTagVal tag);
+__attribute__ ((visibility ("default"))) const char * headerGetString(Header h, rpmTagVal tag);
 
 /* \ingroup header
  * Return a simple number tag (or extension) from header
@@ -428,14 +428,14 @@ const char * headerGetString(Header h, rpmTagVal tag);
  * @param tag		tag to retrieve
  * @return		numeric tag value or 0 on failure
  */
-uint64_t headerGetNumber(Header h, rpmTagVal tag);
+__attribute__ ((visibility ("default"))) uint64_t headerGetNumber(Header h, rpmTagVal tag);
 
 /** \ingroup header
  * Return header color.
  * @param h		header
  * @return		header color
  */
-RPM_GNUC_DEPRECATED
+__attribute__ ((visibility ("default"))) RPM_GNUC_DEPRECATED
 rpm_color_t headerGetColor(Header h);
 
 /** \ingroup header
@@ -443,14 +443,14 @@ rpm_color_t headerGetColor(Header h);
  * @param h		header
  * @return		0 == binary, 1 == source
  */
-int headerIsSource(Header h);
+__attribute__ ((visibility ("default"))) int headerIsSource(Header h);
 
 /** \ingroup header
  * Return header instance, ie is the header from rpmdb.
  * @param h		header
  * @return		rpmdb record number or 0
  */
-unsigned int headerGetInstance(Header h);
+__attribute__ ((visibility ("default"))) unsigned int headerGetInstance(Header h);
 
 typedef enum headerConvOps_e {
     HEADERCONV_EXPANDFILELIST	= 0,
@@ -464,7 +464,7 @@ typedef enum headerConvOps_e {
  * @param op		one of headerConvOps operations
  * @return		1 on success, 0 on failure
  */
-int headerConvert(Header h, int op);
+__attribute__ ((visibility ("default"))) int headerConvert(Header h, int op);
 
 #ifdef __cplusplus
 }

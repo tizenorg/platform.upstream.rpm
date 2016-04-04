@@ -23,17 +23,17 @@
 extern "C" {
 #endif
 
-extern struct rpmMacroContext_s * rpmGlobalMacroContext;
+__attribute__ ((visibility ("default"))) extern struct rpmMacroContext_s * rpmGlobalMacroContext;
 
-extern struct rpmMacroContext_s * rpmCLIMacroContext;
+__attribute__ ((visibility ("default"))) extern struct rpmMacroContext_s * rpmCLIMacroContext;
 
-extern const char * const RPMVERSION;
+__attribute__ ((visibility ("default"))) extern const char * const RPMVERSION;
 
-extern const char * const rpmNAME;
+__attribute__ ((visibility ("default"))) extern const char * const rpmNAME;
 
-extern const char * const rpmEVR;
+__attribute__ ((visibility ("default"))) extern const char * const rpmEVR;
 
-extern const int rpmFLAGS;
+__attribute__ ((visibility ("default"))) extern const int rpmFLAGS;
 
 /* ==================================================================== */
 /** \name RPMRC */
@@ -56,7 +56,7 @@ enum rpm_machtable_e {
  * @param target	target platform (NULL uses default)
  * @return		0 on success, -1 on error
  */
-int rpmReadConfigFiles(const char * file,
+__attribute__ ((visibility ("default"))) int rpmReadConfigFiles(const char * file,
 		const char * target);
 
 /** \ingroup rpmrc
@@ -65,7 +65,7 @@ int rpmReadConfigFiles(const char * file,
  * @retval name		address of arch name (or NULL)
  * @retval num		address of arch number (or NULL)
  */
-void rpmGetArchInfo( const char ** name,
+__attribute__ ((visibility ("default"))) void rpmGetArchInfo( const char ** name,
 		int * num);
 
 /** \ingroup rpmrc
@@ -73,7 +73,7 @@ void rpmGetArchInfo( const char ** name,
  * @param arch		name of an architecture
  * @return color        color of arch, -1 if the arch couldn't be determined
  */
-int rpmGetArchColor(const char *arch);
+__attribute__ ((visibility ("default"))) int rpmGetArchColor(const char *arch);
 
 /** \ingroup rpmrc
  * Return current os name and/or number.
@@ -81,7 +81,7 @@ int rpmGetArchColor(const char *arch);
  * @retval name		address of os name (or NULL)
  * @retval num		address of os number (or NULL)
  */
-void rpmGetOsInfo( const char ** name,
+__attribute__ ((visibility ("default"))) void rpmGetOsInfo( const char ** name,
 		int * num);
 
 /** \ingroup rpmrc
@@ -97,20 +97,20 @@ void rpmGetOsInfo( const char ** name,
  * @param name		name
  * @return		arch score (0 is no match, lower is preferred)
  */
-int rpmMachineScore(int type, const char * name);
+__attribute__ ((visibility ("default"))) int rpmMachineScore(int type, const char * name);
 
 /** \ingroup rpmrc
  * Display current rpmrc (and macro) configuration.
  * @param fp		output file handle
  * @return		0 always
  */
-int rpmShowRC(FILE * fp);
+__attribute__ ((visibility ("default"))) int rpmShowRC(FILE * fp);
 
 /** \ingroup rpmrc
  * Destroy rpmrc arch/os compatibility tables.
  * @todo Eliminate from API.
  */
-void rpmFreeRpmrc(void);
+__attribute__ ((visibility ("default"))) void rpmFreeRpmrc(void);
 
 /**
  * Compare headers to determine which header is "newer".
@@ -118,7 +118,7 @@ void rpmFreeRpmrc(void);
  * @param second	2nd header
  * @return		result of comparison
  */
-int rpmVersionCompare(Header first, Header second);
+__attribute__ ((visibility ("default"))) int rpmVersionCompare(Header first, Header second);
 
 /**  \ingroup header
  * Check header consistency, performing headerGetEntry() the hard way.
@@ -133,7 +133,7 @@ int rpmVersionCompare(Header first, Header second);
  * @retval *msg		verification error message (or NULL)
  * @return		RPMRC_OK on success
  */
-rpmRC headerCheck(rpmts ts, const void * uh, size_t uc, char ** msg);
+__attribute__ ((visibility ("default"))) rpmRC headerCheck(rpmts ts, const void * uh, size_t uc, char ** msg);
 
 /**  \ingroup header
  * Return checked and loaded header.
@@ -143,7 +143,7 @@ rpmRC headerCheck(rpmts ts, const void * uh, size_t uc, char ** msg);
  * @retval *msg		verification error message (or NULL)
  * @return		RPMRC_OK on success
  */
-rpmRC rpmReadHeader(rpmts ts, FD_t fd, Header *hdrp, char ** msg);
+__attribute__ ((visibility ("default"))) rpmRC rpmReadHeader(rpmts ts, FD_t fd, Header *hdrp, char ** msg);
 
 /** \ingroup header
  * Return package header from file handle, verifying digests/signatures.
@@ -153,7 +153,7 @@ rpmRC rpmReadHeader(rpmts ts, FD_t fd, Header *hdrp, char ** msg);
  * @retval hdrp		address of header (or NULL)
  * @return		RPMRC_OK on success
  */
-rpmRC rpmReadPackageFile(rpmts ts, FD_t fd,
+__attribute__ ((visibility ("default"))) rpmRC rpmReadPackageFile(rpmts ts, FD_t fd,
 		const char * fn, Header * hdrp);
 
 /** \ingroup rpmtrans
@@ -164,7 +164,7 @@ rpmRC rpmReadPackageFile(rpmts ts, FD_t fd,
  * @retval cookie	address of cookie pointer (or NULL)
  * @return		rpmRC return code
  */
-rpmRC rpmInstallSourcePackage(rpmts ts, FD_t fd,
+__attribute__ ((visibility ("default"))) rpmRC rpmInstallSourcePackage(rpmts ts, FD_t fd,
 			char ** specFilePtr,
 			char ** cookie);
 
@@ -175,7 +175,7 @@ rpmRC rpmInstallSourcePackage(rpmts ts, FD_t fd,
  * @param b		2nd string
  * @return		+1 if a is "newer", 0 if equal, -1 if b is "newer"
  */
-int rpmvercmp(const char * a, const char * b);
+__attribute__ ((visibility ("default"))) int rpmvercmp(const char * a, const char * b);
 
 #ifdef __cplusplus
 }

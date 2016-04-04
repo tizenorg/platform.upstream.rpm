@@ -19,16 +19,16 @@ typedef struct rpmMacroEntry_s * rpmMacroEntry;
 
 typedef struct rpmMacroContext_s * rpmMacroContext;
 
-extern rpmMacroContext rpmGlobalMacroContext;
+__attribute__ ((visibility ("default"))) extern rpmMacroContext rpmGlobalMacroContext;
 
-extern rpmMacroContext rpmCLIMacroContext;
+__attribute__ ((visibility ("default"))) extern rpmMacroContext rpmCLIMacroContext;
 
 /** \ingroup rpmrc
  * List of macro files to read when configuring rpm.
  * This is a colon separated list of files. URI's are permitted as well,
  * identified by the token '://', so file paths must not begin with '//'.
  */
-extern const char * macrofiles;
+__attribute__ ((visibility ("default"))) extern const char * macrofiles;
 
 /**
  * Markers for sources of macros added throughout rpm.
@@ -48,7 +48,7 @@ extern const char * macrofiles;
  * @param mc		macro context (NULL uses global context).
  * @param fp		file stream (NULL uses stderr).
  */
-void	rpmDumpMacroTable	(rpmMacroContext mc,
+__attribute__ ((visibility ("default"))) void	rpmDumpMacroTable	(rpmMacroContext mc,
 					FILE * fp);
 
 /** \ingroup rpmmacro
@@ -61,7 +61,7 @@ void	rpmDumpMacroTable	(rpmMacroContext mc,
  * @param slen		size of buffer
  * @return		0 on success
  */
-int	expandMacros	(void * spec, rpmMacroContext mc,
+__attribute__ ((visibility ("default"))) int	expandMacros	(void * spec, rpmMacroContext mc,
 				char * sbuf,
 				size_t slen);
 
@@ -74,7 +74,7 @@ int	expandMacros	(void * spec, rpmMacroContext mc,
  * @param b		macro body
  * @param level		macro recursion level (0 is entry API)
  */
-void	addMacro	(rpmMacroContext mc, const char * n,
+__attribute__ ((visibility ("default"))) void	addMacro	(rpmMacroContext mc, const char * n,
 				const char * o,
 				const char * b, int level);
 
@@ -83,7 +83,7 @@ void	addMacro	(rpmMacroContext mc, const char * n,
  * @param mc		macro context (NULL uses global context).
  * @param n		macro name
  */
-void	delMacro	(rpmMacroContext mc, const char * n);
+__attribute__ ((visibility ("default"))) void	delMacro	(rpmMacroContext mc, const char * n);
 
 /** \ingroup rpmmacro
  * Define macro in context.
@@ -92,7 +92,7 @@ void	delMacro	(rpmMacroContext mc, const char * n);
  * @param level		macro recursion level (0 is entry API)
  * @return		0 on success (always)
  */
-int	rpmDefineMacro	(rpmMacroContext mc, const char * macro,
+__attribute__ ((visibility ("default"))) int	rpmDefineMacro	(rpmMacroContext mc, const char * macro,
 				int level);
 
 /** \ingroup rpmmacro
@@ -100,34 +100,34 @@ int	rpmDefineMacro	(rpmMacroContext mc, const char * macro,
  * @param mc		macro context (NULL does nothing).
  * @param level		macro recursion level (0 is entry API)
  */
-void	rpmLoadMacros	(rpmMacroContext mc, int level);
+__attribute__ ((visibility ("default"))) void	rpmLoadMacros	(rpmMacroContext mc, int level);
 
 /** \ingroup rpmmacro
  * Load macro context from a macro file.
  * @param mc		(unused)
  * @param fn		macro file name
  */
-int	rpmLoadMacroFile(rpmMacroContext mc, const char * fn);
+__attribute__ ((visibility ("default"))) int	rpmLoadMacroFile(rpmMacroContext mc, const char * fn);
 
 /** \ingroup rpmmacro
  * Initialize macro context from set of macrofile(s).
  * @param mc		macro context
  * @param macrofiles	colon separated list of macro files (NULL does nothing)
  */
-void	rpmInitMacros	(rpmMacroContext mc, const char * macrofiles);
+__attribute__ ((visibility ("default"))) void	rpmInitMacros	(rpmMacroContext mc, const char * macrofiles);
 
 /** \ingroup rpmmacro
  * Destroy macro context.
  * @param mc		macro context (NULL uses global context).
  */
-void	rpmFreeMacros	(rpmMacroContext mc);
+__attribute__ ((visibility ("default"))) void	rpmFreeMacros	(rpmMacroContext mc);
 
 /** \ingroup rpmmacro
  * Return (malloc'ed) concatenated macro expansion(s).
  * @param arg		macro(s) to expand (NULL terminates list)
  * @return		macro expansion (malloc'ed)
  */
-char * rpmExpand	(const char * arg, ...) RPM_GNUC_NULL_TERMINATED;
+__attribute__ ((visibility ("default"))) char * rpmExpand	(const char * arg, ...) RPM_GNUC_NULL_TERMINATED;
 
 /** \ingroup rpmmacro
  * Return macro expansion as a numeric value.
@@ -136,7 +136,7 @@ char * rpmExpand	(const char * arg, ...) RPM_GNUC_NULL_TERMINATED;
  * @param arg		macro to expand
  * @return		numeric value
  */
-int	rpmExpandNumeric (const char * arg);
+__attribute__ ((visibility ("default"))) int	rpmExpandNumeric (const char * arg);
 
 /** \ingroup rpmmacro
  * Return rpm configuration base directory.
@@ -147,7 +147,7 @@ int	rpmExpandNumeric (const char * arg);
  * on subsequent calls.
  * @return		rpm configuration directory name
  */
-const char *rpmConfigDir(void);
+__attribute__ ((visibility ("default"))) const char *rpmConfigDir(void);
 
 #ifdef __cplusplus
 }

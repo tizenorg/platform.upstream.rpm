@@ -29,56 +29,56 @@ typedef	struct ARGI_s const * const ARGI_const_t;
  * @param argv		argv array
  * @param fp		output file handle (NULL uses stderr)
  */
-void argvPrint(const char * msg, ARGV_const_t argv, FILE * fp);
+__attribute__ ((visibility ("default"))) void argvPrint(const char * msg, ARGV_const_t argv, FILE * fp);
 
 /** \ingroup rpmargv
  * Destroy an argi array.
  * @param argi		argi array
  * @return		NULL always
  */
-ARGI_t argiFree(ARGI_t argi);
+__attribute__ ((visibility ("default"))) ARGI_t argiFree(ARGI_t argi);
 
 
 /** \ingroup rpmargv
  * Create an empty argv array.
  * @return		pointer to empty argv
  */
-ARGV_t argvNew(void);
+__attribute__ ((visibility ("default"))) ARGV_t argvNew(void);
 
 /** \ingroup rpmargv
  * Destroy an argv array.
  * @param argv		argv array
  * @return		NULL always
  */
-ARGV_t argvFree(ARGV_t argv);
+__attribute__ ((visibility ("default"))) ARGV_t argvFree(ARGV_t argv);
 
 /** \ingroup rpmargv
  * Return no. of elements in argi array.
  * @param argi		argi array
  * @return		no. of elements
  */
-int argiCount(ARGI_const_t argi);
+__attribute__ ((visibility ("default"))) int argiCount(ARGI_const_t argi);
 
 /** \ingroup rpmargv
  * Return data from argi array.
  * @param argi		argi array
  * @return		argi array data address
  */
-ARGint_t argiData(ARGI_const_t argi);
+__attribute__ ((visibility ("default"))) ARGint_t argiData(ARGI_const_t argi);
 
 /** \ingroup rpmargv
  * Return no. of elements in argv array.
  * @param argv		argv array
  * @return		no. of elements
  */
-int argvCount(ARGV_const_t argv);
+__attribute__ ((visibility ("default"))) int argvCount(ARGV_const_t argv);
 
 /** \ingroup rpmargv
  * Return data from argv array.
  * @param argv		argv array
  * @return		argv array data address
  */
-ARGV_t argvData(ARGV_t argv);
+__attribute__ ((visibility ("default"))) ARGV_t argvData(ARGV_t argv);
 
 /** \ingroup rpmargv
  * Compare argv arrays (qsort/bsearch).
@@ -86,7 +86,7 @@ ARGV_t argvData(ARGV_t argv);
  * @param b		2nd instance address
  * @return		result of comparison
  */
-int argvCmp(const void * a, const void * b);
+__attribute__ ((visibility ("default"))) int argvCmp(const void * a, const void * b);
 
 /** \ingroup rpmargv
  * Sort an argv array.
@@ -94,7 +94,7 @@ int argvCmp(const void * a, const void * b);
  * @param compar	strcmp-like comparison function, or NULL for argvCmp()
  * @return		0 always
  */
-int argvSort(ARGV_t argv, int (*compar)(const void *, const void *));
+__attribute__ ((visibility ("default"))) int argvSort(ARGV_t argv, int (*compar)(const void *, const void *));
 
 /** \ingroup rpmargv
  * Find an element in an argv array.
@@ -103,7 +103,7 @@ int argvSort(ARGV_t argv, int (*compar)(const void *, const void *));
  * @param compar	strcmp-like comparison function, or NULL for argvCmp()
  * @return		found string (NULL on failure)
  */
-ARGV_t argvSearch(ARGV_const_t argv, const char *val,
+__attribute__ ((visibility ("default"))) ARGV_t argvSearch(ARGV_const_t argv, const char *val,
 		int (*compar)(const void *, const void *));
 
 /** \ingroup rpmargv
@@ -113,7 +113,7 @@ ARGV_t argvSearch(ARGV_const_t argv, const char *val,
  * @param val		int arg to add
  * @return		0 always
  */
-int argiAdd(ARGI_t * argip, int ix, int val);
+__attribute__ ((visibility ("default"))) int argiAdd(ARGI_t * argip, int ix, int val);
 
 /** \ingroup rpmargv
  * Add a string to an argv array.
@@ -121,7 +121,7 @@ int argiAdd(ARGI_t * argip, int ix, int val);
  * @param val		string arg to append
  * @return		0 always
  */
-int argvAdd(ARGV_t * argvp, const char *val);
+__attribute__ ((visibility ("default"))) int argvAdd(ARGV_t * argvp, const char *val);
 
 /** \ingroup rpmargv
  * Add a number to an argv array (converting to a string).
@@ -129,7 +129,7 @@ int argvAdd(ARGV_t * argvp, const char *val);
  * @param val		numeric arg to append
  * @return		0 always
  */
-int argvAddNum(ARGV_t * argvp, int val);
+__attribute__ ((visibility ("default"))) int argvAddNum(ARGV_t * argvp, int val);
 
 /** \ingroup rpmargv
  * Append one argv array to another.
@@ -137,7 +137,7 @@ int argvAddNum(ARGV_t * argvp, int val);
  * @param av		argv array to append
  * @return		0 always
  */
-int argvAppend(ARGV_t * argvp, ARGV_const_t av);
+__attribute__ ((visibility ("default"))) int argvAppend(ARGV_t * argvp, ARGV_const_t av);
 
 enum argvFlags_e {
     ARGV_NONE		= 0,
@@ -153,7 +153,7 @@ typedef rpmFlags argvFlags;
  * @param flags		flags to control behavior
  * @return		argv array
  */
-ARGV_t argvSplitString(const char * str, const char * seps, argvFlags flags);
+__attribute__ ((visibility ("default"))) ARGV_t argvSplitString(const char * str, const char * seps, argvFlags flags);
 
 /** \ingroup rpmargv
  * Split a string into an argv array.
@@ -162,7 +162,7 @@ ARGV_t argvSplitString(const char * str, const char * seps, argvFlags flags);
  * @param seps		seperator characters
  * @return		0 always
  */
-int argvSplit(ARGV_t * argvp, const char * str, const char * seps);
+__attribute__ ((visibility ("default"))) int argvSplit(ARGV_t * argvp, const char * str, const char * seps);
 
 /** \ingroup rpmargv
  * Join an argv array into a string.
@@ -170,7 +170,7 @@ int argvSplit(ARGV_t * argvp, const char * str, const char * seps);
  * @param sep		seperator string to use
  * @return		malloc'ed string
  */
-char *argvJoin(ARGV_const_t argv, const char *sep);
+__attribute__ ((visibility ("default"))) char *argvJoin(ARGV_const_t argv, const char *sep);
 
 #ifdef __cplusplus
 }

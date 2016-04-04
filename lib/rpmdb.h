@@ -36,14 +36,14 @@ typedef enum rpmdbOpX_e {
  * @param opx           operation timestamp index
  * @return              pointer to operation timestamp.
  */
-rpmop rpmdbOp(rpmdb db, rpmdbOpX opx);
+__attribute__ ((visibility ("default"))) rpmop rpmdbOp(rpmdb db, rpmdbOpX opx);
 
 /** \ingroup rpmdb
  * Open all database indices.
  * @param db		rpm database
  * @return		0 on success
  */
-int rpmdbOpenAll (rpmdb db);
+__attribute__ ((visibility ("default"))) int rpmdbOpenAll (rpmdb db);
 
 /** \ingroup rpmdb
  * Return number of instances of package in rpm database.
@@ -51,25 +51,25 @@ int rpmdbOpenAll (rpmdb db);
  * @param name		rpm package name
  * @return		number of instances
  */
-int rpmdbCountPackages(rpmdb db, const char * name);
+__attribute__ ((visibility ("default"))) int rpmdbCountPackages(rpmdb db, const char * name);
 
 /** \ingroup rpmdb
  * Return header join key for current position of rpm database iterator.
  * @param mi		rpm database iterator
  * @return		current header join key
  */
-unsigned int rpmdbGetIteratorOffset(rpmdbMatchIterator mi);
+__attribute__ ((visibility ("default"))) unsigned int rpmdbGetIteratorOffset(rpmdbMatchIterator mi);
 
 /** \ingroup rpmdb
  * Return number of elements in rpm database iterator.
  * @param mi		rpm database iterator
  * @return		number of elements
  */
-int rpmdbGetIteratorCount(rpmdbMatchIterator mi);
+__attribute__ ((visibility ("default"))) int rpmdbGetIteratorCount(rpmdbMatchIterator mi);
 
 /** \ingroup rpmdb
  */
-unsigned int rpmdbGetIteratorFileNum(rpmdbMatchIterator mi);
+__attribute__ ((visibility ("default"))) unsigned int rpmdbGetIteratorFileNum(rpmdbMatchIterator mi);
 
 /** \ingroup rpmdb
  * Append items to set of package instances to iterate.
@@ -78,7 +78,7 @@ unsigned int rpmdbGetIteratorFileNum(rpmdbMatchIterator mi);
  * @param nHdrNums	number of elements in array
  * @return		0 on success, 1 on failure (bad args)
  */
-int rpmdbAppendIterator(rpmdbMatchIterator mi,
+__attribute__ ((visibility ("default"))) int rpmdbAppendIterator(rpmdbMatchIterator mi,
 		const int * hdrNums, int nHdrNums);
 
 /** \ingroup rpmdb
@@ -89,7 +89,7 @@ int rpmdbAppendIterator(rpmdbMatchIterator mi,
  * @param pattern	pattern to match
  * @return		0 on success
  */
-int rpmdbSetIteratorRE(rpmdbMatchIterator mi, rpmTagVal tag,
+__attribute__ ((visibility ("default"))) int rpmdbSetIteratorRE(rpmdbMatchIterator mi, rpmTagVal tag,
 		rpmMireMode mode, const char * pattern);
 
 /** \ingroup rpmdb
@@ -99,7 +99,7 @@ int rpmdbSetIteratorRE(rpmdbMatchIterator mi, rpmTagVal tag,
  * @param rewrite	new value of rewrite
  * @return		previous value
  */
-int rpmdbSetIteratorRewrite(rpmdbMatchIterator mi, int rewrite);
+__attribute__ ((visibility ("default"))) int rpmdbSetIteratorRewrite(rpmdbMatchIterator mi, int rewrite);
 
 /** \ingroup rpmdb
  * Modify iterator to mark header for lazy write on release.
@@ -107,7 +107,7 @@ int rpmdbSetIteratorRewrite(rpmdbMatchIterator mi, int rewrite);
  * @param modified	new value of modified
  * @return		previous value
  */
-int rpmdbSetIteratorModified(rpmdbMatchIterator mi, int modified);
+__attribute__ ((visibility ("default"))) int rpmdbSetIteratorModified(rpmdbMatchIterator mi, int modified);
 
 /** \ingroup rpmdb
  * Modify iterator to verify retrieved header blobs.
@@ -116,7 +116,7 @@ int rpmdbSetIteratorModified(rpmdbMatchIterator mi, int modified);
  * @param (*hdrchk)	headerCheck() vector
  * @return		0 always
  */
-int rpmdbSetHdrChk(rpmdbMatchIterator mi, rpmts ts,
+__attribute__ ((visibility ("default"))) int rpmdbSetHdrChk(rpmdbMatchIterator mi, rpmts ts,
 	rpmRC (*hdrchk) (rpmts ts, const void * uh, size_t uc, char ** msg));
 
 /** \ingroup rpmdb
@@ -127,7 +127,7 @@ int rpmdbSetHdrChk(rpmdbMatchIterator mi, rpmts ts,
  * @param keylen	key data length (0 will use strlen(keyp))
  * @return		NULL on failure
  */
-rpmdbMatchIterator rpmdbInitIterator(rpmdb db, rpmDbiTagVal rpmtag,
+__attribute__ ((visibility ("default"))) rpmdbMatchIterator rpmdbInitIterator(rpmdb db, rpmDbiTagVal rpmtag,
 			const void * keyp, size_t keylen);
 
 /** \ingroup rpmdb
@@ -135,12 +135,12 @@ rpmdbMatchIterator rpmdbInitIterator(rpmdb db, rpmDbiTagVal rpmtag,
  * @param mi		rpm database iterator
  * @return		NULL on end of iteration.
  */
-Header rpmdbNextIterator(rpmdbMatchIterator mi);
+__attribute__ ((visibility ("default"))) Header rpmdbNextIterator(rpmdbMatchIterator mi);
 
 /** \ingroup rpmdb
  * Check for and exit on termination signals.
  */
-int rpmdbCheckSignals(void);
+__attribute__ ((visibility ("default"))) int rpmdbCheckSignals(void);
 
 /** \ingroup rpmdb
  * Check rpmdb signal handler for trapped signal and/or requested exit,
@@ -150,14 +150,14 @@ int rpmdbCheckSignals(void);
  * @param terminate	0 to only check for signals, 1 to terminate anyway
  * @return 		0 to continue, 1 if termination cleanup was done.
  */
-int rpmdbCheckTerminate(int terminate);
+__attribute__ ((visibility ("default"))) int rpmdbCheckTerminate(int terminate);
 
 /** \ingroup rpmdb
  * Destroy rpm database iterator.
  * @param mi		rpm database iterator
  * @return		NULL always
  */
-rpmdbMatchIterator rpmdbFreeIterator(rpmdbMatchIterator mi);
+__attribute__ ((visibility ("default"))) rpmdbMatchIterator rpmdbFreeIterator(rpmdbMatchIterator mi);
 
 /** \ingroup rpmdb
  * Get an iterator for an index
@@ -165,7 +165,7 @@ rpmdbMatchIterator rpmdbFreeIterator(rpmdbMatchIterator mi);
  * @param rpmtag	the index to iterate over
  * @return		the index iterator
  */
-rpmdbIndexIterator rpmdbIndexIteratorInit(rpmdb db, rpmDbiTag rpmtag);
+__attribute__ ((visibility ("default"))) rpmdbIndexIterator rpmdbIndexIteratorInit(rpmdb db, rpmDbiTag rpmtag);
 
 /** \ingroup rpmdb
  * Get the next key - Warning! Keys are not zero terminated!
@@ -175,14 +175,14 @@ rpmdbIndexIterator rpmdbIndexIteratorInit(rpmdb db, rpmDbiTag rpmtag);
  * @param keylen	adress to save the length of the key to
  * @return 		0 on success; != 0 on error or end of index
  */
-int rpmdbIndexIteratorNext(rpmdbIndexIterator ii, const void ** key, size_t * keylen);
+__attribute__ ((visibility ("default"))) int rpmdbIndexIteratorNext(rpmdbIndexIterator ii, const void ** key, size_t * keylen);
 
 /** \ingroup rpmdb
  * Get number of entries for current key
  * @param ii            index iterator
  * @return		number of entries. 0 on error.
  */
-unsigned int rpmdbIndexIteratorNumPkgs(rpmdbIndexIterator ii);
+__attribute__ ((visibility ("default"))) unsigned int rpmdbIndexIteratorNumPkgs(rpmdbIndexIterator ii);
 
 /** \ingroup rpmdb
  * Get package offset of entry
@@ -190,7 +190,7 @@ unsigned int rpmdbIndexIteratorNumPkgs(rpmdbIndexIterator ii);
  * @param nr		number of the entry
  * @return		db offset of pkg
  */
-unsigned int rpmdbIndexIteratorPkgOffset(rpmdbIndexIterator ii, unsigned int nr);
+__attribute__ ((visibility ("default"))) unsigned int rpmdbIndexIteratorPkgOffset(rpmdbIndexIterator ii, unsigned int nr);
 
 /** \ingroup rpmdb
  * Get tag number of entry
@@ -198,14 +198,14 @@ unsigned int rpmdbIndexIteratorPkgOffset(rpmdbIndexIterator ii, unsigned int nr)
  * @param nr		number of the entry
  * @return		number of tag within the package
  */
-unsigned int rpmdbIndexIteratorTagNum(rpmdbIndexIterator ii, unsigned int nr);
+__attribute__ ((visibility ("default"))) unsigned int rpmdbIndexIteratorTagNum(rpmdbIndexIterator ii, unsigned int nr);
 
 /** \ingroup rpmdb
  * Free index iterator
  * @param ii            index iterator
  * return 		NULL
  */
-rpmdbIndexIterator rpmdbIndexIteratorFree(rpmdbIndexIterator ii);
+__attribute__ ((visibility ("default"))) rpmdbIndexIterator rpmdbIndexIteratorFree(rpmdbIndexIterator ii);
 
 
 #ifdef __cplusplus

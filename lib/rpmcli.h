@@ -23,13 +23,13 @@ extern "C" {
 /** \ingroup rpmcli
  * Popt option table for options shared by all modes and executables.
  */
-extern struct poptOption		rpmcliAllPoptTable[];
+__attribute__ ((visibility ("default"))) extern struct poptOption		rpmcliAllPoptTable[];
 
-extern const char * rpmcliPipeOutput;
+__attribute__ ((visibility ("default"))) extern const char * rpmcliPipeOutput;
 
-extern const char * rpmcliRcfile;
+__attribute__ ((visibility ("default"))) extern const char * rpmcliRcfile;
 
-extern const char * rpmcliRootDir;
+__attribute__ ((visibility ("default"))) extern const char * rpmcliRootDir;
 
 /** \ingroup rpmcli
  * Initialize most everything needed by an rpm CLI executable context.
@@ -38,21 +38,21 @@ extern const char * rpmcliRootDir;
  * @param optionsTable		popt option table
  * @return			popt context (or NULL)
  */
-poptContext
+__attribute__ ((visibility ("default"))) poptContext
 rpmcliInit(int argc, char *const argv[], struct poptOption * optionsTable);
 
 /** \ingroup rpmcli
  * Make sure that rpm configuration has been read.
  * @warning Options like --rcfile and --verbose must precede callers option.
  */
-void rpmcliConfigured(void);
+__attribute__ ((visibility ("default"))) void rpmcliConfigured(void);
 
 /** \ingroup rpmcli
  * Destroy most everything needed by an rpm CLI executable context.
  * @param optCon		popt context
  * @return			NULL always
  */
-poptContext
+__attribute__ ((visibility ("default"))) poptContext
 rpmcliFini(poptContext optCon);
 
 /**
@@ -136,7 +136,7 @@ typedef rpmFlags rpmQueryFlags;
 /** \ingroup rpmcli
  * Bit(s) from common command line options.
  */
-extern rpmQueryFlags rpmcliQueryFlags;
+__attribute__ ((visibility ("default"))) extern rpmQueryFlags rpmcliQueryFlags;
 
 /** \ingroup rpmcli
  */
@@ -186,25 +186,25 @@ struct rpmQVKArguments_s {
 
 /** \ingroup rpmcli
  */
-extern struct rpmQVKArguments_s rpmQVKArgs;
+__attribute__ ((visibility ("default"))) extern struct rpmQVKArguments_s rpmQVKArgs;
 
 /** \ingroup rpmcli
  */
-extern struct poptOption rpmQVSourcePoptTable[];
+__attribute__ ((visibility ("default"))) extern struct poptOption rpmQVSourcePoptTable[];
 
 /** \ingroup rpmcli
  */
-extern struct poptOption rpmQueryPoptTable[];
+__attribute__ ((visibility ("default"))) extern struct poptOption rpmQueryPoptTable[];
 
 /** \ingroup rpmcli
  */
-extern struct poptOption rpmVerifyPoptTable[];
+__attribute__ ((visibility ("default"))) extern struct poptOption rpmVerifyPoptTable[];
 
 /** \ingroup rpmcli
  * Display list of tags that can be used in --queryformat.
  * @param fp	file handle to use for display
  */
-void rpmDisplayQueryTags(FILE * fp);
+__attribute__ ((visibility ("default"))) void rpmDisplayQueryTags(FILE * fp);
 
 /** \ingroup rpmcli
  * Display results of package query.
@@ -214,7 +214,7 @@ void rpmDisplayQueryTags(FILE * fp);
  * @param h		header to use for query
  * @return		0 always
  */
-int showQueryPackage(QVA_t qva, rpmts ts, Header h);
+__attribute__ ((visibility ("default"))) int showQueryPackage(QVA_t qva, rpmts ts, Header h);
 
 /** \ingroup rpmcli
  * Iterate over query/verify arg list.
@@ -223,7 +223,7 @@ int showQueryPackage(QVA_t qva, rpmts ts, Header h);
  * @param argv		query argument(s) (or NULL)
  * @return		0 on success, else no. of failures
  */
-int rpmcliArgIter(rpmts ts, QVA_t qva, ARGV_const_t argv);
+__attribute__ ((visibility ("default"))) int rpmcliArgIter(rpmts ts, QVA_t qva, ARGV_const_t argv);
 
 /** \ingroup rpmcli
  * Display package information.
@@ -233,7 +233,7 @@ int rpmcliArgIter(rpmts ts, QVA_t qva, ARGV_const_t argv);
  * @param argv		query argument(s) (or NULL)
  * @return		0 on success, else no. of failures
  */
-int rpmcliQuery(rpmts ts, QVA_t qva, ARGV_const_t argv);
+__attribute__ ((visibility ("default"))) int rpmcliQuery(rpmts ts, QVA_t qva, ARGV_const_t argv);
 
 /** \ingroup rpmcli
  * Display results of package verify.
@@ -242,7 +242,7 @@ int rpmcliQuery(rpmts ts, QVA_t qva, ARGV_const_t argv);
  * @param h		header to use for verify
  * @return		result of last non-zero verify return
  */
-int showVerifyPackage(QVA_t qva, rpmts ts, Header h);
+__attribute__ ((visibility ("default"))) int showVerifyPackage(QVA_t qva, rpmts ts, Header h);
 
 /**
  * Check package and header signatures.
@@ -252,7 +252,7 @@ int showVerifyPackage(QVA_t qva, rpmts ts, Header h);
  * @param fn		package file name
  * @return		0 on success, 1 on failure
  */
-int rpmVerifySignatures(QVA_t qva, rpmts ts, FD_t fd, const char * fn);
+__attribute__ ((visibility ("default"))) int rpmVerifySignatures(QVA_t qva, rpmts ts, FD_t fd, const char * fn);
 
 /** \ingroup rpmcli
  * Verify package install.
@@ -262,7 +262,7 @@ int rpmVerifySignatures(QVA_t qva, rpmts ts, FD_t fd, const char * fn);
  * @param argv		verify argument(s) (or NULL)
  * @return		0 on success, else no. of failures
  */
-int rpmcliVerify(rpmts ts, QVA_t qva, ARGV_const_t argv);
+__attribute__ ((visibility ("default"))) int rpmcliVerify(rpmts ts, QVA_t qva, ARGV_const_t argv);
 
 /* ==================================================================== */
 /** \name RPMEIU */
@@ -308,7 +308,7 @@ typedef rpmFlags rpmInstallFlags;
  * @param data		private data (e.g. rpmInstallInterfaceFlags)
  * @return		per-callback data (e.g. an opened FD_t)
  */
-void * rpmShowProgress(const void * arg,
+__attribute__ ((visibility ("default"))) void * rpmShowProgress(const void * arg,
 		const rpmCallbackType what,
 		const rpm_loff_t amount,
 		const rpm_loff_t total,
@@ -323,7 +323,7 @@ void * rpmShowProgress(const void * arg,
  * @retval *cookie
  * @return		0 on success
  */
-int rpmInstallSource(rpmts ts, const char * arg,
+__attribute__ ((visibility ("default"))) int rpmInstallSource(rpmts ts, const char * arg,
 		char ** specFilePtr,
 		char ** cookie);
 
@@ -351,7 +351,7 @@ struct rpmInstallArguments_s {
  *
  * @todo		fileArgv is modified on errors, should be ARGV_const_t
  */
-int rpmInstall(rpmts ts, struct rpmInstallArguments_s * ia, ARGV_t fileArgv);
+__attribute__ ((visibility ("default"))) int rpmInstall(rpmts ts, struct rpmInstallArguments_s * ia, ARGV_t fileArgv);
 
 /** \ingroup rpmcli
  * Erase binary rpm package.
@@ -361,15 +361,15 @@ int rpmInstall(rpmts ts, struct rpmInstallArguments_s * ia, ARGV_t fileArgv);
  * @return		0 on success
  */
 
-int rpmErase(rpmts ts, struct rpmInstallArguments_s * ia, ARGV_const_t argv);
+__attribute__ ((visibility ("default"))) int rpmErase(rpmts ts, struct rpmInstallArguments_s * ia, ARGV_const_t argv);
 
 /** \ingroup rpmcli
  */
-extern struct rpmInstallArguments_s rpmIArgs;
+__attribute__ ((visibility ("default"))) extern struct rpmInstallArguments_s rpmIArgs;
 
 /** \ingroup rpmcli
  */
-extern struct poptOption rpmInstallPoptTable[];
+__attribute__ ((visibility ("default"))) extern struct poptOption rpmInstallPoptTable[];
 
 /* ==================================================================== */
 /** \name RPMK */
@@ -379,7 +379,7 @@ extern struct poptOption rpmInstallPoptTable[];
  * @param argv		array of pubkey path arguments (NULL terminated)
  * @return		0 on success
  */
-int rpmcliImportPubkeys(rpmts ts, ARGV_const_t argv);
+__attribute__ ((visibility ("default"))) int rpmcliImportPubkeys(rpmts ts, ARGV_const_t argv);
 
 /** \ingroup rpmcli
  * Verify package signatures
@@ -387,7 +387,7 @@ int rpmcliImportPubkeys(rpmts ts, ARGV_const_t argv);
  * @param argv		array of package path arguments (NULL terminated)
  * @return		0 on success
  */
-int rpmcliVerifySignatures(rpmts ts, ARGV_const_t argv);
+__attribute__ ((visibility ("default"))) int rpmcliVerifySignatures(rpmts ts, ARGV_const_t argv);
 
 #ifdef __cplusplus
 }

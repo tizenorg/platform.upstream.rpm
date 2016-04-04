@@ -38,7 +38,7 @@ typedef enum rpmCompressedMagic_e {
  * @retval *fsizep	file size pointer (or NULL)
  * @return		0 on success, 1 on error
  */
-int rpmDoDigest(int algo, const char * fn,int asAscii,
+__attribute__ ((visibility ("default"))) int rpmDoDigest(int algo, const char * fn,int asAscii,
 		  unsigned char * digest, rpm_loff_t * fsizep);
 
 /** \ingroup rpmfileutil
@@ -46,7 +46,7 @@ int rpmDoDigest(int algo, const char * fn,int asAscii,
  * @param templ			template for temporary filename
  * @return 			file handle or NULL on error
  */
-FD_t rpmMkTemp(char *templ);
+__attribute__ ((visibility ("default"))) FD_t rpmMkTemp(char *templ);
 
 /** \ingroup rpmfileutil
  * Return file handle for a temporaray file.
@@ -58,7 +58,7 @@ FD_t rpmMkTemp(char *templ);
  * @retval fn		temp file name (or NULL)
  * @return fdptr	open file handle or NULL on error
  */
-FD_t rpmMkTempFile(const char * prefix, char **fn);
+__attribute__ ((visibility ("default"))) FD_t rpmMkTempFile(const char * prefix, char **fn);
 
 /** \ingroup rpmfileutil
  * Insure that directories in path exist, creating as needed.
@@ -68,7 +68,7 @@ FD_t rpmMkTempFile(const char * prefix, char **fn);
  * @param gid		directory uid (if created), or -1 to skip
  * @return		0 on success, errno (or -1) on error
  */
-int rpmioMkpath(const char * path, mode_t mode, uid_t uid, gid_t gid);
+__attribute__ ((visibility ("default"))) int rpmioMkpath(const char * path, mode_t mode, uid_t uid, gid_t gid);
 
 /** \ingroup rpmfileutil
  * Create several directories (including parents if needed) in one go.
@@ -78,14 +78,14 @@ int rpmioMkpath(const char * path, mode_t mode, uid_t uid, gid_t gid);
  * @return		0 if all directories were successfully created
  * 			(or already existed), non-zero otherwise
  */
-int rpmMkdirs(const char *root, const char *pathstr);
+__attribute__ ((visibility ("default"))) int rpmMkdirs(const char *root, const char *pathstr);
 
 /** \ingroup rpmfileutil
  * Canonicalize file path.
  * @param path		path to canonicalize (in-place)
  * @return		pointer to path
  */
-char * rpmCleanPath	(char * path);
+__attribute__ ((visibility ("default"))) char * rpmCleanPath	(char * path);
 
 /** \ingroup rpmfileutil
  * Merge 3 args into path, any or all of which may be a url.
@@ -97,7 +97,7 @@ char * rpmCleanPath	(char * path);
  * @param urlfile	file URL (often a file, or NULL)
  * @return		expanded, merged, canonicalized path (malloc'ed)
  */
-char * rpmGenPath	(const char * urlroot,
+__attribute__ ((visibility ("default"))) char * rpmGenPath	(const char * urlroot,
 			const char * urlmdir,
 			const char * urlfile);
 
@@ -106,7 +106,7 @@ char * rpmGenPath	(const char * urlroot,
  * @param path		macro(s) to expand (NULL terminates list)
  * @return		canonicalized path (malloc'ed)
  */
-char * rpmGetPath (const char * path, ...) RPM_GNUC_NULL_TERMINATED;
+__attribute__ ((visibility ("default"))) char * rpmGetPath (const char * path, ...) RPM_GNUC_NULL_TERMINATED;
 
 /** \ingroup rpmfileutil
  * Check whether pattern contains any glob metacharacters.
@@ -114,7 +114,7 @@ char * rpmGetPath (const char * path, ...) RPM_GNUC_NULL_TERMINATED;
  * @param quote		allow backslash quoting of metacharacters?
  * @return		1 if pattern contains globs, 0 otherwise
  */
-int rpmIsGlob(const char * pattern, int quote);
+__attribute__ ((visibility ("default"))) int rpmIsGlob(const char * pattern, int quote);
 
 /** \ingroup rpmfileutil
  * Return URL path(s) from a (URL prefixed) pattern glob.
@@ -123,14 +123,14 @@ int rpmIsGlob(const char * pattern, int quote);
  * @retval *argvPtr	ARGV_t array of paths
  * @return		0 on success
  */
-int rpmGlob(const char * patterns, int * argcPtr, ARGV_t * argvPtr);
+__attribute__ ((visibility ("default"))) int rpmGlob(const char * patterns, int * argcPtr, ARGV_t * argvPtr);
 
 /** \ingroup rpmfileutil
  * Escape isspace(3) characters in string.
  * @param s             string
  * @return              escaped string
  */
-char * rpmEscapeSpaces(const char * s);
+__attribute__ ((visibility ("default"))) char * rpmEscapeSpaces(const char * s);
 
 /** \ingroup rpmfileutil
  * Return type of compression used in file.
@@ -138,7 +138,7 @@ char * rpmEscapeSpaces(const char * s);
  * @retval compressed	address of compression type
  * @return		0 on success, 1 on I/O error
  */
-int rpmFileIsCompressed (const char * file, rpmCompressedMagic * compressed);
+__attribute__ ((visibility ("default"))) int rpmFileIsCompressed (const char * file, rpmCompressedMagic * compressed);
 
 /** \ingroup rpmfileutil
  * Check if path (string) ends with given suffix
@@ -146,13 +146,13 @@ int rpmFileIsCompressed (const char * file, rpmCompressedMagic * compressed);
  * @param suffix	suffix string to check for
  * @return		1 if true, 0 otherwise
  */
-int rpmFileHasSuffix(const char *path, const char *suffix);
+__attribute__ ((visibility ("default"))) int rpmFileHasSuffix(const char *path, const char *suffix);
 
 /** \ingroup rpmfileutil
  * Like getcwd() but the result is malloced.
  * @return              current working directory (malloc'ed)
  */
-char * rpmGetCwd(void);
+__attribute__ ((visibility ("default"))) char * rpmGetCwd(void);
 
 #ifdef __cplusplus
 }

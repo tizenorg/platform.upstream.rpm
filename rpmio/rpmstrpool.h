@@ -11,7 +11,7 @@ extern "C" {
  * Create a new, empty string pool.
  * @return		new string pool
  */
-rpmstrPool rpmstrPoolCreate(void);
+__attribute__ ((visibility ("default"))) rpmstrPool rpmstrPoolCreate(void);
 
 /** \ingroup rpmstrpool
  * Free a string pool and its contents. While other references exist,
@@ -19,14 +19,14 @@ rpmstrPool rpmstrPoolCreate(void);
  * @param pool		string pool
  * @return		NULL always
  */
-rpmstrPool rpmstrPoolFree(rpmstrPool pool);
+__attribute__ ((visibility ("default"))) rpmstrPool rpmstrPoolFree(rpmstrPool pool);
 
 /** \ingroup rpmstrpool
  * Reference a string pool
  * @param pool		string pool
  * @return		new string pool reference
  */
-rpmstrPool rpmstrPoolLink(rpmstrPool pool);
+__attribute__ ((visibility ("default"))) rpmstrPool rpmstrPoolLink(rpmstrPool pool);
 
 /** \ingroup rpmstrpool
  * Freeze a string pool: new strings cannot be added to a frozen pool.
@@ -36,7 +36,7 @@ rpmstrPool rpmstrPoolLink(rpmstrPool pool);
  * @param pool		string pool
  * @param keephash	should string -> id hash be kept around?
  */
-void rpmstrPoolFreeze(rpmstrPool pool, int keephash);
+__attribute__ ((visibility ("default"))) void rpmstrPoolFreeze(rpmstrPool pool, int keephash);
 
 /** \ingroup rpmstrpool
  * Unfreeze a string pool to allow new additions again.
@@ -44,7 +44,7 @@ void rpmstrPoolFreeze(rpmstrPool pool, int keephash);
  * the entire pool contents.
  * @param pool		string pool
  */
-void rpmstrPoolUnfreeze(rpmstrPool pool);
+__attribute__ ((visibility ("default"))) void rpmstrPoolUnfreeze(rpmstrPool pool);
 
 /** \ingroup rpmstrpool
  * Look up the id of a string. If create is specified the string is
@@ -55,7 +55,7 @@ void rpmstrPoolUnfreeze(rpmstrPool pool);
  * @param create	should an id be created if not already present?
  * @return		id of the string or 0 for not found
  */
-rpmsid rpmstrPoolId(rpmstrPool pool, const char *s, int create);
+__attribute__ ((visibility ("default"))) rpmsid rpmstrPoolId(rpmstrPool pool, const char *s, int create);
 
 /** \ingroup rpmstrpool
  * Look up the id of a string with predetermined length. The string does
@@ -68,7 +68,7 @@ rpmsid rpmstrPoolId(rpmstrPool pool, const char *s, int create);
  * @param create	should an id be created if not already present?
  * @return		id of the string or 0 for not found
  */
-rpmsid rpmstrPoolIdn(rpmstrPool pool, const char *s, size_t slen, int create);
+__attribute__ ((visibility ("default"))) rpmsid rpmstrPoolIdn(rpmstrPool pool, const char *s, size_t slen, int create);
 
 /** \ingroup rpmstrpool
  * Look up a string by its pool id.
@@ -76,7 +76,7 @@ rpmsid rpmstrPoolIdn(rpmstrPool pool, const char *s, size_t slen, int create);
  * @param sid		pool id of a string
  * @return		pointer to the string or NULL for invalid id
  */
-const char * rpmstrPoolStr(rpmstrPool pool, rpmsid sid);
+__attribute__ ((visibility ("default"))) const char * rpmstrPoolStr(rpmstrPool pool, rpmsid sid);
 
 /** \ingroup rpmstrpool
  * Return length of a string by its pool id. The result is equal to
@@ -86,7 +86,7 @@ const char * rpmstrPoolStr(rpmstrPool pool, rpmsid sid);
  * @param sid		pool id of a string
  * @return		length of the string
  */
-size_t rpmstrPoolStrlen(rpmstrPool pool, rpmsid sid);
+__attribute__ ((visibility ("default"))) size_t rpmstrPoolStrlen(rpmstrPool pool, rpmsid sid);
 
 /** \ingroup rpmstrpool
  * Compare two strings for equality by their ids. The result is equal to
@@ -98,7 +98,7 @@ size_t rpmstrPoolStrlen(rpmstrPool pool, rpmsid sid);
  * @param sidB		pool id of the second string
  * @return		1 if strings are equal, 0 otherwise
  */
-int rpmstrPoolStreq(rpmstrPool poolA, rpmsid sidA,
+__attribute__ ((visibility ("default"))) int rpmstrPoolStreq(rpmstrPool poolA, rpmsid sidA,
                     rpmstrPool poolB, rpmsid sidB);
 
 /** \ingroup rpmstrpool
@@ -107,7 +107,7 @@ int rpmstrPoolStreq(rpmstrPool poolA, rpmsid sidA,
  * @param pool		string pool
  * @return		number of strings in the pool
  */
-rpmsid rpmstrPoolNumStr(rpmstrPool pool);
+__attribute__ ((visibility ("default"))) rpmsid rpmstrPoolNumStr(rpmstrPool pool);
 
 #ifdef __cplusplus
 }

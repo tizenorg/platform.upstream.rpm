@@ -117,19 +117,19 @@ extern "C" {
 #endif
 
 /* Rpm specific allocators which never return NULL but terminate on failure */
-RPM_GNUC_MALLOC RPM_GNUC_ALLOC_SIZE(1)
+__attribute__ ((visibility ("default"))) RPM_GNUC_MALLOC RPM_GNUC_ALLOC_SIZE(1)
 void * rmalloc(size_t size);
 
-RPM_GNUC_MALLOC RPM_GNUC_ALLOC_SIZE2(1,2)
+__attribute__ ((visibility ("default"))) RPM_GNUC_MALLOC RPM_GNUC_ALLOC_SIZE2(1,2)
 void * rcalloc(size_t nmemb, size_t size);
 
 RPM_GNUC_ALLOC_SIZE(2)
-void * rrealloc(void *ptr, size_t size);
+__attribute__ ((visibility ("default"))) void * rrealloc(void *ptr, size_t size);
 
-char * rstrdup(const char *str);
+__attribute__ ((visibility ("default"))) char * rstrdup(const char *str);
 
 /* Rpm specific free() which returns NULL */
-void * rfree(void *ptr);
+__attribute__ ((visibility ("default"))) void * rfree(void *ptr);
 
 /** \ingroup rpmutil
  * Memory allocation failure callback prototype. When registered through
@@ -150,7 +150,7 @@ typedef void * (*rpmMemFailFunc) (size_t size, void *data);
  * @param data		User data (or NULL)
  * @return		Previous callback function
  */
-rpmMemFailFunc rpmSetMemFail(rpmMemFailFunc func, void *data);
+__attribute__ ((visibility ("default"))) rpmMemFailFunc rpmSetMemFail(rpmMemFailFunc func, void *data);
 
 #ifdef __cplusplus
 }

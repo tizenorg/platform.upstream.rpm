@@ -102,21 +102,21 @@ struct rpmRelocation_s {
  * @param fi		file info set
  * @return		new file info set reference
  */
-rpmfi rpmfiLink (rpmfi fi);
+__attribute__ ((visibility ("default"))) rpmfi rpmfiLink (rpmfi fi);
 
 /** \ingroup rpmfi
  * Return file count from file info set.
  * @param fi		file info set
  * @return		current file count
  */
-rpm_count_t rpmfiFC(rpmfi fi);
+__attribute__ ((visibility ("default"))) rpm_count_t rpmfiFC(rpmfi fi);
 
 /** \ingroup rpmfi
  * Return current file index from file info set.
  * @param fi		file info set
  * @return		current file index
  */
-int rpmfiFX(rpmfi fi);
+__attribute__ ((visibility ("default"))) int rpmfiFX(rpmfi fi);
 
 /** \ingroup rpmfi
  * Set current file index in file info set.
@@ -124,21 +124,21 @@ int rpmfiFX(rpmfi fi);
  * @param fx		new file index
  * @return		current file index
  */
-int rpmfiSetFX(rpmfi fi, int fx);
+__attribute__ ((visibility ("default"))) int rpmfiSetFX(rpmfi fi, int fx);
 
 /** \ingroup rpmfi
  * Return directory count from file info set.
  * @param fi		file info set
  * @return		current directory count
  */
-rpm_count_t rpmfiDC(rpmfi fi);
+__attribute__ ((visibility ("default"))) rpm_count_t rpmfiDC(rpmfi fi);
 
 /** \ingroup rpmfi
  * Return current directory index from file info set.
  * @param fi		file info set
  * @return		current directory index
  */
-int rpmfiDX(rpmfi fi);
+__attribute__ ((visibility ("default"))) int rpmfiDX(rpmfi fi);
 
 /** \ingroup rpmfi
  * Set current directory index in file info set.
@@ -146,63 +146,63 @@ int rpmfiDX(rpmfi fi);
  * @param dx		new directory index
  * @return		current directory index
  */
-int rpmfiSetDX(rpmfi fi, int dx);
+__attribute__ ((visibility ("default"))) int rpmfiSetDX(rpmfi fi, int dx);
 
 /** \ingroup rpmfi
  * Return current base name from file info set.
  * @param fi		file info set
  * @return		current base name, NULL on invalid
  */
-const char * rpmfiBN(rpmfi fi);
+__attribute__ ((visibility ("default"))) const char * rpmfiBN(rpmfi fi);
 
 /** \ingroup rpmfi
  * Return current directory name from file info set.
  * @param fi		file info set
  * @return		current directory, NULL on invalid
  */
-const char * rpmfiDN(rpmfi fi);
+__attribute__ ((visibility ("default"))) const char * rpmfiDN(rpmfi fi);
 
 /** \ingroup rpmfi
  * Return current file name from file info set.
  * @param fi		file info set
  * @return		current file name
  */
-const char * rpmfiFN(rpmfi fi);
+__attribute__ ((visibility ("default"))) const char * rpmfiFN(rpmfi fi);
 
 /** \ingroup rpmfi
  * Return current file flags from file info set.
  * @param fi		file info set
  * @return		current file flags, 0 on invalid
  */
-rpmfileAttrs rpmfiFFlags(rpmfi fi);
+__attribute__ ((visibility ("default"))) rpmfileAttrs rpmfiFFlags(rpmfi fi);
 
 /** \ingroup rpmfi
  * Return current file verify flags from file info set.
  * @param fi		file info set
  * @return		current file verify flags, 0 on invalid
  */
-rpmVerifyAttrs rpmfiVFlags(rpmfi fi);
+__attribute__ ((visibility ("default"))) rpmVerifyAttrs rpmfiVFlags(rpmfi fi);
 
 /** \ingroup rpmfi
  * Return current file mode from file info set.
  * @param fi		file info set
  * @return		current file mode, 0 on invalid
  */
-rpm_mode_t rpmfiFMode(rpmfi fi);
+__attribute__ ((visibility ("default"))) rpm_mode_t rpmfiFMode(rpmfi fi);
 
 /** \ingroup rpmfi
  * Return current file state from file info set.
  * @param fi		file info set
  * @return		current file state, 0 on invalid
  */
-rpmfileState rpmfiFState(rpmfi fi);
+__attribute__ ((visibility ("default"))) rpmfileState rpmfiFState(rpmfi fi);
 
 /** \ingroup rpmfi
  * Return digest algorithm of a file info set.
  * @param fi		file info set
  * @return		digest algorithm of file info set, 0 on invalid
  */
-int rpmfiDigestAlgo(rpmfi fi);
+__attribute__ ((visibility ("default"))) int rpmfiDigestAlgo(rpmfi fi);
 
 /** \ingroup rpmfi
  * Return current file (binary) digest of file info set.
@@ -211,7 +211,7 @@ int rpmfiDigestAlgo(rpmfi fi);
  * @retval diglen	digest hash length (pass NULL to ignore)
  * @return		current file digest, NULL on invalid
  */
-const unsigned char * rpmfiFDigest(rpmfi fi, int *algo, size_t *diglen);
+__attribute__ ((visibility ("default"))) const unsigned char * rpmfiFDigest(rpmfi fi, int *algo, size_t *diglen);
 
 /** \ingroup rpmfi
  * Return current file (hex) digest of file info set.
@@ -222,7 +222,7 @@ const unsigned char * rpmfiFDigest(rpmfi fi, int *algo, size_t *diglen);
  * @retval algo		digest hash algoritm used (pass NULL to ignore)
  * @return		current file digest (malloc'ed), NULL on invalid
  */
-char * rpmfiFDigestHex(rpmfi fi, int *algo);
+__attribute__ ((visibility ("default"))) char * rpmfiFDigestHex(rpmfi fi, int *algo);
 
 /** \ingroup rpmfi
  * Return current file (binary) md5 digest from file info set.
@@ -230,56 +230,56 @@ char * rpmfiFDigestHex(rpmfi fi, int *algo);
  * @param fi		file info set
  * @return		current file md5 digest, NULL on invalid
  */
-const unsigned char * rpmfiMD5(rpmfi fi) RPM_GNUC_DEPRECATED;
+__attribute__ ((visibility ("default"))) const unsigned char * rpmfiMD5(rpmfi fi) RPM_GNUC_DEPRECATED;
 
 /** \ingroup rpmfi
  * Return current file linkto (i.e. symlink(2) target) from file info set.
  * @param fi		file info set
  * @return		current file linkto, NULL on invalid
  */
-const char * rpmfiFLink(rpmfi fi);
+__attribute__ ((visibility ("default"))) const char * rpmfiFLink(rpmfi fi);
 
 /** \ingroup rpmfi
  * Return current file size from file info set.
  * @param fi		file info set
  * @return		current file size, 0 on invalid
  */
-rpm_loff_t rpmfiFSize(rpmfi fi);
+__attribute__ ((visibility ("default"))) rpm_loff_t rpmfiFSize(rpmfi fi);
 
 /** \ingroup rpmfi
  * Return current file rdev from file info set.
  * @param fi		file info set
  * @return		current file rdev, 0 on invalid
  */
-rpm_rdev_t rpmfiFRdev(rpmfi fi);
+__attribute__ ((visibility ("default"))) rpm_rdev_t rpmfiFRdev(rpmfi fi);
 
 /** \ingroup rpmfi
  * Return current file inode from file info set.
  * @param fi		file info set
  * @return		current file inode, 0 on invalid
  */
-rpm_ino_t rpmfiFInode(rpmfi fi);
+__attribute__ ((visibility ("default"))) rpm_ino_t rpmfiFInode(rpmfi fi);
 
 /** \ingroup rpmfi
  * Return union of all file color bits from file info set.
  * @param fi		file info set
  * @return		current color
  */
-rpm_color_t rpmfiColor(rpmfi fi);
+__attribute__ ((visibility ("default"))) rpm_color_t rpmfiColor(rpmfi fi);
 
 /** \ingroup rpmfi
  * Return current file color bits from file info set.
  * @param fi		file info set
  * @return		current file color
  */
-rpm_color_t rpmfiFColor(rpmfi fi);
+__attribute__ ((visibility ("default"))) rpm_color_t rpmfiFColor(rpmfi fi);
 
 /** \ingroup rpmfi
  * Return current file class from file info set.
  * @param fi		file info set
  * @return		current file class, 0 on invalid
  */
-const char * rpmfiFClass(rpmfi fi);
+__attribute__ ((visibility ("default"))) const char * rpmfiFClass(rpmfi fi);
 
 /** \ingroup rpmfi
  * Return current file depends dictionary from file info set.
@@ -287,7 +287,7 @@ const char * rpmfiFClass(rpmfi fi);
  * @retval *fddictp	file depends dictionary array (or NULL)
  * @return		no. of file depends entries, 0 on invalid
  */
-uint32_t rpmfiFDepends(rpmfi fi,
+__attribute__ ((visibility ("default"))) uint32_t rpmfiFDepends(rpmfi fi,
 		const uint32_t ** fddictp);
 
 /** \ingroup rpmfi
@@ -295,28 +295,28 @@ uint32_t rpmfiFDepends(rpmfi fi,
  * @param fi		file info set
  * @return		current file nlink count, 0 on invalid
  */
-uint32_t rpmfiFNlink(rpmfi fi);
+__attribute__ ((visibility ("default"))) uint32_t rpmfiFNlink(rpmfi fi);
 
 /** \ingroup rpmfi
  * Return current file modify time from file info set.
  * @param fi		file info set
  * @return		current file modify time, 0 on invalid
  */
-rpm_time_t rpmfiFMtime(rpmfi fi);
+__attribute__ ((visibility ("default"))) rpm_time_t rpmfiFMtime(rpmfi fi);
 
 /** \ingroup rpmfi
  * Return current file owner from file info set.
  * @param fi		file info set
  * @return		current file owner, NULL on invalid
  */
-const char * rpmfiFUser(rpmfi fi);
+__attribute__ ((visibility ("default"))) const char * rpmfiFUser(rpmfi fi);
 
 /** \ingroup rpmfi
  * Return current file group from file info set.
  * @param fi		file info set
  * @return		current file group, NULL on invalid
  */
-const char * rpmfiFGroup(rpmfi fi);
+__attribute__ ((visibility ("default"))) const char * rpmfiFGroup(rpmfi fi);
 
 /** \ingroup rpmfi
  * Return textual representation of current file capabilities 
@@ -325,21 +325,21 @@ const char * rpmfiFGroup(rpmfi fi);
  * @return		file capability description, "" for no capabilities
  * 			and NULL on invalid
  */
-const char * rpmfiFCaps(rpmfi fi);
+__attribute__ ((visibility ("default"))) const char * rpmfiFCaps(rpmfi fi);
 
 /** \ingroup rpmfi
  * Return current file language(s) from file info set.
  * @param fi		file info set
  * @return		current file language(s), NULL on invalid
  */
-const char * rpmfiFLangs(rpmfi fi);
+__attribute__ ((visibility ("default"))) const char * rpmfiFLangs(rpmfi fi);
 
 /** \ingroup rpmfi
  * Return next file iterator index.
  * @param fi		file info set
  * @return		file iterator index, -1 on termination
  */
-int rpmfiNext(rpmfi fi);
+__attribute__ ((visibility ("default"))) int rpmfiNext(rpmfi fi);
 
 /** \ingroup rpmfi
  * Initialize file iterator index.
@@ -347,14 +347,14 @@ int rpmfiNext(rpmfi fi);
  * @param fx		file iterator index
  * @return		file info set
  */
-rpmfi rpmfiInit(rpmfi fi, int fx);
+__attribute__ ((visibility ("default"))) rpmfi rpmfiInit(rpmfi fi, int fx);
 
 /** \ingroup rpmfi
  * Return next directory iterator index.
  * @param fi		file info set
  * @return		directory iterator index, -1 on termination
  */
-int rpmfiNextD(rpmfi fi);
+__attribute__ ((visibility ("default"))) int rpmfiNextD(rpmfi fi);
 
 /** \ingroup rpmfi
  * Initialize directory iterator index.
@@ -362,14 +362,14 @@ int rpmfiNextD(rpmfi fi);
  * @param dx		directory iterator index
  * @return		file info set, NULL if dx is out of range
  */
-rpmfi rpmfiInitD(rpmfi fi, int dx);
+__attribute__ ((visibility ("default"))) rpmfi rpmfiInitD(rpmfi fi, int dx);
 
 /** \ingroup rpmfi
  * Destroy a file info set.
  * @param fi		file info set
  * @return		NULL always
  */
-rpmfi rpmfiFree(rpmfi fi);
+__attribute__ ((visibility ("default"))) rpmfi rpmfiFree(rpmfi fi);
 
 enum rpmfiFlags_e {
     RPMFI_NOHEADER		= 0,
@@ -419,14 +419,14 @@ typedef rpmFlags rpmfiFlags;
  * @param flags		Flags to control what information is loaded.
  * @return		new file info set
  */
-rpmfi rpmfiNew(const rpmts ts, Header h, rpmTagVal tagN, rpmfiFlags flags);
+__attribute__ ((visibility ("default"))) rpmfi rpmfiNew(const rpmts ts, Header h, rpmTagVal tagN, rpmfiFlags flags);
 
 /** \ingroup rpmfi
  * Return file type from mode_t.
  * @param mode		file mode bits (from header)
  * @return		file type
  */
-rpmFileTypes rpmfiWhatis(rpm_mode_t mode);
+__attribute__ ((visibility ("default"))) rpmFileTypes rpmfiWhatis(rpm_mode_t mode);
 
 /** \ingroup rpmfi
  * Return file info comparison.
@@ -434,7 +434,7 @@ rpmFileTypes rpmfiWhatis(rpm_mode_t mode);
  * @param bfi		2nd file info
  * @return		0 if identical
  */
-int rpmfiCompare(const rpmfi afi, const rpmfi bfi);
+__attribute__ ((visibility ("default"))) int rpmfiCompare(const rpmfi afi, const rpmfi bfi);
 
 /** \ingroup rpmfi
  * Return file disposition.
@@ -443,14 +443,14 @@ int rpmfiCompare(const rpmfi afi, const rpmfi bfi);
  * @param skipMissing	OK to skip missing files?
  * @return		file dispostion
  */
-rpmFileAction rpmfiDecideFate(const rpmfi ofi, rpmfi nfi, int skipMissing);
+__attribute__ ((visibility ("default"))) rpmFileAction rpmfiDecideFate(const rpmfi ofi, rpmfi nfi, int skipMissing);
 
 /** \ingroup rpmfi
  * Return whether file is conflicting config
  * @param fi		file info
  * @return		1 if config file and file on disk conflicts
  */
-int rpmfiConfigConflict(const rpmfi fi);
+__attribute__ ((visibility ("default"))) int rpmfiConfigConflict(const rpmfi fi);
 
 #ifdef __cplusplus
 }

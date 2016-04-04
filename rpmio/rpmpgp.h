@@ -942,7 +942,7 @@ typedef rpmFlags rpmDigestFlags;
  * @param val		byte value to lookup
  * @return		string value of byte
  */
-const char * pgpValString(pgpValType type, uint8_t val);
+__attribute__ ((visibility ("default"))) const char * pgpValString(pgpValType type, uint8_t val);
 
 /** \ingroup rpmpgp
  * Return (native-endian) integer from big-endian representation.
@@ -966,7 +966,7 @@ unsigned int pgpGrab(const uint8_t *s, size_t nbytes)
  * @param plen		no. of bytes
  * @return		hex formatted string (malloc'ed)
  */
-char * pgpHexStr(const uint8_t *p, size_t plen);
+__attribute__ ((visibility ("default"))) char * pgpHexStr(const uint8_t *p, size_t plen);
 
 /** \ingroup rpmpgp
  * Calculate OpenPGP public key fingerprint.
@@ -976,7 +976,7 @@ char * pgpHexStr(const uint8_t *p, size_t plen);
  * @retval keyid	public key fingerprint
  * @return		0 on sucess, else -1
  */
-int pgpPubkeyFingerprint(const uint8_t * pkt, size_t pktlen,
+__attribute__ ((visibility ("default"))) int pgpPubkeyFingerprint(const uint8_t * pkt, size_t pktlen,
 		pgpKeyID_t keyid);
 
 /** \ingroup rpmpgp
@@ -986,7 +986,7 @@ int pgpPubkeyFingerprint(const uint8_t * pkt, size_t pktlen,
 * @retval keyid		public key fingerprint
 * @return             	8 (no. of bytes) on success, < 0 on error
 */
-int pgpExtractPubkeyFingerprint(const char * b64pkt, pgpKeyID_t keyid);
+__attribute__ ((visibility ("default"))) int pgpExtractPubkeyFingerprint(const char * b64pkt, pgpKeyID_t keyid);
 
 /** \ingroup rpmpgp
  * Parse a OpenPGP packet(s).
@@ -996,7 +996,7 @@ int pgpExtractPubkeyFingerprint(const char * b64pkt, pgpKeyID_t keyid);
  * @retval ret		signature/pubkey packet parameters on success (alloced)
  * @return		-1 on error, 0 on success
  */
-int pgpPrtParams(const uint8_t *pkts, size_t pktlen, unsigned int pkttype,
+__attribute__ ((visibility ("default"))) int pgpPrtParams(const uint8_t *pkts, size_t pktlen, unsigned int pkttype,
 		 pgpDigParams * ret);
 
 /** \ingroup rpmpgp
@@ -1007,7 +1007,7 @@ int pgpPrtParams(const uint8_t *pkts, size_t pktlen, unsigned int pkttype,
  * @param printing	should packets be printed?
  * @return		-1 on error, 0 on success
  */
-int pgpPrtPkts(const uint8_t *pkts, size_t pktlen, pgpDig dig, int printing);
+__attribute__ ((visibility ("default"))) int pgpPrtPkts(const uint8_t *pkts, size_t pktlen, pgpDig dig, int printing);
 
 /** \ingroup rpmpgp
  * Parse armored OpenPGP packets from a file.
@@ -1016,7 +1016,7 @@ int pgpPrtPkts(const uint8_t *pkts, size_t pktlen, pgpDig dig, int printing);
  * @retval pktlen	dearmored OpenPGP packet(s) length in bytes
  * @return		type of armor found
  */
-pgpArmor pgpReadPkts(const char * fn, uint8_t ** pkt, size_t * pktlen);
+__attribute__ ((visibility ("default"))) pgpArmor pgpReadPkts(const char * fn, uint8_t ** pkt, size_t * pktlen);
 
 /** \ingroup rpmpgp
  * Parse armored OpenPGP packets from memory.
@@ -1025,7 +1025,7 @@ pgpArmor pgpReadPkts(const char * fn, uint8_t ** pkt, size_t * pktlen);
  * @retval pktlen	dearmored OpenPGP packet(s) length in bytes
  * @return		type of armor found
  */
-pgpArmor pgpParsePkts(const char *armor, uint8_t ** pkt, size_t * pktlen);
+__attribute__ ((visibility ("default"))) pgpArmor pgpParsePkts(const char *armor, uint8_t ** pkt, size_t * pktlen);
 
 /** \ingroup rpmpgp
  * Wrap a OpenPGP packets in ascii armor for transport.
@@ -1034,26 +1034,26 @@ pgpArmor pgpParsePkts(const char *armor, uint8_t ** pkt, size_t * pktlen);
  * @param ns		binary pkt data length
  * @return		formatted string
  */
-char * pgpArmorWrap(int atype, const unsigned char * s, size_t ns);
+__attribute__ ((visibility ("default"))) char * pgpArmorWrap(int atype, const unsigned char * s, size_t ns);
 
 /** \ingroup rpmpgp
  * Create a container for parsed OpenPGP packet(s).
  * @return		container
  */
-pgpDig pgpNewDig(void);
+__attribute__ ((visibility ("default"))) pgpDig pgpNewDig(void);
 
 /** \ingroup rpmpgp
  * Release (malloc'd) data from container.
  * @param dig		container
  */
-void pgpCleanDig(pgpDig dig);
+__attribute__ ((visibility ("default"))) void pgpCleanDig(pgpDig dig);
 
 /** \ingroup rpmpgp
  * Destroy a container for parsed OpenPGP packet(s).
  * @param dig		container
  * @return		NULL always
  */
-pgpDig pgpFreeDig(pgpDig dig);
+__attribute__ ((visibility ("default"))) pgpDig pgpFreeDig(pgpDig dig);
 
 /** \ingroup rpmpgp
  * Retrieve parameters for parsed OpenPGP packet(s).
@@ -1061,7 +1061,7 @@ pgpDig pgpFreeDig(pgpDig dig);
  * @param pkttype	type of params to retrieve (signature / pubkey)
  * @return		pointer to OpenPGP parameters, NULL on error/not found
  */
-pgpDigParams pgpDigGetParams(pgpDig dig, unsigned int pkttype);
+__attribute__ ((visibility ("default"))) pgpDigParams pgpDigGetParams(pgpDig dig, unsigned int pkttype);
 
 /** \ingroup rpmpgp
  * Compare OpenPGP packet parameters
@@ -1069,7 +1069,7 @@ pgpDigParams pgpDigGetParams(pgpDig dig, unsigned int pkttype);
  * param p2		2nd parameter container
  * return		1 if the parameters differ, 0 otherwise
  */
-int pgpDigParamsCmp(pgpDigParams p1, pgpDigParams p2);
+__attribute__ ((visibility ("default"))) int pgpDigParamsCmp(pgpDigParams p1, pgpDigParams p2);
 
 /** \ingroup rpmpgp
  * Retrieve OpenPGP algorithm parameters
@@ -1077,14 +1077,14 @@ int pgpDigParamsCmp(pgpDigParams p1, pgpDigParams p2);
  * param algotype	PGPVAL_HASHALGO / PGPVAL_PUBKEYALGO
  * return		algorithm value, 0 on error
  */
-unsigned int pgpDigParamsAlgo(pgpDigParams digp, unsigned int algotype);
+__attribute__ ((visibility ("default"))) unsigned int pgpDigParamsAlgo(pgpDigParams digp, unsigned int algotype);
 
 /** \ingroup rpmpgp
  * Destroy parsed OpenPGP packet parameter(s).
  * @param digp		parameter container
  * @return		NULL always
  */
-pgpDigParams pgpDigParamsFree(pgpDigParams digp);
+__attribute__ ((visibility ("default"))) pgpDigParams pgpDigParamsFree(pgpDigParams digp);
 
 /** \ingroup rpmpgp
  * Verify a PGP signature.
@@ -1093,7 +1093,7 @@ pgpDigParams pgpDigParamsFree(pgpDigParams digp);
  * @param hashctx	digest context
  * @return 		RPMRC_OK on success 
  */
-rpmRC pgpVerifySignature(pgpDigParams key, pgpDigParams sig, DIGEST_CTX hashctx);
+__attribute__ ((visibility ("default"))) rpmRC pgpVerifySignature(pgpDigParams key, pgpDigParams sig, DIGEST_CTX hashctx);
 
 /** \ingroup rpmpgp
  * Verify a PGP signature.
@@ -1103,14 +1103,14 @@ rpmRC pgpVerifySignature(pgpDigParams key, pgpDigParams sig, DIGEST_CTX hashctx)
  * @param hashctx	digest context
  * @return 		RPMRC_OK on success 
  */
-rpmRC pgpVerifySig(pgpDig dig, DIGEST_CTX hashctx);
+__attribute__ ((visibility ("default"))) rpmRC pgpVerifySig(pgpDig dig, DIGEST_CTX hashctx);
 
 /** \ingroup rpmpgp
  * Return a string identification of a PGP signature/pubkey.
  * @param digp		signature/pubkey container
  * @return		string describing the item and parameters
  */
-char *pgpIdentItem(pgpDigParams digp);
+__attribute__ ((visibility ("default"))) char *pgpIdentItem(pgpDigParams digp);
 
 /** \ingroup rpmpgp
  * Perform cryptography initialization.
@@ -1119,26 +1119,26 @@ char *pgpIdentItem(pgpDigParams digp);
  * general rpm initialization routines.
  * @return		0 on success, -1 on failure
  */
-int rpmInitCrypto(void);
+__attribute__ ((visibility ("default"))) int rpmInitCrypto(void);
 
 /** \ingroup rpmpgp
  * Shutdown cryptography
  */
-int rpmFreeCrypto(void);
+__attribute__ ((visibility ("default"))) int rpmFreeCrypto(void);
 
 /** \ingroup rpmpgp
  * Duplicate a digest context.
  * @param octx		existing digest context
  * @return		duplicated digest context
  */
-DIGEST_CTX rpmDigestDup(DIGEST_CTX octx);
+__attribute__ ((visibility ("default"))) DIGEST_CTX rpmDigestDup(DIGEST_CTX octx);
 
 /** \ingroup rpmpgp
  * Obtain digest length in bytes.
  * @param hashalgo	type of digest
  * @return		digest length, zero on invalid algorithm
  */
-size_t rpmDigestLength(int hashalgo);
+__attribute__ ((visibility ("default"))) size_t rpmDigestLength(int hashalgo);
 
 /** \ingroup rpmpgp
  * Initialize digest.
@@ -1147,7 +1147,7 @@ size_t rpmDigestLength(int hashalgo);
  * @param flags		bit(s) to control digest operation
  * @return		digest context
  */
-DIGEST_CTX rpmDigestInit(int hashalgo, rpmDigestFlags flags);
+__attribute__ ((visibility ("default"))) DIGEST_CTX rpmDigestInit(int hashalgo, rpmDigestFlags flags);
 
 /** \ingroup rpmpgp
  * Update context with next plain text buffer.
@@ -1156,7 +1156,7 @@ DIGEST_CTX rpmDigestInit(int hashalgo, rpmDigestFlags flags);
  * @param len		no. bytes of data
  * @return		0 on success
  */
-int rpmDigestUpdate(DIGEST_CTX ctx, const void * data, size_t len);
+__attribute__ ((visibility ("default"))) int rpmDigestUpdate(DIGEST_CTX ctx, const void * data, size_t len);
 
 /** \ingroup rpmpgp
  * Return digest and destroy context.
@@ -1169,7 +1169,7 @@ int rpmDigestUpdate(DIGEST_CTX ctx, const void * data, size_t len);
  * @param asAscii	return digest as ascii string?
  * @return		0 on success
  */
-int rpmDigestFinal(DIGEST_CTX ctx,
+__attribute__ ((visibility ("default"))) int rpmDigestFinal(DIGEST_CTX ctx,
 	void ** datap,
 	size_t * lenp, int asAscii);
 
@@ -1177,14 +1177,14 @@ int rpmDigestFinal(DIGEST_CTX ctx,
  * Create a new digest bundle.
  * @return		New digest bundle
  */
-rpmDigestBundle rpmDigestBundleNew(void);
+__attribute__ ((visibility ("default"))) rpmDigestBundle rpmDigestBundleNew(void);
 
 /** \ingroup rpmpgp
  * Free a digest bundle and all contained digest contexts.
  * @param bundle	digest bundle
  * @return		NULL always
  */
-rpmDigestBundle rpmDigestBundleFree(rpmDigestBundle bundle);
+__attribute__ ((visibility ("default"))) rpmDigestBundle rpmDigestBundleFree(rpmDigestBundle bundle);
 
 /** \ingroup rpmpgp
  * Add a new type of digest to a bundle.
@@ -1193,7 +1193,7 @@ rpmDigestBundle rpmDigestBundleFree(rpmDigestBundle bundle);
  * @param flags		bit(s) to control digest operation
  * @return		0 on success
  */
-int rpmDigestBundleAdd(rpmDigestBundle bundle, int algo,
+__attribute__ ((visibility ("default"))) int rpmDigestBundleAdd(rpmDigestBundle bundle, int algo,
 			rpmDigestFlags flags);
 
 /** \ingroup rpmpgp
@@ -1203,7 +1203,7 @@ int rpmDigestBundleAdd(rpmDigestBundle bundle, int algo,
  * @param len		no. bytes of data
  * @return		0 on success
  */
-int rpmDigestBundleUpdate(rpmDigestBundle bundle, const void *data, size_t len);
+__attribute__ ((visibility ("default"))) int rpmDigestBundleUpdate(rpmDigestBundle bundle, const void *data, size_t len);
 
 /** \ingroup rpmpgp
  * Return digest from a bundle and destroy context, see rpmDigestFinal().
@@ -1215,7 +1215,7 @@ int rpmDigestBundleUpdate(rpmDigestBundle bundle, const void *data, size_t len);
  * @param asAscii	return digest as ascii string?
  * @return		0 on success
  */
-int rpmDigestBundleFinal(rpmDigestBundle bundle,
+__attribute__ ((visibility ("default"))) int rpmDigestBundleFinal(rpmDigestBundle bundle,
 	 int algo, void ** datap, size_t * lenp, int asAscii);
 
 /** \ingroup rpmpgp
@@ -1224,7 +1224,7 @@ int rpmDigestBundleFinal(rpmDigestBundle bundle,
  * @param algo		type of digest to dup
  * @return		duplicated digest context
  */
-DIGEST_CTX rpmDigestBundleDupCtx(rpmDigestBundle bundle, int algo);
+__attribute__ ((visibility ("default"))) DIGEST_CTX rpmDigestBundleDupCtx(rpmDigestBundle bundle, int algo);
 
 #ifdef __cplusplus
 }

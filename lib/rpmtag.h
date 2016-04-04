@@ -422,49 +422,49 @@ typedef rpmFlags rpmTagReturnType;
  * @param tag		tag value
  * @return		tag name, "(unknown)" on not found
  */
-const char * rpmTagGetName(rpmTagVal tag);
+__attribute__ ((visibility ("default"))) const char * rpmTagGetName(rpmTagVal tag);
 
 /** \ingroup rpmtag
  * Return tag data type from value.
  * @param tag		tag value
  * @return		tag data type + return type, RPM_NULL_TYPE on not found.
  */
-rpmTagType rpmTagGetType(rpmTagVal tag);
+__attribute__ ((visibility ("default"))) rpmTagType rpmTagGetType(rpmTagVal tag);
 
 /** \ingroup rpmtag
  * Return tag data type from value.
  * @param tag		tag value
  * @return		tag data type, RPM_NULL_TYPE on not found.
  */
-rpmTagType rpmTagGetTagType(rpmTagVal tag);
+__attribute__ ((visibility ("default"))) rpmTagType rpmTagGetTagType(rpmTagVal tag);
 
 /** \ingroup rpmtag
  * Return tag data type from value.
  * @param tag		tag value
  * @return		tag data return type, RPM_NULL_TYPE on not found.
  */
-rpmTagReturnType rpmTagGetReturnType(rpmTagVal tag);
+__attribute__ ((visibility ("default"))) rpmTagReturnType rpmTagGetReturnType(rpmTagVal tag);
 
 /** \ingroup rpmtag
  * Return tag data class from value.
  * @param tag		tag value
  * @return		tag data class, RPM_NULL_CLASS on not found.
  */
-rpmTagClass rpmTagGetClass(rpmTagVal tag);
+__attribute__ ((visibility ("default"))) rpmTagClass rpmTagGetClass(rpmTagVal tag);
 
 /** \ingroup rpmtag
  * Return tag value from name.
  * @param tagstr	name of tag
  * @return		tag value, -1 on not found
  */
-rpmTagVal rpmTagGetValue(const char * tagstr);
+__attribute__ ((visibility ("default"))) rpmTagVal rpmTagGetValue(const char * tagstr);
 
 /** \ingroup rpmtag
  * Return data class of type
  * @param type		tag type
  * @return		data class, RPM_NULL_CLASS on unknown.
  */
-rpmTagClass rpmTagTypeGetClass(rpmTagType type);
+__attribute__ ((visibility ("default"))) rpmTagClass rpmTagTypeGetClass(rpmTagType type);
 
 /** \ingroup rpmtag
  * Return known rpm tag names, sorted by name.
@@ -472,7 +472,7 @@ rpmTagClass rpmTagTypeGetClass(rpmTagType type);
  * @param fullname	return short or full name
  * @return		number of tag names, 0 on error
  */
-int rpmTagGetNames(rpmtd tagnames, int fullname);
+__attribute__ ((visibility ("default"))) int rpmTagGetNames(rpmtd tagnames, int fullname);
 
 #ifdef __cplusplus
 }

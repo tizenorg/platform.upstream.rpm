@@ -49,7 +49,7 @@ struct rpmop_s {
  * @param *sw		time stamp
  * @return		0 on success
  */
-rpmsw rpmswNow(rpmsw sw);
+__attribute__ ((visibility ("default"))) rpmsw rpmswNow(rpmsw sw);
 
 /** \ingroup rpmsw
  * Return benchmark time stamp difference.
@@ -57,13 +57,13 @@ rpmsw rpmswNow(rpmsw sw);
  * @param *begin	begin time stamp
  * @return		difference in micro-seconds
  */
-rpmtime_t rpmswDiff(rpmsw end, rpmsw begin);
+__attribute__ ((visibility ("default"))) rpmtime_t rpmswDiff(rpmsw end, rpmsw begin);
 
 /** \ingroup rpmsw
  * Return benchmark time stamp overhead.
  * @return		overhead in micro-seconds
  */
-rpmtime_t rpmswInit(void);
+__attribute__ ((visibility ("default"))) rpmtime_t rpmswInit(void);
 
 /** \ingroup rpmsw
  * Enter timed operation.
@@ -71,7 +71,7 @@ rpmtime_t rpmswInit(void);
  * @param rc			-1 clears usec counter
  * @return			0 always
  */
-int rpmswEnter(rpmop op, ssize_t rc);
+__attribute__ ((visibility ("default"))) int rpmswEnter(rpmop op, ssize_t rc);
 
 /** \ingroup rpmsw
  * Exit timed operation.
@@ -79,7 +79,7 @@ int rpmswEnter(rpmop op, ssize_t rc);
  * @param rc			per-operation data (e.g. bytes transferred)
  * @return			cumulative usecs for operation
  */
-rpmtime_t rpmswExit(rpmop op, ssize_t rc);
+__attribute__ ((visibility ("default"))) rpmtime_t rpmswExit(rpmop op, ssize_t rc);
 
 /** \ingroup rpmsw
  * Sum statistic counters.
@@ -87,7 +87,7 @@ rpmtime_t rpmswExit(rpmop op, ssize_t rc);
  * @param from			operation statistics
  * @return			cumulative usecs for operation
  */
-rpmtime_t rpmswAdd(rpmop to, rpmop from);
+__attribute__ ((visibility ("default"))) rpmtime_t rpmswAdd(rpmop to, rpmop from);
 
 /** \ingroup rpmsw
  * Subtract statistic counters.
@@ -95,7 +95,7 @@ rpmtime_t rpmswAdd(rpmop to, rpmop from);
  * @param from			operation statistics
  * @return			cumulative usecs for operation
  */
-rpmtime_t rpmswSub(rpmop to, rpmop from);
+__attribute__ ((visibility ("default"))) rpmtime_t rpmswSub(rpmop to, rpmop from);
 
 #ifdef __cplusplus
 }

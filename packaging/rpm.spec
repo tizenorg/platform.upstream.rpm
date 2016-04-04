@@ -132,6 +132,9 @@ rm -f m4/libtool.m4
 rm -f m4/lt*.m4
 
 %build
+export CFLAGS+=" -fvisibility=hidden"
+  export CXXFLAGS+=" -fvisibility=hidden"
+  
 CPPFLAGS="$CPPFLAGS `pkg-config --cflags nss`"
 export CPPFLAGS
 export CFLAGS="%{optflags} -ffunction-sections"

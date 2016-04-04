@@ -30,7 +30,7 @@ typedef void (*rpmsqAction_t) (int signum);
  * @param signum	signal to test for
  * @return		1 if caught, 0 if not and -1 on error
  */
-int rpmsqIsCaught(int signum);
+__attribute__ ((visibility ("default"))) int rpmsqIsCaught(int signum);
 
 /** \ingroup rpmsq
  * Default signal handler.
@@ -39,7 +39,7 @@ int rpmsqIsCaught(int signum);
  * @param context	signal context
  */
 #ifdef SA_SIGINFO
-void rpmsqAction(int signum, siginfo_t * info, void * context);
+__attribute__ ((visibility ("default"))) void rpmsqAction(int signum, siginfo_t * info, void * context);
 #else
 void rpmsqAction(int signum);
 #endif
@@ -50,7 +50,7 @@ void rpmsqAction(int signum);
  * @param handler	sa_sigaction handler (or NULL to use rpmsqHandler())
  * @return		no. of refs, -1 on error
  */
-int rpmsqEnable(int signum, rpmsqAction_t handler);
+__attribute__ ((visibility ("default"))) int rpmsqEnable(int signum, rpmsqAction_t handler);
 
 #ifdef __cplusplus
 }

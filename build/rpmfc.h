@@ -14,7 +14,7 @@
 extern "C" {
 #endif
 
-extern int _rpmfc_debug;
+__attribute__ ((visibility ("default"))) extern int _rpmfc_debug;
 
 /** \ingroup rpmfc
  */
@@ -50,14 +50,14 @@ typedef const struct rpmfcTokens_s * rpmfcToken;
  * @param fc		file classifier
  * @param fp		output file handle (NULL for stderr)
  */
-void rpmfcPrint(const char * msg, rpmfc fc, FILE * fp);
+__attribute__ ((visibility ("default"))) void rpmfcPrint(const char * msg, rpmfc fc, FILE * fp);
 
 /** \ingroup rpmfc
  * Destroy a file classifier.
  * @param fc		file classifier
  * @return		NULL always
  */
-rpmfc rpmfcFree(rpmfc fc);
+__attribute__ ((visibility ("default"))) rpmfc rpmfcFree(rpmfc fc);
 
 /** \ingroup rpmfc
  * Create a file classifier.
@@ -65,14 +65,14 @@ rpmfc rpmfcFree(rpmfc fc);
  * @param flags		(unused)
  * @return		new file classifier
  */
-rpmfc rpmfcCreate(const char *rootDir, rpmFlags flags);
+__attribute__ ((visibility ("default"))) rpmfc rpmfcCreate(const char *rootDir, rpmFlags flags);
 
 /** \ingroup rpmfc
  * @deprecated
  * Create a file classifier.
  * @return		new file classifier
  */
-RPM_GNUC_DEPRECATED
+__attribute__ ((visibility ("default"))) RPM_GNUC_DEPRECATED
 rpmfc rpmfcNew(void);
 
 
@@ -83,35 +83,35 @@ rpmfc rpmfcNew(void);
  * @param fmode		files mode_t array (or NULL)
  * @return		RPMRC_OK on success
  */
-rpmRC rpmfcClassify(rpmfc fc, ARGV_t argv, rpm_mode_t * fmode);
+__attribute__ ((visibility ("default"))) rpmRC rpmfcClassify(rpmfc fc, ARGV_t argv, rpm_mode_t * fmode);
 
 /** \ingroup rpmfc
  * Build file/package dependency dictionary and mappings.
  * @param fc		file classifier
  * @return		RPMRC_OK on success
  */
-rpmRC rpmfcApply(rpmfc fc);
+__attribute__ ((visibility ("default"))) rpmRC rpmfcApply(rpmfc fc);
 
 /** \ingroup rpmfc
  * Retrieve file classification provides
  * @param fc		file classifier
  * @return		rpmds dependency set of fc provides
  */
-rpmds rpmfcProvides(rpmfc fc);
+__attribute__ ((visibility ("default"))) rpmds rpmfcProvides(rpmfc fc);
 
 /** \ingroup rpmfc
  * Retrieve file classification requires
  * @param fc		file classifier
  * @return		rpmds dependency set of fc requires
  */
-rpmds rpmfcRequires(rpmfc fc);
+__attribute__ ((visibility ("default"))) rpmds rpmfcRequires(rpmfc fc);
 
 /** \ingroup rpmfc
  * Retrieve file classification supplements
  * @param fc		file classifier
  * @return		rpmds dependency set of fc requires
  */
-rpmds rpmfcSupplements(rpmfc fc);
+__attribute__ ((visibility ("default"))) rpmds rpmfcSupplements(rpmfc fc);
 
 #ifdef __cplusplus
 }

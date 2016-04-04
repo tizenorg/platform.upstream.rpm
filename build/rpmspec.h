@@ -45,32 +45,32 @@ typedef rpmFlags rpmSpecFlags;
  * @param spec		spec file control structure
  * @return		NULL always
  */
-rpmSpec rpmSpecFree(rpmSpec spec);
+__attribute__ ((visibility ("default"))) rpmSpec rpmSpecFree(rpmSpec spec);
 
 /* Iterator for spec packages */
-rpmSpecPkgIter rpmSpecPkgIterInit(rpmSpec spec);
-rpmSpecPkg rpmSpecPkgIterNext(rpmSpecPkgIter iter);
-rpmSpecPkgIter rpmSpecPkgIterFree(rpmSpecPkgIter iter);
+__attribute__ ((visibility ("default"))) rpmSpecPkgIter rpmSpecPkgIterInit(rpmSpec spec);
+__attribute__ ((visibility ("default"))) rpmSpecPkg rpmSpecPkgIterNext(rpmSpecPkgIter iter);
+__attribute__ ((visibility ("default"))) rpmSpecPkgIter rpmSpecPkgIterFree(rpmSpecPkgIter iter);
 
 /* Getters for spec package attributes */
-Header rpmSpecPkgHeader(rpmSpecPkg pkg);
+__attribute__ ((visibility ("default"))) Header rpmSpecPkgHeader(rpmSpecPkg pkg);
 
 /* Iterator for spec sources */
-rpmSpecSrcIter rpmSpecSrcIterInit(rpmSpec spec);
-rpmSpecSrc rpmSpecSrcIterNext(rpmSpecSrcIter iter);
-rpmSpecSrcIter rpmSpecSrcIterFree(rpmSpecSrcIter iter);
+__attribute__ ((visibility ("default"))) rpmSpecSrcIter rpmSpecSrcIterInit(rpmSpec spec);
+__attribute__ ((visibility ("default"))) rpmSpecSrc rpmSpecSrcIterNext(rpmSpecSrcIter iter);
+__attribute__ ((visibility ("default"))) rpmSpecSrcIter rpmSpecSrcIterFree(rpmSpecSrcIter iter);
 
 /* Getters for spec source attributes */
-rpmSourceFlags rpmSpecSrcFlags(rpmSpecSrc src);
-int rpmSpecSrcNum(rpmSpecSrc src);
-const char * rpmSpecSrcFilename(rpmSpecSrc src, int full);
+__attribute__ ((visibility ("default"))) rpmSourceFlags rpmSpecSrcFlags(rpmSpecSrc src);
+__attribute__ ((visibility ("default"))) int rpmSpecSrcNum(rpmSpecSrc src);
+__attribute__ ((visibility ("default"))) const char * rpmSpecSrcFilename(rpmSpecSrc src, int full);
 
 /*
  * Retrieve parsed spec script section (RPMBUILD_PREP, RPMBUILD_BUILD etc).
  * As a special case, RPMBUILD_NONE as section returns the entire spec in
  * preprocessed (macros expanded etc) format.
  */
-const char * rpmSpecGetSection(rpmSpec spec, int section);
+__attribute__ ((visibility ("default"))) const char * rpmSpecGetSection(rpmSpec spec, int section);
 
 /** \ingroup rpmbuild
  * Function to query spec file(s).
@@ -79,7 +79,7 @@ const char * rpmSpecGetSection(rpmSpec spec, int section);
  * @param arg		query argument
  * @return		0 on success, else no. of failures
  */
-int rpmspecQuery(rpmts ts, QVA_t qva, const char * arg);
+__attribute__ ((visibility ("default"))) int rpmspecQuery(rpmts ts, QVA_t qva, const char * arg);
 
 #ifdef __cplusplus
 }

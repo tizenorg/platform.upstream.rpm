@@ -27,7 +27,7 @@ typedef enum urltype_e {
  * @param url		url string
  * @return		type of url
  */
-urltype	urlIsURL(const char * url);
+__attribute__ ((visibility ("default"))) urltype	urlIsURL(const char * url);
 
 /** \ingroup rpmurl
  * Return path component of URL.
@@ -35,7 +35,7 @@ urltype	urlIsURL(const char * url);
  * @retval pathp	pointer to path component of url
  * @return		type of url
  */
-urltype	urlPath(const char * url, const char ** pathp);
+__attribute__ ((visibility ("default"))) urltype	urlPath(const char * url, const char ** pathp);
 
 /** \ingroup rpmurl
  * Copy data from URL to local file.
@@ -43,7 +43,7 @@ urltype	urlPath(const char * url, const char ** pathp);
  * @param dest		file name of destination
  * @return		0 on success, -1 on error
  */
-int urlGetFile(const char * url, const char * dest);
+__attribute__ ((visibility ("default"))) int urlGetFile(const char * url, const char * dest);
 
 #ifdef __cplusplus
 }

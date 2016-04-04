@@ -167,14 +167,14 @@ typedef struct rpmlogRec_s * rpmlogRec;
  * @param rec		rpmlog record
  * @return		log message
  */
-const char * rpmlogRecMessage(rpmlogRec rec);
+__attribute__ ((visibility ("default"))) const char * rpmlogRecMessage(rpmlogRec rec);
 
 /** \ingroup rpmlog
  * Retrieve log priority from rpmlog record
  * @param rec		rpmlog record
  * @return		log priority
  */
-rpmlogLvl rpmlogRecPriority(rpmlogRec rec);
+__attribute__ ((visibility ("default"))) rpmlogLvl rpmlogRecPriority(rpmlogRec rec);
 
 typedef void * rpmlogCallbackData;
 
@@ -192,43 +192,43 @@ typedef int (*rpmlogCallback) (rpmlogRec rec, rpmlogCallbackData data);
  * Return number of rpmError() ressages.
  * @return		number of messages
  */
-int rpmlogGetNrecs(void)	;
+__attribute__ ((visibility ("default"))) int rpmlogGetNrecs(void)	;
 
 /** \ingroup rpmlog
  * Print all rpmError() messages.
  * @param f		file handle (NULL uses stderr)
  */
-void rpmlogPrint(FILE *f);
+__attribute__ ((visibility ("default"))) void rpmlogPrint(FILE *f);
 
 /** \ingroup rpmlog
  * Close desriptor used to write to system logger.
  * @todo Implement.
  */
-void rpmlogClose (void);
+__attribute__ ((visibility ("default"))) void rpmlogClose (void);
 
 /** \ingroup rpmlog
  * Open connection to system logger.
  * @todo Implement.
  */
-void rpmlogOpen (const char * ident, int option, int facility);
+__attribute__ ((visibility ("default"))) void rpmlogOpen (const char * ident, int option, int facility);
 
 /** \ingroup rpmlog
  * Set the log mask level.
  * @param mask		log mask (0 is no operation)
  * @return		previous log mask
  */
-int rpmlogSetMask (int mask);
+__attribute__ ((visibility ("default"))) int rpmlogSetMask (int mask);
 
 /** \ingroup rpmlog
  * Generate a log message using FMT string and option arguments.
  */
-void rpmlog (int code, const char *fmt, ...) RPM_GNUC_PRINTF(2, 3);
+__attribute__ ((visibility ("default"))) void rpmlog (int code, const char *fmt, ...) RPM_GNUC_PRINTF(2, 3);
 
 /** \ingroup rpmlog
  * Return text of last rpmError() message.
  * @return		text of last message
  */
-const char * rpmlogMessage(void);
+__attribute__ ((visibility ("default"))) const char * rpmlogMessage(void);
 
 /** \ingroup rpmlog
  * Return error code from last rpmError() message.
@@ -237,14 +237,14 @@ const char * rpmlogMessage(void);
  *	and parsed IMHO.
  * @return		code from last message
  */
-int rpmlogCode(void);
+__attribute__ ((visibility ("default"))) int rpmlogCode(void);
 
 /** \ingroup rpmlog
  * Return translated prefix string (if any) given log level.
  * @param pri		log priority
  * @return		message prefix (or "" for none)
  */
-const char * rpmlogLevelPrefix(rpmlogLvl pri);
+__attribute__ ((visibility ("default"))) const char * rpmlogLevelPrefix(rpmlogLvl pri);
 
 /** \ingroup rpmlog
  * Set rpmlog callback function.
@@ -252,14 +252,14 @@ const char * rpmlogLevelPrefix(rpmlogLvl pri);
  * @param data		callback private (user) data
  * @return		previous rpmlog callback function
  */
-rpmlogCallback rpmlogSetCallback(rpmlogCallback cb, rpmlogCallbackData data);
+__attribute__ ((visibility ("default"))) rpmlogCallback rpmlogSetCallback(rpmlogCallback cb, rpmlogCallbackData data);
 
 /** \ingroup rpmlog
  * Set rpmlog file handle.
  * @param fp		rpmlog file handle (NULL uses stdout/stderr)
  * @return		previous rpmlog file handle
  */
-FILE * rpmlogSetFile(FILE * fp);
+__attribute__ ((visibility ("default"))) FILE * rpmlogSetFile(FILE * fp);
 
 #define	rpmSetVerbosity(_lvl)	\
 	((void)rpmlogSetMask( RPMLOG_UPTO( RPMLOG_PRI(_lvl))))
