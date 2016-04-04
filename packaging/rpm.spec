@@ -143,6 +143,8 @@ export LDFLAGS="${LDFLAGS} -Wl,-Bsymbolic-functions -ffunction-sections"
 export CFLAGS="-g -O0 -fno-strict-aliasing -ffunction-sections"
 %endif
 
+export CFLAGS+=" -fvisibility=hidden"
+  export CXXFLAGS+=" -fvisibility=hidden"
 %reconfigure \
     --disable-dependency-tracking \
     --with-lua \
