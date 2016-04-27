@@ -220,7 +220,7 @@ CFLAGS="%optflags" ; export CFLAGS ; \
 CXXFLAGS="${CXXFLAGS:-%optflags}" ; export CXXFLAGS ; \
 FFLAGS="${FFLAGS:-%optflags -I%_fmoddir}" ; export FFLAGS ; \
 LDFLAGS="${LDFLAGS:-%{?global_LDFLAGS}}"; export LDFLAGS ; \
-LD_AS_NEEDED=1; export LD_AS_NEEDED ; \
+LD_AS_NEEDED=1; export LD_AS_NEEDED ; LSAN_OPTIONS=detect_leaks=0; export LSAN_OPTIONS; \
 %{nil}
 
 %install %{?_enable_debug_packages:%{?buildsubdir:%{debug_package}}}\
