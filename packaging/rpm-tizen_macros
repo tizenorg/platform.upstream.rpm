@@ -230,6 +230,8 @@ export LANG\
 unset DISPLAY\
 rm -rf %{?buildroot:%{buildroot}} \
 mkdir -p %{?buildroot:%{buildroot}} \
+cat /tmp/ubsan.log* > /tmp/all_results.log || true \
+cat /tmp/all_results.log | grep -E -v 'h:[0-9]|awkgram.y|y.tab.c|eina_inline_hash.x' || true \
 %{nil}
 
 
