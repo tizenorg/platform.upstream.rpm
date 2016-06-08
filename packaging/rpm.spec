@@ -148,7 +148,7 @@ export CFLAGS="-g -O0 -fno-strict-aliasing -ffunction-sections"
     --enable-shared \
     --enable-python \
     --with-vendor=tizen \
-    --with-msm 
+    --with-msm
 
 make %{?_smp_mflags}
 
@@ -218,7 +218,7 @@ rm -f %{buildroot}%{__plugindir}/*.la
 
 sh %{buildroot}%{rpmhome}/find-lang.sh %{buildroot} rpm
 
-%ifarch armv7hl armv7l
+%ifarch armv7hl armv7l mips
 # rpm is using the host_cpu as default for the platform,
 #but armv7hl is not known by the kernel.
 # so we need to enforce the platform here.

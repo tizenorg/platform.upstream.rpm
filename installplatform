@@ -29,13 +29,13 @@ for ARCH in noarch `grep ^arch_canon $RPMRC | cut -d: -f2`; do
   CANONCOLOR=
   FILTER=cat
   case "${ARCH}" in
-    sparc64*) 
+    sparc64*)
 	ISANAME=sparc
 	ISABITS=64
 	CANONARCH=sparc64
 	CANONCOLOR=3
 	;;
-    sparc*) 
+    sparc*)
 	ISANAME=sparc
 	ISABITS=32
 	CANONARCH=sparc
@@ -106,6 +106,12 @@ for ARCH in noarch `grep ^arch_canon $RPMRC | cut -d: -f2`; do
 	ISABITS=64
 	CANONARCH=aarch64
 	CANONCOLOR=3
+	;;
+    mips)
+	ISANAME=mips
+	ISABITS=32
+	CANONARCH=mips
+	CANONCOLOR=0
 	;;
     noarch)
 	CANONARCH=noarch
