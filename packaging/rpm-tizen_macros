@@ -65,7 +65,7 @@
 	if test -e "${ALL_ARGS[$((NUM_ARGS-1))]}" ; then \
 	    /sbin/install-info "${ALL_ARGS[@]}" \
 	fi \
-    fi ; 
+    fi ;
 
 %install_info_delete(:-:) \
     ALL_ARGS=(%{**}) \
@@ -74,7 +74,7 @@
 	if ! test -e "${ALL_ARGS[$((NUM_ARGS-1))]}" ; then \
 	    /sbin/install-info --quiet --delete "${ALL_ARGS[@]}" \
 	fi ; \
-    fi ; 
+    fi ;
 
 # find-supplements.ksyms parses this macro directly out of the spec file:
 %supplements_kernel_module() \
@@ -322,3 +322,6 @@ This package provides header files and other developer releated files for packag
 to develop applications that require %{name}.\
 %{nil}
 
+%restore_fcommon \
+  /usr/bin/gcc-unforce-options \
+  /usr/bin/gcc-force-options -fsanitize-recover=address -fsanitize=address -fcommon -fno-omit-frame-pointer -U_FORTIFY_SOURCE %{?pkg_force_flags:%{pkg_force_flags}}
